@@ -1,0 +1,30 @@
+{
+	"name": "SBDBranchMappingTable",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "DataFoundationDW",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlDWTable",
+		"schema": [
+			{
+				"name": "SBDName",
+				"type": "nvarchar"
+			},
+			{
+				"name": "DistributorCode",
+				"type": "nvarchar"
+			},
+			{
+				"name": "BranchCode",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "tmpSBDBranchMapping"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

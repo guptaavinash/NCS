@@ -1,0 +1,66 @@
+{
+	"name": "SBDFileTable",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "DataFoundationDW",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlDWTable",
+		"schema": [
+			{
+				"name": "SBD Name",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Channel Code",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Channel Name",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Group Code",
+				"type": "nvarchar"
+			},
+			{
+				"name": "SBF Code",
+				"type": "nvarchar"
+			},
+			{
+				"name": "SBF Name",
+				"type": "nvarchar"
+			},
+			{
+				"name": "MOQ",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Effective From",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Effective To",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Is Base",
+				"type": "nvarchar"
+			},
+			{
+				"name": "FilePath",
+				"type": "nvarchar"
+			},
+			{
+				"name": "LastModifiedTime",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "tmpSBDFile"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

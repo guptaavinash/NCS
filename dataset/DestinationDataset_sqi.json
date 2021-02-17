@@ -1,0 +1,24 @@
+{
+	"name": "DestinationDataset_sqi",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobNCSArchive",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "tmpBranchMultipleDSEData.csv",
+				"container": "tempfolderfordelete"
+			},
+			"columnDelimiter": "|",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

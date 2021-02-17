@@ -1,0 +1,36 @@
+{
+	"name": "CntRTRMProject",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDatafoundation",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"Mnth": {
+				"type": "string",
+				"defaultValue": "2020/09/30"
+			}
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": {
+					"value": "RTRM_cloud0*.gz",
+					"type": "Expression"
+				},
+				"folderPath": {
+					"value": "@dataset().Mnth",
+					"type": "Expression"
+				},
+				"container": "cntleap"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"quoteChar": "\""
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

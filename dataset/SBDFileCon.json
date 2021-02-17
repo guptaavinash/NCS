@@ -1,0 +1,73 @@
+{
+	"name": "SBDFileCon",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobNCSArchive",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"SBDFileName": {
+				"type": "string",
+				"defaultValue": "SBD_AP,TL.xlsx"
+			}
+		},
+		"annotations": [],
+		"type": "Excel",
+		"typeProperties": {
+			"sheetName": "Sheet1",
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": {
+					"value": "@dataset().SBDFileName",
+					"type": "Expression"
+				},
+				"folderPath": "SBD/SBDDetailFile",
+				"container": "subddata"
+			},
+			"firstRowAsHeader": true
+		},
+		"schema": [
+			{
+				"name": "SBD Name",
+				"type": "String"
+			},
+			{
+				"name": "Channel Code",
+				"type": "String"
+			},
+			{
+				"name": "Channel Name",
+				"type": "String"
+			},
+			{
+				"name": "Group Code",
+				"type": "String"
+			},
+			{
+				"name": "SBF Code",
+				"type": "String"
+			},
+			{
+				"name": "SBF Name",
+				"type": "String"
+			},
+			{
+				"name": "MOQ",
+				"type": "String"
+			},
+			{
+				"name": "Effective From",
+				"type": "String"
+			},
+			{
+				"name": "Effective To",
+				"type": "String"
+			},
+			{
+				"name": "Is Base",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

@@ -1,0 +1,17 @@
+{
+	"name": "SourceDataset_sqi",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "DataFoundationDW",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlDWTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "tmpBranchMultipleDSEData"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

@@ -1,0 +1,559 @@
+{
+	"name": "SBDFileLoading",
+	"properties": {
+		"activities": [
+			{
+				"name": "GetListOfFiles",
+				"type": "GetMetadata",
+				"dependsOn": [
+					{
+						"activity": "TruncateTables",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataset": {
+						"referenceName": "Folder_SBDBranchMapping",
+						"type": "DatasetReference"
+					},
+					"fieldList": [
+						"childItems"
+					],
+					"storeSettings": {
+						"type": "AzureBlobStorageReadSettings",
+						"recursive": true,
+						"enablePartitionDiscovery": false
+					}
+				}
+			},
+			{
+				"name": "FileListLoop",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "GetListOfFiles",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('GetListOfFiles').output.childItems",
+						"type": "Expression"
+					},
+					"isSequential": true,
+					"activities": [
+						{
+							"name": "CopyDataFromExcel",
+							"type": "Copy",
+							"dependsOn": [
+								{
+									"activity": "FileLastModifiedTime",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "ExcelSource",
+									"additionalColumns": [
+										{
+											"name": "FilePathTxt",
+											"value": "$$FILEPATH"
+										},
+										{
+											"name": "LastModifiedTime",
+											"value": {
+												"value": "@activity('FileLastModifiedTime').output.lastModified",
+												"type": "Expression"
+											}
+										}
+									],
+									"storeSettings": {
+										"type": "AzureBlobStorageReadSettings",
+										"recursive": true,
+										"enablePartitionDiscovery": false
+									}
+								},
+								"sink": {
+									"type": "SqlDWSink"
+								},
+								"enableStaging": false,
+								"translator": {
+									"type": "TabularTranslator",
+									"mappings": [
+										{
+											"source": {
+												"name": "SBD Name",
+												"type": "String",
+												"physicalType": "String"
+											},
+											"sink": {
+												"name": "SBDName",
+												"type": "String",
+												"physicalType": "nvarchar"
+											}
+										},
+										{
+											"source": {
+												"name": "Distributor Code",
+												"type": "String",
+												"physicalType": "String"
+											},
+											"sink": {
+												"name": "DistributorCode",
+												"type": "String",
+												"physicalType": "nvarchar"
+											}
+										},
+										{
+											"source": {
+												"name": "Branch Code",
+												"type": "String",
+												"physicalType": "String"
+											},
+											"sink": {
+												"name": "BranchCode",
+												"type": "String",
+												"physicalType": "nvarchar"
+											}
+										},
+										{
+											"source": {
+												"name": "FilePathTxt",
+												"type": "String"
+											},
+											"sink": {
+												"name": "FilePath",
+												"type": "String",
+												"physicalType": "nvarchar"
+											}
+										},
+										{
+											"source": {
+												"name": "LastModifiedTime",
+												"type": "String"
+											},
+											"sink": {
+												"name": "LastModifiedTime",
+												"type": "String",
+												"physicalType": "nvarchar"
+											}
+										}
+									],
+									"typeConversion": true,
+									"typeConversionSettings": {
+										"allowDataTruncation": true,
+										"treatBooleanAsNumber": false
+									}
+								}
+							},
+							"inputs": [
+								{
+									"referenceName": "Cnt_SBDBranchMapping",
+									"type": "DatasetReference",
+									"parameters": {
+										"BrnMapFileName": {
+											"value": "@item().name",
+											"type": "Expression"
+										}
+									}
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "SBDBranchMappingTable",
+									"type": "DatasetReference"
+								}
+							]
+						},
+						{
+							"name": "FileLastModifiedTime",
+							"type": "GetMetadata",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"dataset": {
+									"referenceName": "Cnt_SBDBranchMapping",
+									"type": "DatasetReference",
+									"parameters": {
+										"BrnMapFileName": {
+											"value": "@item().name",
+											"type": "Expression"
+										}
+									}
+								},
+								"fieldList": [
+									"lastModified",
+									"itemName"
+								],
+								"storeSettings": {
+									"type": "AzureBlobStorageReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								}
+							}
+						}
+					]
+				}
+			},
+			{
+				"name": "TruncateTables",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[dbo].[spTruncateSBDTempTables]"
+				},
+				"linkedServiceName": {
+					"referenceName": "DataFoundationDW",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "GetListOfSBDFiles",
+				"type": "GetMetadata",
+				"dependsOn": [
+					{
+						"activity": "TruncateTables",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataset": {
+						"referenceName": "Folder_SBDFile",
+						"type": "DatasetReference"
+					},
+					"fieldList": [
+						"childItems"
+					],
+					"storeSettings": {
+						"type": "AzureBlobStorageReadSettings",
+						"recursive": true,
+						"enablePartitionDiscovery": false
+					}
+				}
+			},
+			{
+				"name": "SBDFileListLoop",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "GetListOfSBDFiles",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('GetListOfSBDFiles').output.childItems\n",
+						"type": "Expression"
+					},
+					"isSequential": true,
+					"activities": [
+						{
+							"name": "File LogDateTime",
+							"type": "GetMetadata",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"dataset": {
+									"referenceName": "SBDFileCon",
+									"type": "DatasetReference",
+									"parameters": {
+										"SBDFileName": {
+											"value": "@item().name",
+											"type": "Expression"
+										}
+									}
+								},
+								"fieldList": [
+									"lastModified"
+								],
+								"storeSettings": {
+									"type": "AzureBlobStorageReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								}
+							}
+						},
+						{
+							"name": "Copy data1",
+							"type": "Copy",
+							"dependsOn": [
+								{
+									"activity": "File LogDateTime",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "ExcelSource",
+									"additionalColumns": [
+										{
+											"name": "FileNameTxt",
+											"value": "$$FILEPATH"
+										},
+										{
+											"name": "LastModified",
+											"value": {
+												"value": "@activity('File LogDateTime').output.lastModified",
+												"type": "Expression"
+											}
+										}
+									],
+									"storeSettings": {
+										"type": "AzureBlobStorageReadSettings",
+										"recursive": true,
+										"enablePartitionDiscovery": false
+									}
+								},
+								"sink": {
+									"type": "SqlDWSink"
+								},
+								"enableStaging": false,
+								"translator": {
+									"type": "TabularTranslator",
+									"mappings": [
+										{
+											"source": {
+												"name": "SBD Name",
+												"type": "String",
+												"physicalType": "String"
+											},
+											"sink": {
+												"name": "SBD Name",
+												"type": "String",
+												"physicalType": "nvarchar"
+											}
+										},
+										{
+											"source": {
+												"name": "Channel Code",
+												"type": "String",
+												"physicalType": "String"
+											},
+											"sink": {
+												"name": "Channel Code",
+												"type": "String",
+												"physicalType": "nvarchar"
+											}
+										},
+										{
+											"source": {
+												"name": "Channel Name",
+												"type": "String",
+												"physicalType": "String"
+											},
+											"sink": {
+												"name": "Channel Name",
+												"type": "String",
+												"physicalType": "nvarchar"
+											}
+										},
+										{
+											"source": {
+												"name": "Group Code",
+												"type": "String",
+												"physicalType": "String"
+											},
+											"sink": {
+												"name": "Group Code",
+												"type": "String",
+												"physicalType": "nvarchar"
+											}
+										},
+										{
+											"source": {
+												"name": "SBF Code",
+												"type": "String",
+												"physicalType": "String"
+											},
+											"sink": {
+												"name": "SBF Code",
+												"type": "String",
+												"physicalType": "nvarchar"
+											}
+										},
+										{
+											"source": {
+												"name": "SBF Name",
+												"type": "String",
+												"physicalType": "String"
+											},
+											"sink": {
+												"name": "SBF Name",
+												"type": "String",
+												"physicalType": "nvarchar"
+											}
+										},
+										{
+											"source": {
+												"name": "MOQ",
+												"type": "String",
+												"physicalType": "String"
+											},
+											"sink": {
+												"name": "MOQ",
+												"type": "String",
+												"physicalType": "nvarchar"
+											}
+										},
+										{
+											"source": {
+												"name": "Effective From",
+												"type": "String",
+												"physicalType": "String"
+											},
+											"sink": {
+												"name": "Effective From",
+												"type": "String",
+												"physicalType": "nvarchar"
+											}
+										},
+										{
+											"source": {
+												"name": "Effective To",
+												"type": "String",
+												"physicalType": "String"
+											},
+											"sink": {
+												"name": "Effective To",
+												"type": "String",
+												"physicalType": "nvarchar"
+											}
+										},
+										{
+											"source": {
+												"name": "Is Base",
+												"type": "String",
+												"physicalType": "String"
+											},
+											"sink": {
+												"name": "Is Base",
+												"type": "String",
+												"physicalType": "nvarchar"
+											}
+										},
+										{
+											"source": {
+												"name": "FileNameTxt",
+												"type": "String"
+											},
+											"sink": {
+												"name": "FilePath",
+												"type": "String",
+												"physicalType": "nvarchar"
+											}
+										},
+										{
+											"source": {
+												"name": "LastModified",
+												"type": "String"
+											},
+											"sink": {
+												"name": "LastModifiedTime",
+												"type": "String",
+												"physicalType": "nvarchar"
+											}
+										}
+									],
+									"typeConversion": true,
+									"typeConversionSettings": {
+										"allowDataTruncation": true,
+										"treatBooleanAsNumber": false
+									}
+								}
+							},
+							"inputs": [
+								{
+									"referenceName": "SBDFileCon",
+									"type": "DatasetReference",
+									"parameters": {
+										"SBDFileName": {
+											"value": "@item().name",
+											"type": "Expression"
+										}
+									}
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "SBDFileTable",
+									"type": "DatasetReference"
+								}
+							]
+						}
+					]
+				}
+			}
+		],
+		"annotations": [],
+		"lastPublishTime": "2020-12-20T11:13:29Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

@@ -1,0 +1,22 @@
+{
+	"name": "Folder_SBDBranchMapping",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobNCSArchive",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Excel",
+		"typeProperties": {
+			"sheetName": "Sheet1",
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "*.xls",
+				"folderPath": "SBD/BranchMapping",
+				"container": "subddata"
+			}
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

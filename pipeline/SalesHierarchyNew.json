@@ -1,0 +1,1213 @@
+{
+	"name": "SalesHierarchyNew",
+	"properties": {
+		"activities": [
+			{
+				"name": "ForEach_b58",
+				"type": "ForEach",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@pipeline().parameters.cw_items",
+						"type": "Expression"
+					},
+					"activities": [
+						{
+							"name": "Copy_b58",
+							"type": "Copy",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [
+								{
+									"name": "Source",
+									"value": "dbo.@{item().source.table}"
+								},
+								{
+									"name": "Destination",
+									"value": "dbo.@{item().destination.table}"
+								}
+							],
+							"typeProperties": {
+								"source": {
+									"type": "SqlServerSource",
+									"partitionOption": "None"
+								},
+								"sink": {
+									"type": "SqlDWSink",
+									"preCopyScript": {
+										"value": "@item().copySink.preCopyScript",
+										"type": "Expression"
+									}
+								},
+								"enableStaging": false,
+								"validateDataConsistency": false,
+								"translator": {
+									"value": "@item().copyActivity.translator",
+									"type": "Expression"
+								}
+							},
+							"inputs": [
+								{
+									"referenceName": "SourceDataset_b58",
+									"type": "DatasetReference",
+									"parameters": {
+										"cw_table": "@item().source.table"
+									}
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "DestinationDataset_b58",
+									"type": "DatasetReference",
+									"parameters": {
+										"cw_table": "@item().destination.table"
+									}
+								}
+							]
+						}
+					]
+				}
+			},
+			{
+				"name": "Transfer",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "ForEach_b58",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SqlServerSource",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "SqlDWSink",
+						"preCopyScript": "truncate table tblMstrPerson",
+						"disableMetricsCollection": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "SourceDataset_b58",
+						"type": "DatasetReference",
+						"parameters": {
+							"cw_table": "tblMstrPerson"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DestinationDataset_b58",
+						"type": "DatasetReference",
+						"parameters": {
+							"cw_table": "tblMstrPerson"
+						}
+					}
+				]
+			}
+		],
+		"parameters": {
+			"cw_items": {
+				"type": "Array",
+				"defaultValue": [
+					{
+						"source": {
+							"table": "tblCompanySalesStructureActDBR"
+						},
+						"destination": {
+							"table": "tblCompanySalesStructureActDBR"
+						},
+						"copySink": {
+							"preCopyScript": "truncate table tblcompanysalesstructureactdbr"
+						},
+						"copyActivity": {
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "NodeID",
+											"type": "Int32"
+										},
+										"sink": {
+											"name": "NodeID",
+											"type": "Int32"
+										}
+									},
+									{
+										"source": {
+											"name": "Code",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Code",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Descr",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Descr",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "NodeType",
+											"type": "Int32"
+										},
+										"sink": {
+											"name": "NodeType",
+											"type": "Int32"
+										}
+									},
+									{
+										"source": {
+											"name": "IsActive",
+											"type": "Boolean"
+										},
+										"sink": {
+											"name": "IsActive",
+											"type": "Boolean"
+										}
+									},
+									{
+										"source": {
+											"name": "LoginIDIns",
+											"type": "Int32"
+										},
+										"sink": {
+											"name": "LoginIDIns",
+											"type": "Int32"
+										}
+									},
+									{
+										"source": {
+											"name": "TimestampIns",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "TimestampIns",
+											"type": "DateTime"
+										}
+									},
+									{
+										"source": {
+											"name": "LoginIDUpd",
+											"type": "Int32"
+										},
+										"sink": {
+											"name": "LoginIDUpd",
+											"type": "Int32"
+										}
+									},
+									{
+										"source": {
+											"name": "TimestampUpd",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "TimestampUpd",
+											"type": "DateTime"
+										}
+									}
+								]
+							}
+						}
+					},
+					{
+						"source": {
+							"table": "tblCompanySalesStructureBranch"
+						},
+						"destination": {
+							"table": "tblCompanySalesStructureBranch"
+						},
+						"copySink": {
+							"preCopyScript": "truncate table tblcompanysalesstructurebranch"
+						},
+						"copyActivity": {
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "NodeID",
+											"type": "Int32"
+										},
+										"sink": {
+											"name": "NodeID",
+											"type": "Int32"
+										}
+									},
+									{
+										"source": {
+											"name": "Code",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Code",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Descr",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Descr",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "NodeType",
+											"type": "Int32"
+										},
+										"sink": {
+											"name": "NodeType",
+											"type": "Int32"
+										}
+									},
+									{
+										"source": {
+											"name": "IsActive",
+											"type": "Boolean"
+										},
+										"sink": {
+											"name": "IsActive",
+											"type": "Boolean"
+										}
+									},
+									{
+										"source": {
+											"name": "LoginIDIns",
+											"type": "Int32"
+										},
+										"sink": {
+											"name": "LoginIDIns",
+											"type": "Int32"
+										}
+									},
+									{
+										"source": {
+											"name": "TimestampIns",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "TimestampIns",
+											"type": "DateTime"
+										}
+									},
+									{
+										"source": {
+											"name": "LoginIDUpd",
+											"type": "Int32"
+										},
+										"sink": {
+											"name": "LoginIDUpd",
+											"type": "Int32"
+										}
+									},
+									{
+										"source": {
+											"name": "TimestampUpd",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "TimestampUpd",
+											"type": "DateTime"
+										}
+									},
+									{
+										"source": {
+											"name": "TASSiteNodeId",
+											"type": "Int32"
+										},
+										"sink": {
+											"name": "TASSiteNodeId",
+											"type": "Int32"
+										}
+									},
+									{
+										"source": {
+											"name": "TASSiteNodeType",
+											"type": "Int32"
+										},
+										"sink": {
+											"name": "TASSiteNodeType",
+											"type": "Int32"
+										}
+									},
+									{
+										"source": {
+											"name": "NoOfDaysForInv",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "NoOfDaysForInv",
+											"type": "Byte"
+										}
+									},
+									{
+										"source": {
+											"name": "EMailId",
+											"type": "String"
+										},
+										"sink": {
+											"name": "EMailId",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "ManagerName",
+											"type": "String"
+										},
+										"sink": {
+											"name": "ManagerName",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "ContactNo",
+											"type": "String"
+										},
+										"sink": {
+											"name": "ContactNo",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "IsMappedLeapSwing",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "IsMappedLeapSwing",
+											"type": "Byte"
+										}
+									},
+									{
+										"source": {
+											"name": "flgD2PendingOrder",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "flgD2PendingOrder",
+											"type": "Byte"
+										}
+									},
+									{
+										"source": {
+											"name": "PresentDSECallTypeId",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "PresentDSECallTypeId",
+											"type": "Byte"
+										}
+									},
+									{
+										"source": {
+											"name": "DayFrom",
+											"type": "Int16"
+										},
+										"sink": {
+											"name": "DayFrom",
+											"type": "Int16"
+										}
+									},
+									{
+										"source": {
+											"name": "DayTo",
+											"type": "Int16"
+										},
+										"sink": {
+											"name": "DayTo",
+											"type": "Int16"
+										}
+									},
+									{
+										"source": {
+											"name": "flgIncludeTCMissedCalls",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "flgIncludeTCMissedCalls",
+											"type": "Byte"
+										}
+									},
+									{
+										"source": {
+											"name": "INITClusterID",
+											"type": "Int32"
+										},
+										"sink": {
+											"name": "INITClusterID",
+											"type": "Int32"
+										}
+									},
+									{
+										"source": {
+											"name": "ActDBRNodeId",
+											"type": "Int32"
+										},
+										"sink": {
+											"name": "ActDBRNodeId",
+											"type": "Int32"
+										}
+									},
+									{
+										"source": {
+											"name": "ActDBRNodeType",
+											"type": "Int32"
+										},
+										"sink": {
+											"name": "ActDBRNodeType",
+											"type": "Int32"
+										}
+									}
+								]
+							}
+						}
+					},
+					{
+						"source": {
+							"table": "tblCompanySalesStructureDBR"
+						},
+						"destination": {
+							"table": "tblCompanySalesStructureDBR"
+						},
+						"copySink": {
+							"preCopyScript": "truncate table tblcompanysalesstructuredbr"
+						},
+						"copyActivity": {
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "NodeID",
+											"type": "Int32"
+										},
+										"sink": {
+											"name": "NodeID",
+											"type": "Int32"
+										}
+									},
+									{
+										"source": {
+											"name": "Code",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Code",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Descr",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Descr",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "NodeType",
+											"type": "Int32"
+										},
+										"sink": {
+											"name": "NodeType",
+											"type": "Int32"
+										}
+									},
+									{
+										"source": {
+											"name": "IsActive",
+											"type": "Boolean"
+										},
+										"sink": {
+											"name": "IsActive",
+											"type": "Boolean"
+										}
+									},
+									{
+										"source": {
+											"name": "LoginIDIns",
+											"type": "Int32"
+										},
+										"sink": {
+											"name": "LoginIDIns",
+											"type": "Int32"
+										}
+									},
+									{
+										"source": {
+											"name": "TimestampIns",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "TimestampIns",
+											"type": "DateTime"
+										}
+									},
+									{
+										"source": {
+											"name": "LoginIDUpd",
+											"type": "Int32"
+										},
+										"sink": {
+											"name": "LoginIDUpd",
+											"type": "Int32"
+										}
+									},
+									{
+										"source": {
+											"name": "TimestampUpd",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "TimestampUpd",
+											"type": "DateTime"
+										}
+									},
+									{
+										"source": {
+											"name": "flgLive",
+											"type": "Boolean"
+										},
+										"sink": {
+											"name": "flgLive",
+											"type": "Boolean"
+										}
+									},
+									{
+										"source": {
+											"name": "flgDRCPUploadType",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "flgDRCPUploadType",
+											"type": "Byte"
+										}
+									},
+									{
+										"source": {
+											"name": "flgSBD",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "flgSBD",
+											"type": "Byte"
+										}
+									},
+									{
+										"source": {
+											"name": "SBDTimeStamp",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "SBDTimeStamp",
+											"type": "DateTime"
+										}
+									},
+									{
+										"source": {
+											"name": "flgSMSGuard",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "flgSMSGuard",
+											"type": "Byte"
+										}
+									}
+								]
+							}
+						}
+					},
+					{
+						"source": {
+							"table": "tblCompanySalesStructureHierarchy"
+						},
+						"destination": {
+							"table": "tblCompanySalesStructureHierarchy"
+						},
+						"copySink": {
+							"preCopyScript": "truncate table tblcompanysalesstructureHierarchy"
+						},
+						"copyActivity": {
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "HierID",
+											"type": "Int32"
+										},
+										"sink": {
+											"name": "HierID",
+											"type": "Int32"
+										}
+									},
+									{
+										"source": {
+											"name": "NodeID",
+											"type": "Int32"
+										},
+										"sink": {
+											"name": "NodeID",
+											"type": "Int32"
+										}
+									},
+									{
+										"source": {
+											"name": "NodeType",
+											"type": "Int32"
+										},
+										"sink": {
+											"name": "NodeType",
+											"type": "Int32"
+										}
+									},
+									{
+										"source": {
+											"name": "PNodeID",
+											"type": "Int32"
+										},
+										"sink": {
+											"name": "PNodeID",
+											"type": "Int32"
+										}
+									},
+									{
+										"source": {
+											"name": "PNodeType",
+											"type": "Int32"
+										},
+										"sink": {
+											"name": "PNodeType",
+											"type": "Int32"
+										}
+									},
+									{
+										"source": {
+											"name": "HierTypeID",
+											"type": "Int32"
+										},
+										"sink": {
+											"name": "HierTypeID",
+											"type": "Int32"
+										}
+									},
+									{
+										"source": {
+											"name": "PHierId",
+											"type": "Int32"
+										},
+										"sink": {
+											"name": "PHierId",
+											"type": "Int32"
+										}
+									},
+									{
+										"source": {
+											"name": "VldFrom",
+											"type": "Date"
+										},
+										"sink": {
+											"name": "VldFrom",
+											"type": "Date"
+										}
+									},
+									{
+										"source": {
+											"name": "VldTo",
+											"type": "Date"
+										},
+										"sink": {
+											"name": "VldTo",
+											"type": "Date"
+										}
+									}
+								]
+							}
+						}
+					},
+					{
+						"source": {
+							"table": "tblCompanySalesStructureMgnrLvl1"
+						},
+						"destination": {
+							"table": "tblCompanySalesStructureMgnrLvl1"
+						},
+						"copySink": {
+							"preCopyScript": "truncate table tblcompanysalesstructureMgnrLvl1"
+						},
+						"copyActivity": {
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "NodeID",
+											"type": "Int32"
+										},
+										"sink": {
+											"name": "NodeID",
+											"type": "Int32"
+										}
+									},
+									{
+										"source": {
+											"name": "Descr",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Descr",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "NodeType",
+											"type": "Int32"
+										},
+										"sink": {
+											"name": "NodeType",
+											"type": "Int32"
+										}
+									},
+									{
+										"source": {
+											"name": "IsActive",
+											"type": "Boolean"
+										},
+										"sink": {
+											"name": "IsActive",
+											"type": "Boolean"
+										}
+									},
+									{
+										"source": {
+											"name": "LoginIDIns",
+											"type": "Int32"
+										},
+										"sink": {
+											"name": "LoginIDIns",
+											"type": "Int32"
+										}
+									},
+									{
+										"source": {
+											"name": "TimestampIns",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "TimestampIns",
+											"type": "DateTime"
+										}
+									},
+									{
+										"source": {
+											"name": "LoginIDUpd",
+											"type": "Int32"
+										},
+										"sink": {
+											"name": "LoginIDUpd",
+											"type": "Int32"
+										}
+									},
+									{
+										"source": {
+											"name": "TimestampUpd",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "TimestampUpd",
+											"type": "DateTime"
+										}
+									}
+								]
+							}
+						}
+					},
+					{
+						"source": {
+							"table": "tblCompanySalesStructureMgnrLvl2"
+						},
+						"destination": {
+							"table": "tblCompanySalesStructureMgnrLvl2"
+						},
+						"copySink": {
+							"preCopyScript": "truncate table tblcompanysalesstructureMgnrLvl2"
+						},
+						"copyActivity": {
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "NodeID",
+											"type": "Int32"
+										},
+										"sink": {
+											"name": "NodeID",
+											"type": "Int32"
+										}
+									},
+									{
+										"source": {
+											"name": "Descr",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Descr",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "NodeType",
+											"type": "Int32"
+										},
+										"sink": {
+											"name": "NodeType",
+											"type": "Int32"
+										}
+									},
+									{
+										"source": {
+											"name": "IsActive",
+											"type": "Boolean"
+										},
+										"sink": {
+											"name": "IsActive",
+											"type": "Boolean"
+										}
+									},
+									{
+										"source": {
+											"name": "LoginIDIns",
+											"type": "Int32"
+										},
+										"sink": {
+											"name": "LoginIDIns",
+											"type": "Int32"
+										}
+									},
+									{
+										"source": {
+											"name": "TimestampIns",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "TimestampIns",
+											"type": "DateTime"
+										}
+									},
+									{
+										"source": {
+											"name": "LoginIDUpd",
+											"type": "Int32"
+										},
+										"sink": {
+											"name": "LoginIDUpd",
+											"type": "Int32"
+										}
+									},
+									{
+										"source": {
+											"name": "TimestampUpd",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "TimestampUpd",
+											"type": "DateTime"
+										}
+									}
+								]
+							}
+						}
+					},
+					{
+						"source": {
+							"table": "tblCompanySalesStructureMgnrLvl3"
+						},
+						"destination": {
+							"table": "tblCompanySalesStructureMgnrLvl3"
+						},
+						"copySink": {
+							"preCopyScript": "truncate table tblcompanysalesstructureMgnrLvl3"
+						},
+						"copyActivity": {
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "NodeID",
+											"type": "Int32"
+										},
+										"sink": {
+											"name": "NodeID",
+											"type": "Int32"
+										}
+									},
+									{
+										"source": {
+											"name": "Descr",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Descr",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "NodeType",
+											"type": "Int32"
+										},
+										"sink": {
+											"name": "NodeType",
+											"type": "Int32"
+										}
+									},
+									{
+										"source": {
+											"name": "IsActive",
+											"type": "Boolean"
+										},
+										"sink": {
+											"name": "IsActive",
+											"type": "Boolean"
+										}
+									},
+									{
+										"source": {
+											"name": "LoginIDIns",
+											"type": "Int32"
+										},
+										"sink": {
+											"name": "LoginIDIns",
+											"type": "Int32"
+										}
+									},
+									{
+										"source": {
+											"name": "TimestampIns",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "TimestampIns",
+											"type": "DateTime"
+										}
+									},
+									{
+										"source": {
+											"name": "LoginIDUpd",
+											"type": "Int32"
+										},
+										"sink": {
+											"name": "LoginIDUpd",
+											"type": "Int32"
+										}
+									},
+									{
+										"source": {
+											"name": "TimestampUpd",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "TimestampUpd",
+											"type": "DateTime"
+										}
+									}
+								]
+							}
+						}
+					},
+					{
+						"source": {
+							"table": "tblCompanySalesStructureTASSite"
+						},
+						"destination": {
+							"table": "tblCompanySalesStructureTASSite"
+						},
+						"copySink": {
+							"preCopyScript": "truncate table tblcompanysalesstructureTASSite"
+						},
+						"copyActivity": {
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "NodeID",
+											"type": "Int32"
+										},
+										"sink": {
+											"name": "NodeID",
+											"type": "Int32"
+										}
+									},
+									{
+										"source": {
+											"name": "Code",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Code",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Descr",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Descr",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "NodeType",
+											"type": "Int32"
+										},
+										"sink": {
+											"name": "NodeType",
+											"type": "Int32"
+										}
+									},
+									{
+										"source": {
+											"name": "IsActive",
+											"type": "Boolean"
+										},
+										"sink": {
+											"name": "IsActive",
+											"type": "Boolean"
+										}
+									},
+									{
+										"source": {
+											"name": "LoginIDIns",
+											"type": "Int32"
+										},
+										"sink": {
+											"name": "LoginIDIns",
+											"type": "Int32"
+										}
+									},
+									{
+										"source": {
+											"name": "TimestampIns",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "TimestampIns",
+											"type": "DateTime"
+										}
+									},
+									{
+										"source": {
+											"name": "LoginIDUpd",
+											"type": "Int32"
+										},
+										"sink": {
+											"name": "LoginIDUpd",
+											"type": "Int32"
+										}
+									},
+									{
+										"source": {
+											"name": "TimestampUpd",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "TimestampUpd",
+											"type": "DateTime"
+										}
+									},
+									{
+										"source": {
+											"name": "flgLive",
+											"type": "Boolean"
+										},
+										"sink": {
+											"name": "flgLive",
+											"type": "Boolean"
+										}
+									},
+									{
+										"source": {
+											"name": "DBRName",
+											"type": "String"
+										},
+										"sink": {
+											"name": "DBRName",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "flgGuard3SMS",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "flgGuard3SMS",
+											"type": "Byte"
+										}
+									}
+								]
+							}
+						}
+					}
+				]
+			}
+		},
+		"annotations": [],
+		"lastPublishTime": "2020-10-23T14:14:10Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}
