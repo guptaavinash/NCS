@@ -1,0 +1,42 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "ncsdatamovement"
+		},
+		"67Server_connectionString": {
+			"value": ""
+		},
+		"AzureBlobNCSArchive_connectionString": {
+			"value": ""
+		},
+		"AzureDatafoundation_connectionString": {
+			"value": ""
+		},
+		"AzureSynapseAnalyticsBackup_connectionString": {
+			"value": ""
+		},
+		"DFSQLDB_connectionString": {
+			"value": ""
+		},
+		"DataFoundationDW_connectionString": {
+			"value": ""
+		},
+		"DataFoundationDW_servicePrincipalKey": {
+			"value": ""
+		},
+		"TASDB_connectionString": {
+			"value": ""
+		},
+		"AzureSqlMI1_connectionString": {
+			"value": ""
+		},
+		"DataFoundationDW_properties_typeProperties_servicePrincipalId": {
+			"value": "7ec6607e-638a-46bf-9ff0-ea38bacb5ea9"
+		},
+		"DataFoundationDW_properties_typeProperties_tenant": {
+			"value": "515445df-f272-4c96-aa97-d670cbdeab20"
+		}
+	}
+}
