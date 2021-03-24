@@ -1,0 +1,118 @@
+{
+	"name": "AzureSynapseAnalyticsTable1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "DataFoundationDW",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlDWTable",
+		"schema": [
+			{
+				"name": "BranchSubdType",
+				"type": "varchar"
+			},
+			{
+				"name": "BranchSUBDCode",
+				"type": "varchar"
+			},
+			{
+				"name": "StoreCode",
+				"type": "varchar"
+			},
+			{
+				"name": "OrderNo",
+				"type": "varchar"
+			},
+			{
+				"name": "OrderDate",
+				"type": "date"
+			},
+			{
+				"name": "DSECode",
+				"type": "varchar"
+			},
+			{
+				"name": "SBFCode",
+				"type": "varchar"
+			},
+			{
+				"name": "SBFName",
+				"type": "varchar"
+			},
+			{
+				"name": "Qty",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Rate",
+				"type": "decimal",
+				"precision": 18,
+				"scale": 2
+			},
+			{
+				"name": "RetailingAmt",
+				"type": "decimal",
+				"precision": 18,
+				"scale": 2
+			},
+			{
+				"name": "TeleCallerCode",
+				"type": "varchar"
+			},
+			{
+				"name": "FileName",
+				"type": "varchar"
+			},
+			{
+				"name": "LastModifiedDatetime",
+				"type": "varchar"
+			},
+			{
+				"name": "FileSetId",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "BranchSubdNodeId",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "BranchSubdNodeType",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "StoreId",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "DSENodeId",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "DSENodeType",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "SBFNodeId",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "SbfNodeType",
+				"type": "int",
+				"precision": 10
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "tmpOrderDataForDataFoundation"
+		}
+	}
+}
