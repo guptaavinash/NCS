@@ -17,7 +17,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "SqlMISource",
-						"sqlReaderQuery": "select * from tmpOrderDataForDataFoundation",
+						"sqlReaderQuery": "select *,'' as FileName,'' AS LastModifiedDatetime,\n\t0 AS FileSetId,0 AS BranchSubdNodeId,0 AS BranchSubdNodeType,\n\t0 AS StoreId,\n\t0 AS DSENodeId,\n\t0 AS DSENodeType,\n\t0 AS SBFNodeId,\n\t0 AS SbfNodeType from tmpOrderDataForDataFoundation",
 						"partitionOption": "None"
 					},
 					"sink": {
@@ -179,6 +179,126 @@
 									"name": "TeleCallerCode",
 									"type": "String",
 									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "FileName",
+									"type": "String",
+									"physicalType": "varchar"
+								},
+								"sink": {
+									"name": "FileName",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "LastModifiedDatetime",
+									"type": "String",
+									"physicalType": "varchar"
+								},
+								"sink": {
+									"name": "LastModifiedDatetime",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "FileSetId",
+									"type": "Int32",
+									"physicalType": "int"
+								},
+								"sink": {
+									"name": "FileSetId",
+									"type": "Int64",
+									"physicalType": "bigint"
+								}
+							},
+							{
+								"source": {
+									"name": "BranchSubdNodeId",
+									"type": "Int32",
+									"physicalType": "int"
+								},
+								"sink": {
+									"name": "BranchSubdNodeId",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "BranchSubdNodeType",
+									"type": "Int32",
+									"physicalType": "int"
+								},
+								"sink": {
+									"name": "BranchSubdNodeType",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "StoreId",
+									"type": "Int32",
+									"physicalType": "int"
+								},
+								"sink": {
+									"name": "StoreId",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "DSENodeId",
+									"type": "Int32",
+									"physicalType": "int"
+								},
+								"sink": {
+									"name": "DSENodeId",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "DSENodeType",
+									"type": "Int32",
+									"physicalType": "int"
+								},
+								"sink": {
+									"name": "DSENodeType",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "SBFNodeId",
+									"type": "Int32",
+									"physicalType": "int"
+								},
+								"sink": {
+									"name": "SBFNodeId",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "SbfNodeType",
+									"type": "Int32",
+									"physicalType": "int"
+								},
+								"sink": {
+									"name": "SbfNodeType",
+									"type": "Int32",
+									"physicalType": "int"
 								}
 							}
 						],
