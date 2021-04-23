@@ -6528,7 +6528,10 @@
 							"value": "@dataset().OrdFileName",
 							"type": "Expression"
 						},
-						"folderPath": "2021/04/01",
+						"folderPath": {
+							"value": "@'2021/04/'+substring(dataset().OrdFileName, 23, 2)",
+							"type": "Expression"
+						},
 						"container": "cntleap"
 					},
 					"columnDelimiter": "|",
