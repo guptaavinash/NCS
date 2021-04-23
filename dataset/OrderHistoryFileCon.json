@@ -5,6 +5,12 @@
 			"referenceName": "DatafoundationADLS",
 			"type": "LinkedServiceReference"
 		},
+		"parameters": {
+			"OrdFileName": {
+				"type": "string",
+				"defaultValue": "ORDHTR_cloud01_2021Apr01.csv.gz"
+			}
+		},
 		"annotations": [],
 		"type": "DelimitedText",
 		"typeProperties": {
