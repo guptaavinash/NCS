@@ -936,7 +936,11 @@
 											"referenceName": "OrderHistoryFileCon",
 											"type": "DatasetReference",
 											"parameters": {
-												"OrdFileName": "@item().name"
+												"OrdFileName": "@item().name",
+												"FullDt": {
+													"value": "concat('2021/04/'+substring(@item().name, 23, 2)",
+													"type": "Expression"
+												}
 											}
 										}
 									],
@@ -6517,6 +6521,10 @@
 					"OrdFileName": {
 						"type": "string",
 						"defaultValue": "ORDHTR_cloud01_2021Apr01.csv.gz"
+					},
+					"FullDt": {
+						"type": "string",
+						"defaultValue": "2021/04/01"
 					}
 				},
 				"annotations": [],
@@ -6529,7 +6537,7 @@
 							"type": "Expression"
 						},
 						"folderPath": {
-							"value": "concat('2021/04/',substring(string(@dataset().OrdFileName), 23, 2))",
+							"value": "@dataset().FullDt",
 							"type": "Expression"
 						},
 						"container": "cntleap"
