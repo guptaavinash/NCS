@@ -29,10 +29,10 @@
 		"DataFoundationDW_servicePrincipalKey": {
 			"value": ""
 		},
-		"TASDB_connectionString": {
+		"DatafoundationADLS_connectionString": {
 			"value": ""
 		},
-		"DatafoundationADLS_connectionString": {
+		"TASDB_connectionString": {
 			"value": ""
 		},
 		"DataFoundationDW_properties_typeProperties_servicePrincipalId": {
