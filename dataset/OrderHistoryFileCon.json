@@ -20,7 +20,7 @@
 					"value": "@dataset().OrdFileName",
 					"type": "Expression"
 				},
-				"folderPath": "2021/04/*",
+				"folderPath": "2021/04/01",
 				"container": "cntleap"
 			},
 			"columnDelimiter": "|",
