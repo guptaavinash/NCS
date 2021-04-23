@@ -10,7 +10,6 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "ORDHTR_cloud01_2021Apr01.csv.gz",
 				"folderPath": "2021/04/01",
 				"container": "cntleap"
 			},
