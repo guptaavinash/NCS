@@ -346,7 +346,11 @@
 									"referenceName": "OrderHistoryFileCon",
 									"type": "DatasetReference",
 									"parameters": {
-										"OrdFileName": "@item().name"
+										"OrdFileName": "@item().name",
+										"FullDt": {
+											"value": "concat('2021/04/'+substring(@item().name, 23, 2)",
+											"type": "Expression"
+										}
 									}
 								}
 							],
@@ -382,6 +386,7 @@
 					],
 					"storeSettings": {
 						"type": "AzureBlobStorageReadSettings",
+						"recursive": true,
 						"enablePartitionDiscovery": false
 					},
 					"formatSettings": {
