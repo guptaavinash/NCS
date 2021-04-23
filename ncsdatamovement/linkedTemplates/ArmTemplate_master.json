@@ -19,6 +19,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'AzureDatafoundation'"
 		},
+		"AzureSqlMI1_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureSqlMI1'"
+		},
 		"AzureSynapseAnalyticsBackup_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'AzureSynapseAnalyticsBackup'"
@@ -39,9 +43,9 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'TASDB'"
 		},
-		"AzureSqlMI1_connectionString": {
+		"DatafoundationADLS_connectionString": {
 			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'AzureSqlMI1'"
+			"metadata": "Secure string for 'connectionString' of 'DatafoundationADLS'"
 		},
 		"DataFoundationDW_properties_typeProperties_servicePrincipalId": {
 			"type": "string",
@@ -87,6 +91,9 @@
 					"AzureDatafoundation_connectionString": {
 						"value": "[parameters('AzureDatafoundation_connectionString')]"
 					},
+					"AzureSqlMI1_connectionString": {
+						"value": "[parameters('AzureSqlMI1_connectionString')]"
+					},
 					"AzureSynapseAnalyticsBackup_connectionString": {
 						"value": "[parameters('AzureSynapseAnalyticsBackup_connectionString')]"
 					},
@@ -102,8 +109,8 @@
 					"TASDB_connectionString": {
 						"value": "[parameters('TASDB_connectionString')]"
 					},
-					"AzureSqlMI1_connectionString": {
-						"value": "[parameters('AzureSqlMI1_connectionString')]"
+					"DatafoundationADLS_connectionString": {
+						"value": "[parameters('DatafoundationADLS_connectionString')]"
 					},
 					"DataFoundationDW_properties_typeProperties_servicePrincipalId": {
 						"value": "[parameters('DataFoundationDW_properties_typeProperties_servicePrincipalId')]"

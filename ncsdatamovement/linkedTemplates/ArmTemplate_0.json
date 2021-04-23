@@ -19,6 +19,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'AzureDatafoundation'"
 		},
+		"AzureSqlMI1_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureSqlMI1'"
+		},
 		"AzureSynapseAnalyticsBackup_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'AzureSynapseAnalyticsBackup'"
@@ -39,9 +43,9 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'TASDB'"
 		},
-		"AzureSqlMI1_connectionString": {
+		"DatafoundationADLS_connectionString": {
 			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'AzureSqlMI1'"
+			"metadata": "Secure string for 'connectionString' of 'DatafoundationADLS'"
 		},
 		"DataFoundationDW_properties_typeProperties_servicePrincipalId": {
 			"type": "string",
@@ -91,6 +95,19 @@
 				"type": "AzureBlobStorage",
 				"typeProperties": {
 					"connectionString": "[parameters('AzureDatafoundation_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureSqlMI1')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureSqlMI",
+				"typeProperties": {
+					"connectionString": "[parameters('AzureSqlMI1_connectionString')]"
 				}
 			},
 			"dependsOn": []
@@ -154,17 +171,158 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/AzureSqlMI1')]",
+			"name": "[concat(parameters('factoryName'), '/DatafoundationADLS')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"annotations": [],
-				"type": "AzureSqlMI",
+				"type": "AzureBlobStorage",
 				"typeProperties": {
-					"connectionString": "[parameters('AzureSqlMI1_connectionString')]"
+					"connectionString": "[parameters('DatafoundationADLS_connectionString')]"
 				}
 			},
 			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureSqlMITable1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlMI1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlMITable",
+				"schema": [],
+				"typeProperties": {}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureSqlMI1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureSynapseAnalyticsTable1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "DataFoundationDW",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlDWTable",
+				"schema": [
+					{
+						"name": "BranchSubdType",
+						"type": "varchar"
+					},
+					{
+						"name": "BranchSUBDCode",
+						"type": "varchar"
+					},
+					{
+						"name": "StoreCode",
+						"type": "varchar"
+					},
+					{
+						"name": "OrderNo",
+						"type": "varchar"
+					},
+					{
+						"name": "OrderDate",
+						"type": "date"
+					},
+					{
+						"name": "DSECode",
+						"type": "varchar"
+					},
+					{
+						"name": "SBFCode",
+						"type": "varchar"
+					},
+					{
+						"name": "SBFName",
+						"type": "varchar"
+					},
+					{
+						"name": "Qty",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Rate",
+						"type": "decimal",
+						"precision": 18,
+						"scale": 2
+					},
+					{
+						"name": "RetailingAmt",
+						"type": "decimal",
+						"precision": 18,
+						"scale": 2
+					},
+					{
+						"name": "TeleCallerCode",
+						"type": "varchar"
+					},
+					{
+						"name": "FileName",
+						"type": "varchar"
+					},
+					{
+						"name": "LastModifiedDatetime",
+						"type": "varchar"
+					},
+					{
+						"name": "FileSetId",
+						"type": "bigint",
+						"precision": 19
+					},
+					{
+						"name": "BranchSubdNodeId",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "BranchSubdNodeType",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "StoreId",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "DSENodeId",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "DSENodeType",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "SBFNodeId",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "SbfNodeType",
+						"type": "int",
+						"precision": 10
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "tmpOrderDataForDataFoundation"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/DataFoundationDW')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/CntOldLeapFileLoad')]",
@@ -894,352 +1052,6 @@
 						"value": "@dataset().cw_table",
 						"type": "Expression"
 					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/DataFoundationDW')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Folder_SBDBranchMapping')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureBlobNCSArchive",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "Excel",
-				"typeProperties": {
-					"sheetName": "Sheet1",
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"fileName": "*.xls",
-						"folderPath": "SBD/BranchMapping",
-						"container": "subddata"
-					}
-				},
-				"schema": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureBlobNCSArchive')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Folder_SBDFile')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureBlobNCSArchive",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "Excel",
-				"typeProperties": {
-					"sheetName": "Sheet1",
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"fileName": "*.xlsx",
-						"folderPath": "SBD/SBDDetailFile",
-						"container": "subddata"
-					},
-					"firstRowAsHeader": false
-				},
-				"schema": [
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					}
-				]
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureBlobNCSArchive')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/OldLeapSalesTable')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "DataFoundationDW",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlDWTable",
-				"schema": [
-					{
-						"name": "document_no",
-						"type": "nvarchar"
-					},
-					{
-						"name": "apply_to_doc",
-						"type": "nvarchar"
-					},
-					{
-						"name": "document_date",
-						"type": "nvarchar"
-					},
-					{
-						"name": "transaction_type",
-						"type": "nvarchar"
-					},
-					{
-						"name": "subbrandform_name",
-						"type": "nvarchar"
-					},
-					{
-						"name": "prod_name",
-						"type": "nvarchar"
-					},
-					{
-						"name": "customer_name",
-						"type": "nvarchar"
-					},
-					{
-						"name": "customer_code",
-						"type": "nvarchar"
-					},
-					{
-						"name": "retailer_gst_no",
-						"type": "nvarchar"
-					},
-					{
-						"name": "channel_description",
-						"type": "nvarchar"
-					},
-					{
-						"name": "dse",
-						"type": "nvarchar"
-					},
-					{
-						"name": "pcode",
-						"type": "nvarchar"
-					},
-					{
-						"name": "batch",
-						"type": "nvarchar"
-					},
-					{
-						"name": "customer_type",
-						"type": "nvarchar"
-					},
-					{
-						"name": "hsn_code",
-						"type": "nvarchar"
-					},
-					{
-						"name": "category",
-						"type": "nvarchar"
-					},
-					{
-						"name": "brand",
-						"type": "nvarchar"
-					},
-					{
-						"name": "brandform",
-						"type": "nvarchar"
-					},
-					{
-						"name": "upc",
-						"type": "nvarchar"
-					},
-					{
-						"name": "quantity",
-						"type": "nvarchar"
-					},
-					{
-						"name": "gross_value",
-						"type": "nvarchar"
-					},
-					{
-						"name": "discount",
-						"type": "nvarchar"
-					},
-					{
-						"name": "taxable_scheme",
-						"type": "nvarchar"
-					},
-					{
-						"name": "cgst_amount",
-						"type": "nvarchar"
-					},
-					{
-						"name": "sgst_amount",
-						"type": "nvarchar"
-					},
-					{
-						"name": "igst_amount",
-						"type": "nvarchar"
-					},
-					{
-						"name": "cess_amount",
-						"type": "nvarchar"
-					},
-					{
-						"name": "tcs_amount",
-						"type": "nvarchar"
-					},
-					{
-						"name": "mracc_code",
-						"type": "nvarchar"
-					},
-					{
-						"name": "mracc_desc",
-						"type": "nvarchar"
-					},
-					{
-						"name": "vendor",
-						"type": "nvarchar"
-					},
-					{
-						"name": "net_amount",
-						"type": "nvarchar"
-					},
-					{
-						"name": "tax_on_discount",
-						"type": "nvarchar"
-					},
-					{
-						"name": "tax_on_scheme",
-						"type": "nvarchar"
-					},
-					{
-						"name": "tax_in_rlp",
-						"type": "nvarchar"
-					},
-					{
-						"name": "retailing",
-						"type": "nvarchar"
-					},
-					{
-						"name": "gross_in_slp",
-						"type": "nvarchar"
-					},
-					{
-						"name": "po_no",
-						"type": "nvarchar"
-					},
-					{
-						"name": "dse_code",
-						"type": "nvarchar"
-					},
-					{
-						"name": "msu",
-						"type": "nvarchar"
-					},
-					{
-						"name": "reason",
-						"type": "nvarchar"
-					},
-					{
-						"name": "remarks",
-						"type": "nvarchar"
-					},
-					{
-						"name": "srn_ref_no",
-						"type": "nvarchar"
-					},
-					{
-						"name": "composite",
-						"type": "nvarchar"
-					},
-					{
-						"name": "cgst_rate",
-						"type": "nvarchar"
-					},
-					{
-						"name": "sgst_rate",
-						"type": "nvarchar"
-					},
-					{
-						"name": "igst_rate",
-						"type": "nvarchar"
-					},
-					{
-						"name": "cess_rate",
-						"type": "nvarchar"
-					},
-					{
-						"name": "tcs_rate",
-						"type": "nvarchar"
-					},
-					{
-						"name": "branch_code",
-						"type": "nvarchar"
-					},
-					{
-						"name": "branch_name",
-						"type": "nvarchar"
-					},
-					{
-						"name": "distributor_gst_no",
-						"type": "nvarchar"
-					},
-					{
-						"name": "order_mode",
-						"type": "nvarchar"
-					},
-					{
-						"name": "branch_gst_no",
-						"type": "nvarchar"
-					},
-					{
-						"name": "dl_no",
-						"type": "nvarchar"
-					},
-					{
-						"name": "dl_expiry_date",
-						"type": "nvarchar"
-					},
-					{
-						"name": "tc_code",
-						"type": "nvarchar"
-					},
-					{
-						"name": "tc_name",
-						"type": "nvarchar"
-					},
-					{
-						"name": "irn_no",
-						"type": "nvarchar"
-					},
-					{
-						"name": "FileName",
-						"type": "varchar"
-					}
-				],
-				"typeProperties": {
-					"schema": "dbo",
-					"table": "tmppsr_olddata_tst"
 				}
 			},
 			"dependsOn": [

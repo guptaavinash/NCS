@@ -19,6 +19,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'AzureDatafoundation'"
 		},
+		"AzureSqlMI1_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureSqlMI1'"
+		},
 		"AzureSynapseAnalyticsBackup_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'AzureSynapseAnalyticsBackup'"
@@ -39,9 +43,9 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'TASDB'"
 		},
-		"AzureSqlMI1_connectionString": {
+		"DatafoundationADLS_connectionString": {
 			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'AzureSqlMI1'"
+			"metadata": "Secure string for 'connectionString' of 'DatafoundationADLS'"
 		},
 		"DataFoundationDW_properties_typeProperties_servicePrincipalId": {
 			"type": "string",
@@ -4236,6 +4240,483 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/pipeline1')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Copy data1",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SqlMISource",
+								"sqlReaderQuery": "select *,'' as FileName,'' AS LastModifiedDatetime,\n\t0 AS FileSetId,0 AS BranchSubdNodeId,0 AS BranchSubdNodeType,\n\t0 AS StoreId,\n\t0 AS DSENodeId,\n\t0 AS DSENodeType,\n\t0 AS SBFNodeId,\n\t0 AS SbfNodeType from tmpOrderDataForDataFoundation",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "SqlDWSink",
+								"preCopyScript": "truncate table tmpOrderDataForDataFoundation",
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "BranchSubdType",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "BranchSubdType",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "BranchSUBDCode",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "BranchSUBDCode",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "StoreCode",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "StoreCode",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "OrderNo",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "OrderNo",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "OrderDate",
+											"type": "DateTime",
+											"physicalType": "date"
+										},
+										"sink": {
+											"name": "OrderDate",
+											"type": "DateTime",
+											"physicalType": "date"
+										}
+									},
+									{
+										"source": {
+											"name": "DSECode",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "DSECode",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "SBFCode",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "SBFCode",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "SBFName",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "SBFName",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Qty",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "Qty",
+											"type": "Int32",
+											"physicalType": "int"
+										}
+									},
+									{
+										"source": {
+											"name": "Rate",
+											"type": "Decimal",
+											"physicalType": "decimal",
+											"scale": 2,
+											"precision": 18
+										},
+										"sink": {
+											"name": "Rate",
+											"type": "Decimal",
+											"physicalType": "decimal",
+											"scale": 2,
+											"precision": 18
+										}
+									},
+									{
+										"source": {
+											"name": "RetailingAmt",
+											"type": "Decimal",
+											"physicalType": "decimal",
+											"scale": 2,
+											"precision": 18
+										},
+										"sink": {
+											"name": "RetailingAmt",
+											"type": "Decimal",
+											"physicalType": "decimal",
+											"scale": 2,
+											"precision": 18
+										}
+									},
+									{
+										"source": {
+											"name": "TeleCallerCode",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "TeleCallerCode",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "FileName",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "FileName",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "LastModifiedDatetime",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "LastModifiedDatetime",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "FileSetId",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "FileSetId",
+											"type": "Int64",
+											"physicalType": "bigint"
+										}
+									},
+									{
+										"source": {
+											"name": "BranchSubdNodeId",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "BranchSubdNodeId",
+											"type": "Int32",
+											"physicalType": "int"
+										}
+									},
+									{
+										"source": {
+											"name": "BranchSubdNodeType",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "BranchSubdNodeType",
+											"type": "Int32",
+											"physicalType": "int"
+										}
+									},
+									{
+										"source": {
+											"name": "StoreId",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "StoreId",
+											"type": "Int32",
+											"physicalType": "int"
+										}
+									},
+									{
+										"source": {
+											"name": "DSENodeId",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "DSENodeId",
+											"type": "Int32",
+											"physicalType": "int"
+										}
+									},
+									{
+										"source": {
+											"name": "DSENodeType",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "DSENodeType",
+											"type": "Int32",
+											"physicalType": "int"
+										}
+									},
+									{
+										"source": {
+											"name": "SBFNodeId",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "SBFNodeId",
+											"type": "Int32",
+											"physicalType": "int"
+										}
+									},
+									{
+										"source": {
+											"name": "SbfNodeType",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "SbfNodeType",
+											"type": "Int32",
+											"physicalType": "int"
+										}
+									}
+								],
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "AzureSqlMITable1",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "AzureSynapseAnalyticsTable1",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/AzureSqlMITable1')]",
+				"[concat(variables('factoryId'), '/datasets/AzureSynapseAnalyticsTable1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureSqlMITable1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlMI1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlMITable",
+				"schema": [],
+				"typeProperties": {}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureSqlMI1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureSynapseAnalyticsTable1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "DataFoundationDW",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlDWTable",
+				"schema": [
+					{
+						"name": "BranchSubdType",
+						"type": "varchar"
+					},
+					{
+						"name": "BranchSUBDCode",
+						"type": "varchar"
+					},
+					{
+						"name": "StoreCode",
+						"type": "varchar"
+					},
+					{
+						"name": "OrderNo",
+						"type": "varchar"
+					},
+					{
+						"name": "OrderDate",
+						"type": "date"
+					},
+					{
+						"name": "DSECode",
+						"type": "varchar"
+					},
+					{
+						"name": "SBFCode",
+						"type": "varchar"
+					},
+					{
+						"name": "SBFName",
+						"type": "varchar"
+					},
+					{
+						"name": "Qty",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Rate",
+						"type": "decimal",
+						"precision": 18,
+						"scale": 2
+					},
+					{
+						"name": "RetailingAmt",
+						"type": "decimal",
+						"precision": 18,
+						"scale": 2
+					},
+					{
+						"name": "TeleCallerCode",
+						"type": "varchar"
+					},
+					{
+						"name": "FileName",
+						"type": "varchar"
+					},
+					{
+						"name": "LastModifiedDatetime",
+						"type": "varchar"
+					},
+					{
+						"name": "FileSetId",
+						"type": "bigint",
+						"precision": 19
+					},
+					{
+						"name": "BranchSubdNodeId",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "BranchSubdNodeType",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "StoreId",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "DSENodeId",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "DSENodeType",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "SBFNodeId",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "SbfNodeType",
+						"type": "int",
+						"precision": 10
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "tmpOrderDataForDataFoundation"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/DataFoundationDW')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/CntOldLeapFileLoad')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -6184,6 +6665,19 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/AzureSqlMI1')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureSqlMI",
+				"typeProperties": {
+					"connectionString": "[parameters('AzureSqlMI1_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/AzureSynapseAnalyticsBackup')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
@@ -6242,7 +6736,7 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/pipeline1')]",
+			"name": "[concat(parameters('factoryName'), '/ORDHistoryLoading')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -6261,14 +6755,24 @@
 						"userProperties": [],
 						"typeProperties": {
 							"source": {
-								"type": "SqlMISource",
-								"sqlReaderQuery": "select *,'' as FileName,'' AS LastModifiedDatetime,\n\t0 AS FileSetId,0 AS BranchSubdNodeId,0 AS BranchSubdNodeType,\n\t0 AS StoreId,\n\t0 AS DSENodeId,\n\t0 AS DSENodeType,\n\t0 AS SBFNodeId,\n\t0 AS SbfNodeType from tmpOrderDataForDataFoundation",
-								"partitionOption": "None"
+								"type": "DelimitedTextSource",
+								"additionalColumns": [
+									{
+										"name": "FileName",
+										"value": "$$FILEPATH"
+									}
+								],
+								"storeSettings": {
+									"type": "AzureBlobStorageReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
 							},
 							"sink": {
-								"type": "SqlDWSink",
-								"preCopyScript": "truncate table tmpOrderDataForDataFoundation",
-								"disableMetricsCollection": false
+								"type": "SqlDWSink"
 							},
 							"enableStaging": false,
 							"translator": {
@@ -6276,274 +6780,277 @@
 								"mappings": [
 									{
 										"source": {
-											"name": "BranchSubdType",
+											"name": "branch_name",
 											"type": "String",
-											"physicalType": "varchar"
+											"physicalType": "String"
 										},
 										"sink": {
-											"name": "BranchSubdType",
+											"name": "branch_name",
 											"type": "String",
-											"physicalType": "varchar"
+											"physicalType": "nvarchar"
 										}
 									},
 									{
 										"source": {
-											"name": "BranchSUBDCode",
+											"name": "branch_code",
 											"type": "String",
-											"physicalType": "varchar"
+											"physicalType": "String"
 										},
 										"sink": {
-											"name": "BranchSUBDCode",
+											"name": "branch_code",
 											"type": "String",
-											"physicalType": "varchar"
+											"physicalType": "nvarchar"
 										}
 									},
 									{
 										"source": {
-											"name": "StoreCode",
+											"name": "retailer_code",
 											"type": "String",
-											"physicalType": "varchar"
+											"physicalType": "String"
 										},
 										"sink": {
-											"name": "StoreCode",
+											"name": "retailer_code",
 											"type": "String",
-											"physicalType": "varchar"
+											"physicalType": "nvarchar"
 										}
 									},
 									{
 										"source": {
-											"name": "OrderNo",
+											"name": "retailer_name",
 											"type": "String",
-											"physicalType": "varchar"
+											"physicalType": "String"
 										},
 										"sink": {
-											"name": "OrderNo",
+											"name": "retailer_name",
 											"type": "String",
-											"physicalType": "varchar"
+											"physicalType": "nvarchar"
 										}
 									},
 									{
 										"source": {
-											"name": "OrderDate",
-											"type": "DateTime",
-											"physicalType": "date"
+											"name": "channel_description",
+											"type": "String",
+											"physicalType": "String"
 										},
 										"sink": {
-											"name": "OrderDate",
-											"type": "DateTime",
-											"physicalType": "date"
+											"name": "channel_description",
+											"type": "String",
+											"physicalType": "nvarchar"
 										}
 									},
 									{
 										"source": {
-											"name": "DSECode",
+											"name": "dse_code",
 											"type": "String",
-											"physicalType": "varchar"
+											"physicalType": "String"
 										},
 										"sink": {
-											"name": "DSECode",
+											"name": "dse_code",
 											"type": "String",
-											"physicalType": "varchar"
+											"physicalType": "nvarchar"
 										}
 									},
 									{
 										"source": {
-											"name": "SBFCode",
+											"name": "dse_name",
 											"type": "String",
-											"physicalType": "varchar"
+											"physicalType": "String"
 										},
 										"sink": {
-											"name": "SBFCode",
+											"name": "dse_name",
 											"type": "String",
-											"physicalType": "varchar"
+											"physicalType": "nvarchar"
 										}
 									},
 									{
 										"source": {
-											"name": "SBFName",
+											"name": "order_number",
 											"type": "String",
-											"physicalType": "varchar"
+											"physicalType": "String"
 										},
 										"sink": {
-											"name": "SBFName",
+											"name": "order_number",
 											"type": "String",
-											"physicalType": "varchar"
+											"physicalType": "nvarchar"
 										}
 									},
 									{
 										"source": {
-											"name": "Qty",
-											"type": "Int32",
-											"physicalType": "int"
-										},
-										"sink": {
-											"name": "Qty",
-											"type": "Int32",
-											"physicalType": "int"
-										}
-									},
-									{
-										"source": {
-											"name": "Rate",
-											"type": "Decimal",
-											"physicalType": "decimal",
-											"scale": 2,
-											"precision": 18
-										},
-										"sink": {
-											"name": "Rate",
-											"type": "Decimal",
-											"physicalType": "decimal",
-											"scale": 2,
-											"precision": 18
-										}
-									},
-									{
-										"source": {
-											"name": "RetailingAmt",
-											"type": "Decimal",
-											"physicalType": "decimal",
-											"scale": 2,
-											"precision": 18
-										},
-										"sink": {
-											"name": "RetailingAmt",
-											"type": "Decimal",
-											"physicalType": "decimal",
-											"scale": 2,
-											"precision": 18
-										}
-									},
-									{
-										"source": {
-											"name": "TeleCallerCode",
+											"name": "order_date",
 											"type": "String",
-											"physicalType": "varchar"
+											"physicalType": "String"
 										},
 										"sink": {
-											"name": "TeleCallerCode",
+											"name": "order_date",
 											"type": "String",
-											"physicalType": "varchar"
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "order_type",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "order_type",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "order_status",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "order_status",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "p_code",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "p_code",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "subbf",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "subbf",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "po_number",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "po_number",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "po_date",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "po_date",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "upc",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "upc",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "account_name",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "account_name",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "qty",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "qty",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "rlp",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "rlp",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "amount",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "amount",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "tc_code",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "tc_code",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "tc_name",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "tc_name",
+											"type": "String",
+											"physicalType": "nvarchar"
 										}
 									},
 									{
 										"source": {
 											"name": "FileName",
-											"type": "String",
-											"physicalType": "varchar"
+											"type": "String"
 										},
 										"sink": {
 											"name": "FileName",
 											"type": "String",
-											"physicalType": "varchar"
-										}
-									},
-									{
-										"source": {
-											"name": "LastModifiedDatetime",
-											"type": "String",
-											"physicalType": "varchar"
-										},
-										"sink": {
-											"name": "LastModifiedDatetime",
-											"type": "String",
-											"physicalType": "varchar"
-										}
-									},
-									{
-										"source": {
-											"name": "FileSetId",
-											"type": "Int32",
-											"physicalType": "int"
-										},
-										"sink": {
-											"name": "FileSetId",
-											"type": "Int64",
-											"physicalType": "bigint"
-										}
-									},
-									{
-										"source": {
-											"name": "BranchSubdNodeId",
-											"type": "Int32",
-											"physicalType": "int"
-										},
-										"sink": {
-											"name": "BranchSubdNodeId",
-											"type": "Int32",
-											"physicalType": "int"
-										}
-									},
-									{
-										"source": {
-											"name": "BranchSubdNodeType",
-											"type": "Int32",
-											"physicalType": "int"
-										},
-										"sink": {
-											"name": "BranchSubdNodeType",
-											"type": "Int32",
-											"physicalType": "int"
-										}
-									},
-									{
-										"source": {
-											"name": "StoreId",
-											"type": "Int32",
-											"physicalType": "int"
-										},
-										"sink": {
-											"name": "StoreId",
-											"type": "Int32",
-											"physicalType": "int"
-										}
-									},
-									{
-										"source": {
-											"name": "DSENodeId",
-											"type": "Int32",
-											"physicalType": "int"
-										},
-										"sink": {
-											"name": "DSENodeId",
-											"type": "Int32",
-											"physicalType": "int"
-										}
-									},
-									{
-										"source": {
-											"name": "DSENodeType",
-											"type": "Int32",
-											"physicalType": "int"
-										},
-										"sink": {
-											"name": "DSENodeType",
-											"type": "Int32",
-											"physicalType": "int"
-										}
-									},
-									{
-										"source": {
-											"name": "SBFNodeId",
-											"type": "Int32",
-											"physicalType": "int"
-										},
-										"sink": {
-											"name": "SBFNodeId",
-											"type": "Int32",
-											"physicalType": "int"
-										}
-									},
-									{
-										"source": {
-											"name": "SbfNodeType",
-											"type": "Int32",
-											"physicalType": "int"
-										},
-										"sink": {
-											"name": "SbfNodeType",
-											"type": "Int32",
-											"physicalType": "int"
+											"physicalType": "nvarchar"
 										}
 									}
 								],
@@ -6556,14 +7063,14 @@
 						},
 						"inputs": [
 							{
-								"referenceName": "AzureSqlMITable1",
+								"referenceName": "OrderHistoryFileCon",
 								"type": "DatasetReference",
 								"parameters": {}
 							}
 						],
 						"outputs": [
 							{
-								"referenceName": "AzureSynapseAnalyticsTable1",
+								"referenceName": "OrderHistoryTable",
 								"type": "DatasetReference",
 								"parameters": {}
 							}
@@ -6573,43 +7080,144 @@
 				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/AzureSqlMITable1')]",
-				"[concat(variables('factoryId'), '/datasets/AzureSynapseAnalyticsTable1')]"
+				"[concat(variables('factoryId'), '/datasets/OrderHistoryFileCon')]",
+				"[concat(variables('factoryId'), '/datasets/OrderHistoryTable')]"
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/AzureSqlMI1')]",
+			"name": "[concat(parameters('factoryName'), '/DatafoundationADLS')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"annotations": [],
-				"type": "AzureSqlMI",
+				"type": "AzureBlobStorage",
 				"typeProperties": {
-					"connectionString": "[parameters('AzureSqlMI1_connectionString')]"
+					"connectionString": "[parameters('DatafoundationADLS_connectionString')]"
 				}
 			},
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/AzureSqlMITable1')]",
+			"name": "[concat(parameters('factoryName'), '/OrderHistoryFileCon')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"linkedServiceName": {
-					"referenceName": "AzureSqlMI1",
+					"referenceName": "DatafoundationADLS",
 					"type": "LinkedServiceReference"
 				},
 				"annotations": [],
-				"type": "AzureSqlMITable",
-				"schema": [],
-				"typeProperties": {}
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "ORDHTR_cloud01_2021Apr01.csv.gz",
+						"folderPath": "2021/04/01",
+						"container": "cntleap"
+					},
+					"columnDelimiter": "|",
+					"compressionCodec": "gzip",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "branch_name",
+						"type": "String"
+					},
+					{
+						"name": "branch_code",
+						"type": "String"
+					},
+					{
+						"name": "retailer_code",
+						"type": "String"
+					},
+					{
+						"name": "retailer_name",
+						"type": "String"
+					},
+					{
+						"name": "channel_description",
+						"type": "String"
+					},
+					{
+						"name": "dse_code",
+						"type": "String"
+					},
+					{
+						"name": "dse_name",
+						"type": "String"
+					},
+					{
+						"name": "order_number",
+						"type": "String"
+					},
+					{
+						"name": "order_date",
+						"type": "String"
+					},
+					{
+						"name": "order_type",
+						"type": "String"
+					},
+					{
+						"name": "order_status",
+						"type": "String"
+					},
+					{
+						"name": "p_code",
+						"type": "String"
+					},
+					{
+						"name": "subbf",
+						"type": "String"
+					},
+					{
+						"name": "po_number",
+						"type": "String"
+					},
+					{
+						"name": "po_date",
+						"type": "String"
+					},
+					{
+						"name": "upc",
+						"type": "String"
+					},
+					{
+						"name": "account_name",
+						"type": "String"
+					},
+					{
+						"name": "qty",
+						"type": "String"
+					},
+					{
+						"name": "rlp",
+						"type": "String"
+					},
+					{
+						"name": "amount",
+						"type": "String"
+					},
+					{
+						"name": "tc_code",
+						"type": "String"
+					},
+					{
+						"name": "tc_name",
+						"type": "String"
+					}
+				]
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureSqlMI1')]"
+				"[concat(variables('factoryId'), '/linkedServices/DatafoundationADLS')]"
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/AzureSynapseAnalyticsTable1')]",
+			"name": "[concat(parameters('factoryName'), '/OrderHistoryTable')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -6621,61 +7229,96 @@
 				"type": "AzureSqlDWTable",
 				"schema": [
 					{
-						"name": "BranchSubdType",
-						"type": "varchar"
+						"name": "branch_name",
+						"type": "nvarchar"
 					},
 					{
-						"name": "BranchSUBDCode",
-						"type": "varchar"
+						"name": "branch_code",
+						"type": "nvarchar"
 					},
 					{
-						"name": "StoreCode",
-						"type": "varchar"
+						"name": "retailer_code",
+						"type": "nvarchar"
 					},
 					{
-						"name": "OrderNo",
-						"type": "varchar"
+						"name": "retailer_name",
+						"type": "nvarchar"
 					},
 					{
-						"name": "OrderDate",
-						"type": "date"
+						"name": "channel_description",
+						"type": "nvarchar"
 					},
 					{
-						"name": "DSECode",
-						"type": "varchar"
+						"name": "dse_code",
+						"type": "nvarchar"
 					},
 					{
-						"name": "SBFCode",
-						"type": "varchar"
+						"name": "dse_name",
+						"type": "nvarchar"
 					},
 					{
-						"name": "SBFName",
-						"type": "varchar"
+						"name": "order_number",
+						"type": "nvarchar"
 					},
 					{
-						"name": "Qty",
-						"type": "int",
-						"precision": 10
+						"name": "order_date",
+						"type": "nvarchar"
 					},
 					{
-						"name": "Rate",
-						"type": "decimal",
-						"precision": 18,
-						"scale": 2
+						"name": "order_type",
+						"type": "nvarchar"
 					},
 					{
-						"name": "RetailingAmt",
-						"type": "decimal",
-						"precision": 18,
-						"scale": 2
+						"name": "order_status",
+						"type": "nvarchar"
 					},
 					{
-						"name": "TeleCallerCode",
-						"type": "varchar"
+						"name": "p_code",
+						"type": "nvarchar"
+					},
+					{
+						"name": "subbf",
+						"type": "nvarchar"
+					},
+					{
+						"name": "po_number",
+						"type": "nvarchar"
+					},
+					{
+						"name": "po_date",
+						"type": "nvarchar"
+					},
+					{
+						"name": "upc",
+						"type": "nvarchar"
+					},
+					{
+						"name": "account_name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "qty",
+						"type": "nvarchar"
+					},
+					{
+						"name": "rlp",
+						"type": "nvarchar"
+					},
+					{
+						"name": "amount",
+						"type": "nvarchar"
+					},
+					{
+						"name": "tc_code",
+						"type": "nvarchar"
+					},
+					{
+						"name": "tc_name",
+						"type": "nvarchar"
 					},
 					{
 						"name": "FileName",
-						"type": "varchar"
+						"type": "nvarchar"
 					},
 					{
 						"name": "LastModifiedDatetime",
@@ -6687,44 +7330,13 @@
 						"precision": 19
 					},
 					{
-						"name": "BranchSubdNodeId",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "BranchSubdNodeType",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "StoreId",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "DSENodeId",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "DSENodeType",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "SBFNodeId",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "SbfNodeType",
-						"type": "int",
-						"precision": 10
+						"name": "channel_type_name",
+						"type": "nvarchar"
 					}
 				],
 				"typeProperties": {
 					"schema": "dbo",
-					"table": "tmpOrderDataForDataFoundation"
+					"table": "tmpRawLEAPTAS_ORDHTR"
 				}
 			},
 			"dependsOn": [
