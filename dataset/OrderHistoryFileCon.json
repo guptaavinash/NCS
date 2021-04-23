@@ -1,0 +1,114 @@
+{
+	"name": "OrderHistoryFileCon",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "DatafoundationADLS",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "ORDHTR_cloud01_2021Apr01.csv.gz",
+				"folderPath": "2021/04/01",
+				"container": "cntleap"
+			},
+			"columnDelimiter": "|",
+			"compressionCodec": "gzip",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "branch_name",
+				"type": "String"
+			},
+			{
+				"name": "branch_code",
+				"type": "String"
+			},
+			{
+				"name": "retailer_code",
+				"type": "String"
+			},
+			{
+				"name": "retailer_name",
+				"type": "String"
+			},
+			{
+				"name": "channel_description",
+				"type": "String"
+			},
+			{
+				"name": "dse_code",
+				"type": "String"
+			},
+			{
+				"name": "dse_name",
+				"type": "String"
+			},
+			{
+				"name": "order_number",
+				"type": "String"
+			},
+			{
+				"name": "order_date",
+				"type": "String"
+			},
+			{
+				"name": "order_type",
+				"type": "String"
+			},
+			{
+				"name": "order_status",
+				"type": "String"
+			},
+			{
+				"name": "p_code",
+				"type": "String"
+			},
+			{
+				"name": "subbf",
+				"type": "String"
+			},
+			{
+				"name": "po_number",
+				"type": "String"
+			},
+			{
+				"name": "po_date",
+				"type": "String"
+			},
+			{
+				"name": "upc",
+				"type": "String"
+			},
+			{
+				"name": "account_name",
+				"type": "String"
+			},
+			{
+				"name": "qty",
+				"type": "String"
+			},
+			{
+				"name": "rlp",
+				"type": "String"
+			},
+			{
+				"name": "amount",
+				"type": "String"
+			},
+			{
+				"name": "tc_code",
+				"type": "String"
+			},
+			{
+				"name": "tc_name",
+				"type": "String"
+			}
+		]
+	}
+}
