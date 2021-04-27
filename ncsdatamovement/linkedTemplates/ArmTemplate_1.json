@@ -634,13 +634,22 @@
 					"referenceName": "DatafoundationADLS",
 					"type": "LinkedServiceReference"
 				},
+				"parameters": {
+					"Dt": {
+						"type": "string",
+						"defaultValue": "2021/04/24"
+					}
+				},
 				"annotations": [],
 				"type": "DelimitedText",
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobStorageLocation",
 						"fileName": "ORDHTR_cloud*.gz",
-						"folderPath": "2021/04/*",
+						"folderPath": {
+							"value": "@dataset().Dt",
+							"type": "Expression"
+						},
 						"container": "cntleap"
 					},
 					"columnDelimiter": ",",
@@ -904,7 +913,7 @@
 				],
 				"typeProperties": {
 					"schema": "dbo",
-					"table": "tmpRawLEAPTAS_ORDHTR"
+					"table": "tmpRawLEAPTAS_ORDHTR_Full"
 				}
 			},
 			"dependsOn": []
@@ -2351,7 +2360,12 @@
 							"dataset": {
 								"referenceName": "OrderHistoryCont",
 								"type": "DatasetReference",
-								"parameters": {}
+								"parameters": {
+									"Dt": {
+										"value": "@pipeline().parameters.Dt",
+										"type": "Expression"
+									}
+								}
 							},
 							"fieldList": [
 								"childItems"
@@ -2367,6 +2381,12 @@
 						}
 					}
 				],
+				"parameters": {
+					"Dt": {
+						"type": "string",
+						"defaultValue": "2021/04/24"
+					}
+				},
 				"annotations": []
 			},
 			"dependsOn": [
