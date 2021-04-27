@@ -116,7 +116,7 @@
 		],
 		"typeProperties": {
 			"schema": "dbo",
-			"table": "tmpRawLEAPTAS_ORDHTR"
+			"table": "tmpRawLEAPTAS_ORDHTR_Full"
 		}
 	}
 }

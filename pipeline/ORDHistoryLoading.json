@@ -379,11 +379,15 @@
 				"typeProperties": {
 					"dataset": {
 						"referenceName": "OrderHistoryCont",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"Dt": {
+								"value": "@pipeline().parameters.Dt",
+								"type": "Expression"
+							}
+						}
 					},
-					"fieldList": [
-						"childItems"
-					],
+					"fieldList": [],
 					"storeSettings": {
 						"type": "AzureBlobStorageReadSettings",
 						"recursive": true,
@@ -395,6 +399,11 @@
 				}
 			}
 		],
+		"parameters": {
+			"Dt": {
+				"type": "string"
+			}
+		},
 		"annotations": []
 	}
 }

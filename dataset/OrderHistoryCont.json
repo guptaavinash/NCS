@@ -5,13 +5,22 @@
 			"referenceName": "DatafoundationADLS",
 			"type": "LinkedServiceReference"
 		},
+		"parameters": {
+			"Dt": {
+				"type": "string",
+				"defaultValue": "2021/04/24"
+			}
+		},
 		"annotations": [],
 		"type": "DelimitedText",
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
 				"fileName": "ORDHTR_cloud*.gz",
-				"folderPath": "2021/04/24",
+				"folderPath": {
+					"value": "@dataset().Dt",
+					"type": "Expression"
+				},
 				"container": "cntleap"
 			},
 			"columnDelimiter": ",",
