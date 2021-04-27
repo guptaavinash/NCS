@@ -2347,7 +2347,14 @@
 					{
 						"name": "Get Metadata1",
 						"type": "GetMetadata",
-						"dependsOn": [],
+						"dependsOn": [
+							{
+								"activity": "TruncateTable",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
 						"policy": {
 							"timeout": "7.00:00:00",
 							"retry": 0,
@@ -2378,6 +2385,26 @@
 							"formatSettings": {
 								"type": "DelimitedTextReadSettings"
 							}
+						}
+					},
+					{
+						"name": "TruncateTable",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[dbo].[spTruncateRawLEAPTAS_ORDHTR_Full]"
+						},
+						"linkedServiceName": {
+							"referenceName": "DataFoundationDW",
+							"type": "LinkedServiceReference"
 						}
 					}
 				],
