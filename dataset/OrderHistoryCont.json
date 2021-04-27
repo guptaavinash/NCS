@@ -16,8 +16,9 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
+				"fileName": "ORDHTR_cloud*.gz",
 				"folderPath": {
-					"value": "2021/04/24",
+					"value": "@dataset().Dt",
 					"type": "Expression"
 				},
 				"container": "cntleap"
