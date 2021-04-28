@@ -16,7 +16,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"url": {
-						"value": "https://management.azure.com/subscriptions/@{pipeline().parameters.SubsriptionId}/resourceGroups/@{pipeline().parameters.SQLServer_ResourceGroupName}/providers/Microsoft.Synapse/workspaces/@{pipeline().parameters.SynapseWorkspace}/sqlPools/@{pipeline().parameters.SQLServerDedicatedSQLPool}/?api-version=2019-06-01-preview",
+						"value": "https://management.azure.com/subscriptions/@{pipeline().parameters.SubsriptionId}/resourceGroups/@{pipeline().parameters.SQLServer_ResourceGroupName}/providers/Microsoft.Synapse/workspaces/@{pipeline().parameters.SynapseWorkspace}/sqlPools/@{pipeline().parameters.SQLServerDedicatedSQLPool}?api-version=2019-06-01-preview",
 						"type": "Expression"
 					},
 					"method": "PATCH",
