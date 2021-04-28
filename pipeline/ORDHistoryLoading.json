@@ -348,7 +348,7 @@
 									"parameters": {
 										"OrdFileName": "@item().name",
 										"FullDt": {
-											"value": "@concatconcat(concat('2021/',pipeline().parameters.Mth),'/'),substring(item().name, 22, 2))",
+											"value": "@concat(concat(concat('2021/',pipeline().parameters.Mth),'/'),substring(item().name, 22, 2))",
 											"type": "Expression"
 										}
 									}
