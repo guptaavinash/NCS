@@ -1,5 +1,5 @@
 {
-	"name": "IncreaseDWScale",
+	"name": "PauseDW",
 	"properties": {
 		"activities": [
 			{
@@ -17,6 +17,7 @@
 				"typeProperties": {
 					"url": "https://management.azure.com/subscriptions/15354be3-bb86-4045-a1a1-7bf7d9ba1c31/resourceGroups/DataFoundation/providers/Microsoft.Sql/servers/pgdatafoundation/databases/DataFoundation/pause?api-version=2020-08-01-preview",
 					"method": "POST",
+					"body": "{\n\tlocation: \"eastus2\"\n}",
 					"authentication": {
 						"type": "MSI",
 						"resource": "https://management.core.windows.net"
