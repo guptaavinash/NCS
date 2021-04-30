@@ -1,0 +1,24 @@
+{
+	"name": "OrderHistoryRunAt930",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Started",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "ORDHistoryLoading",
+					"type": "PipelineReference"
+				}
+			}
+		],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Day",
+				"interval": 1,
+				"startTime": "2021-04-30T09:30:00",
+				"timeZone": "India Standard Time"
+			}
+		}
+	}
+}
