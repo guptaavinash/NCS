@@ -881,7 +881,7 @@
 											"parameters": {
 												"OrdFileName": "@item().name",
 												"FullDt": {
-													"value": "@concat(concat(concat('2021/',formatDateTime(convertTimeZone(utcnow(),'UTC','India Standard Time'),'MM')),'/'),substring(item().name, 22, 2))",
+													"value": "@concat('2021/',formatDateTime(convertTimeZone(utcnow(),'UTC','India Standard Time'),'MM/dd'))",
 													"type": "Expression"
 												}
 											}
