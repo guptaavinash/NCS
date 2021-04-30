@@ -543,7 +543,7 @@
 									"parameters": {
 										"OrdFileName": "@item().name",
 										"FullDt": {
-											"value": "@concat(concat(concat('2021/',pipeline().parameters.Mth),'/'),substring(item().name, 22, 2))",
+											"value": "@concat(concat(concat('2021/',formatDateTime(convertTimeZone(utcnow(),'UTC','India Standard Time'),'MM')),'/'),substring(item().name, 22, 2))",
 											"type": "Expression"
 										}
 									}
@@ -584,14 +584,12 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"Dt": {
-								"value": "@pipeline().parameters.Dt",
+								"value": "@formatDateTime(convertTimeZone(utcnow(),'UTC','India Standard Time'),'yyyy/MM/dd')",
 								"type": "Expression"
 							}
 						}
 					},
-					"fieldList": [
-						"childItems"
-					],
+					"fieldList": [],
 					"storeSettings": {
 						"type": "AzureBlobStorageReadSettings",
 						"recursive": true,
@@ -650,16 +648,6 @@
 				}
 			}
 		],
-		"parameters": {
-			"Dt": {
-				"type": "string",
-				"defaultValue": "2021/04/24"
-			},
-			"Mth": {
-				"type": "string",
-				"defaultValue": "04"
-			}
-		},
 		"annotations": []
 	}
 }
