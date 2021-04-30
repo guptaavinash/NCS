@@ -110,8 +110,49 @@
 				"precision": 19
 			},
 			{
-				"name": "channel_type_name",
-				"type": "nvarchar"
+				"name": "BranchNodeId",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "BranchNodeType",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "DSENodeId",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "DSENodeType",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "StoreId",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ChannelId",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "SectorId",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "SBFNodeId",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "SBFNodeType",
+				"type": "int",
+				"precision": 10
 			}
 		],
 		"typeProperties": {
