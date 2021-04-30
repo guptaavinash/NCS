@@ -378,6 +378,80 @@
 												{
 													"name": "FileName",
 													"value": "$$FILEPATH"
+												},
+												{
+													"name": "LastModified",
+													"value": ""
+												},
+												{
+													"name": "FileSetId",
+													"value": {
+														"value": "0",
+														"type": "Expression"
+													}
+												},
+												{
+													"name": "BranchNodeId",
+													"value": {
+														"value": "0",
+														"type": "Expression"
+													}
+												},
+												{
+													"name": "BranchNodeType",
+													"value": {
+														"value": "0",
+														"type": "Expression"
+													}
+												},
+												{
+													"name": "DSENodeId",
+													"value": {
+														"value": "0",
+														"type": "Expression"
+													}
+												},
+												{
+													"name": "DSENodeType",
+													"value": {
+														"value": "0",
+														"type": "Expression"
+													}
+												},
+												{
+													"name": "StoreId",
+													"value": {
+														"value": "0",
+														"type": "Expression"
+													}
+												},
+												{
+													"name": "ChannelId",
+													"value": {
+														"value": "0",
+														"type": "Expression"
+													}
+												},
+												{
+													"name": "SectorId",
+													"value": {
+														"value": "0",
+														"type": "Expression"
+													}
+												},
+												{
+													"name": "SBFNodeId",
+													"value": {
+														"value": "0",
+														"type": "Expression"
+													}
+												},
+												{
+													"name": "SBFNodeType",
+													"value": {
+														"value": "0",
+														"type": "Expression"
+													}
 												}
 											],
 											"storeSettings": {
@@ -670,6 +744,127 @@
 														"type": "String",
 														"physicalType": "nvarchar"
 													}
+												},
+												{
+													"source": {
+														"name": "LastModified",
+														"type": "String"
+													},
+													"sink": {
+														"name": "LastModifiedDatetime",
+														"type": "String",
+														"physicalType": "varchar"
+													}
+												},
+												{
+													"source": {
+														"name": "FileSetId",
+														"type": "String"
+													},
+													"sink": {
+														"name": "FileSetId",
+														"type": "Int64",
+														"physicalType": "bigint"
+													}
+												},
+												{
+													"source": {
+														"name": "BranchNodeId",
+														"type": "String"
+													},
+													"sink": {
+														"name": "BranchNodeId",
+														"type": "Int32",
+														"physicalType": "int"
+													}
+												},
+												{
+													"source": {
+														"name": "BranchNodeType",
+														"type": "String"
+													},
+													"sink": {
+														"name": "BranchNodeType",
+														"type": "Int32",
+														"physicalType": "int"
+													}
+												},
+												{
+													"source": {
+														"name": "DSENodeId",
+														"type": "String"
+													},
+													"sink": {
+														"name": "DSENodeId",
+														"type": "Int32",
+														"physicalType": "int"
+													}
+												},
+												{
+													"source": {
+														"name": "DSENodeType",
+														"type": "String"
+													},
+													"sink": {
+														"name": "DSENodeType",
+														"type": "Int32",
+														"physicalType": "int"
+													}
+												},
+												{
+													"source": {
+														"name": "StoreId",
+														"type": "String"
+													},
+													"sink": {
+														"name": "StoreId",
+														"type": "Int32",
+														"physicalType": "int"
+													}
+												},
+												{
+													"source": {
+														"name": "ChannelId",
+														"type": "String"
+													},
+													"sink": {
+														"name": "ChannelId",
+														"type": "Int32",
+														"physicalType": "int"
+													}
+												},
+												{
+													"source": {
+														"name": "SectorId",
+														"type": "String"
+													},
+													"sink": {
+														"name": "SectorId",
+														"type": "Int32",
+														"physicalType": "int"
+													}
+												},
+												{
+													"source": {
+														"name": "SBFNodeId",
+														"type": "String"
+													},
+													"sink": {
+														"name": "SBFNodeId",
+														"type": "Int32",
+														"physicalType": "int"
+													}
+												},
+												{
+													"source": {
+														"name": "SBFNodeType",
+														"type": "String"
+													},
+													"sink": {
+														"name": "SBFNodeType",
+														"type": "Int32",
+														"physicalType": "int"
+													}
 												}
 											],
 											"typeConversion": true,
@@ -760,6 +955,33 @@
 						"userProperties": [],
 						"typeProperties": {
 							"storedProcedureName": "[[dbo].[spTruncateRawLEAPTAS_ORDHTR_Full]"
+						},
+						"linkedServiceName": {
+							"referenceName": "DataFoundationDW",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "ProcessData",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "ForEach1",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[dbo].[spDataLoadRawLeap_ORDHTR]"
 						},
 						"linkedServiceName": {
 							"referenceName": "DataFoundationDW",
