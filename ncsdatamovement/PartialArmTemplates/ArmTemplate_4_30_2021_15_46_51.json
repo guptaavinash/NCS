@@ -1,0 +1,141 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "ncsdatamovement"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/OrderHistoryTable')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "DataFoundationDW",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlDWTable",
+				"schema": [
+					{
+						"name": "branch_name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "branch_code",
+						"type": "nvarchar"
+					},
+					{
+						"name": "retailer_code",
+						"type": "nvarchar"
+					},
+					{
+						"name": "retailer_name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "channel_description",
+						"type": "nvarchar"
+					},
+					{
+						"name": "dse_code",
+						"type": "nvarchar"
+					},
+					{
+						"name": "dse_name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "order_number",
+						"type": "nvarchar"
+					},
+					{
+						"name": "order_date",
+						"type": "nvarchar"
+					},
+					{
+						"name": "order_type",
+						"type": "nvarchar"
+					},
+					{
+						"name": "order_status",
+						"type": "nvarchar"
+					},
+					{
+						"name": "p_code",
+						"type": "nvarchar"
+					},
+					{
+						"name": "subbf",
+						"type": "nvarchar"
+					},
+					{
+						"name": "po_number",
+						"type": "nvarchar"
+					},
+					{
+						"name": "po_date",
+						"type": "nvarchar"
+					},
+					{
+						"name": "upc",
+						"type": "nvarchar"
+					},
+					{
+						"name": "account_name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "qty",
+						"type": "nvarchar"
+					},
+					{
+						"name": "rlp",
+						"type": "nvarchar"
+					},
+					{
+						"name": "amount",
+						"type": "nvarchar"
+					},
+					{
+						"name": "tc_code",
+						"type": "nvarchar"
+					},
+					{
+						"name": "tc_name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "FileName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "LastModifiedDatetime",
+						"type": "varchar"
+					},
+					{
+						"name": "FileSetId",
+						"type": "bigint",
+						"precision": 19
+					},
+					{
+						"name": "channel_type_name",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "tmpRawLEAPTAS_ORDHTR"
+				}
+			},
+			"dependsOn": []
+		}
+	]
+}

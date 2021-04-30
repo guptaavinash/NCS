@@ -6917,7 +6917,7 @@
 				],
 				"typeProperties": {
 					"schema": "dbo",
-					"table": "tmpRawLEAPTAS_ORDHTR_Full"
+					"table": "tmpRawLEAPTAS_ORDHTR"
 				}
 			},
 			"dependsOn": [
