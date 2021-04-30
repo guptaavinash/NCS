@@ -13,6 +13,266 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/DestinationDataset_llg')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "DataFoundationDW",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlDWTable",
+				"schema": [
+					{
+						"name": "branch_code",
+						"type": "nvarchar"
+					},
+					{
+						"name": "branch_location",
+						"type": "nvarchar"
+					},
+					{
+						"name": "retailer_code",
+						"type": "nvarchar"
+					},
+					{
+						"name": "retailer_name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "address_1",
+						"type": "nvarchar"
+					},
+					{
+						"name": "address_2",
+						"type": "nvarchar"
+					},
+					{
+						"name": "pin_number",
+						"type": "nvarchar"
+					},
+					{
+						"name": "area_code",
+						"type": "nvarchar"
+					},
+					{
+						"name": "area",
+						"type": "nvarchar"
+					},
+					{
+						"name": "town_code",
+						"type": "nvarchar"
+					},
+					{
+						"name": "town",
+						"type": "nvarchar"
+					},
+					{
+						"name": "town_class",
+						"type": "nvarchar"
+					},
+					{
+						"name": "city",
+						"type": "nvarchar"
+					},
+					{
+						"name": "state",
+						"type": "nvarchar"
+					},
+					{
+						"name": "mobile_number",
+						"type": "nvarchar"
+					},
+					{
+						"name": "phone_number",
+						"type": "nvarchar"
+					},
+					{
+						"name": "contact_person",
+						"type": "nvarchar"
+					},
+					{
+						"name": "stl_name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "dse_name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "frequency",
+						"type": "nvarchar"
+					},
+					{
+						"name": "distance",
+						"type": "nvarchar"
+					},
+					{
+						"name": "class_code",
+						"type": "nvarchar"
+					},
+					{
+						"name": "class",
+						"type": "nvarchar"
+					},
+					{
+						"name": "channel_code",
+						"type": "nvarchar"
+					},
+					{
+						"name": "channel",
+						"type": "nvarchar"
+					},
+					{
+						"name": "subchannel_code",
+						"type": "nvarchar"
+					},
+					{
+						"name": "subchannel",
+						"type": "nvarchar"
+					},
+					{
+						"name": "mr_account_code",
+						"type": "nvarchar"
+					},
+					{
+						"name": "mr_account_name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "credit_limit",
+						"type": "nvarchar"
+					},
+					{
+						"name": "credit_period",
+						"type": "nvarchar"
+					},
+					{
+						"name": "invoice_limit",
+						"type": "nvarchar"
+					},
+					{
+						"name": "certificate_type",
+						"type": "nvarchar"
+					},
+					{
+						"name": "gst_number",
+						"type": "nvarchar"
+					},
+					{
+						"name": "pan_no",
+						"type": "nvarchar"
+					},
+					{
+						"name": "dl_number",
+						"type": "nvarchar"
+					},
+					{
+						"name": "dl_expiry_date",
+						"type": "nvarchar"
+					},
+					{
+						"name": "email",
+						"type": "nvarchar"
+					},
+					{
+						"name": "dob",
+						"type": "nvarchar"
+					},
+					{
+						"name": "doa",
+						"type": "nvarchar"
+					},
+					{
+						"name": "status",
+						"type": "nvarchar"
+					},
+					{
+						"name": "default_warehouse_code",
+						"type": "nvarchar"
+					},
+					{
+						"name": "default_warehouse",
+						"type": "nvarchar"
+					},
+					{
+						"name": "restricted_orderswap_status",
+						"type": "nvarchar"
+					},
+					{
+						"name": "lattitude",
+						"type": "nvarchar"
+					},
+					{
+						"name": "longitude",
+						"type": "nvarchar"
+					},
+					{
+						"name": "retailer_radius",
+						"type": "nvarchar"
+					},
+					{
+						"name": "FileSetId",
+						"type": "bigint",
+						"precision": 19
+					},
+					{
+						"name": "Filename",
+						"type": "varchar"
+					},
+					{
+						"name": "LastModifiedDatetime",
+						"type": "smalldatetime",
+						"precision": 16,
+						"scale": 0
+					},
+					{
+						"name": "TimeStampIns",
+						"type": "smalldatetime",
+						"precision": 16,
+						"scale": 0
+					},
+					{
+						"name": "id",
+						"type": "int",
+						"precision": 10
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "tmpRawLEAPTAS_RTRM"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DestinationDataset_sqi')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureBlobNCSArchive",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "tmpBranchMultipleDSEData.csv",
+						"container": "tempfolderfordelete"
+					},
+					"columnDelimiter": "|",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/DestinationDataset_xvt')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -1674,332 +1934,6 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/SourceDataset_07h')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/CopyPipeline_k3b')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "ForEach_k3b",
-						"type": "ForEach",
-						"dependsOn": [],
-						"userProperties": [],
-						"typeProperties": {
-							"items": {
-								"value": "@pipeline().parameters.cw_items",
-								"type": "Expression"
-							},
-							"activities": [
-								{
-									"name": "Copy_k3b",
-									"type": "Copy",
-									"dependsOn": [],
-									"policy": {
-										"timeout": "7.00:00:00",
-										"retry": 0,
-										"retryIntervalInSeconds": 30,
-										"secureOutput": false,
-										"secureInput": false
-									},
-									"userProperties": [
-										{
-											"name": "Source",
-											"value": "dbo.@{item().source.table}"
-										},
-										{
-											"name": "Destination",
-											"value": "dbo.@{item().destination.table}"
-										}
-									],
-									"typeProperties": {
-										"source": {
-											"type": "SqlServerSource",
-											"partitionOption": "None"
-										},
-										"sink": {
-											"type": "SqlDWSink",
-											"tableOption": "autoCreate"
-										},
-										"enableStaging": true,
-										"stagingSettings": {
-											"linkedServiceName": {
-												"referenceName": "AzureDatafoundation",
-												"type": "LinkedServiceReference"
-											}
-										},
-										"translator": {
-											"value": "@item().copyActivity.translator",
-											"type": "Expression"
-										}
-									},
-									"inputs": [
-										{
-											"referenceName": "SourceDataset_k3b",
-											"type": "DatasetReference",
-											"parameters": {
-												"cw_table": "@item().source.table"
-											}
-										}
-									],
-									"outputs": [
-										{
-											"referenceName": "DestinationDataset_k3b",
-											"type": "DatasetReference",
-											"parameters": {
-												"cw_table": "@item().destination.table"
-											}
-										}
-									]
-								}
-							]
-						}
-					}
-				],
-				"parameters": {
-					"cw_items": {
-						"type": "Array",
-						"defaultValue": [
-							{
-								"source": {
-									"table": "tblStoreDetailsAfterMarch"
-								},
-								"destination": {
-									"table": "tblStoreDetailsAfterMarch"
-								},
-								"copyActivity": {
-									"translator": {
-										"type": "TabularTranslator",
-										"mappings": [
-											{
-												"source": {
-													"name": "SiteName",
-													"type": "String",
-													"physicalType": "varchar"
-												},
-												"sink": {
-													"name": "SiteName",
-													"type": "String"
-												}
-											},
-											{
-												"source": {
-													"name": "StoreCode",
-													"type": "String",
-													"physicalType": "varchar"
-												},
-												"sink": {
-													"name": "StoreCode",
-													"type": "String"
-												}
-											},
-											{
-												"source": {
-													"name": "BranchCode",
-													"type": "String",
-													"physicalType": "varchar"
-												},
-												"sink": {
-													"name": "BranchCode",
-													"type": "String"
-												}
-											},
-											{
-												"source": {
-													"name": "BranchName",
-													"type": "String",
-													"physicalType": "varchar"
-												},
-												"sink": {
-													"name": "BranchName",
-													"type": "String"
-												}
-											},
-											{
-												"source": {
-													"name": "ChannelName",
-													"type": "String",
-													"physicalType": "varchar"
-												},
-												"sink": {
-													"name": "ChannelName",
-													"type": "String"
-												}
-											},
-											{
-												"source": {
-													"name": "Month",
-													"type": "String",
-													"physicalType": "varchar"
-												},
-												"sink": {
-													"name": "Month",
-													"type": "String"
-												}
-											}
-										],
-										"typeConversion": true,
-										"typeConversionSettings": {
-											"allowDataTruncation": true,
-											"treatBooleanAsNumber": false
-										}
-									}
-								}
-							},
-							{
-								"source": {
-									"table": "tblStoreDetailsBeforeMarch"
-								},
-								"destination": {
-									"table": "tblStoreDetailsBeforeMarch"
-								},
-								"copyActivity": {
-									"translator": {
-										"type": "TabularTranslator",
-										"mappings": [
-											{
-												"source": {
-													"name": "SiteName",
-													"type": "String",
-													"physicalType": "varchar"
-												},
-												"sink": {
-													"name": "SiteName",
-													"type": "String"
-												}
-											},
-											{
-												"source": {
-													"name": "StoreCode",
-													"type": "String",
-													"physicalType": "varchar"
-												},
-												"sink": {
-													"name": "StoreCode",
-													"type": "String"
-												}
-											},
-											{
-												"source": {
-													"name": "BranchCode",
-													"type": "String",
-													"physicalType": "varchar"
-												},
-												"sink": {
-													"name": "BranchCode",
-													"type": "String"
-												}
-											},
-											{
-												"source": {
-													"name": "BranchName",
-													"type": "String",
-													"physicalType": "varchar"
-												},
-												"sink": {
-													"name": "BranchName",
-													"type": "String"
-												}
-											},
-											{
-												"source": {
-													"name": "ChannelName",
-													"type": "String",
-													"physicalType": "varchar"
-												},
-												"sink": {
-													"name": "ChannelName",
-													"type": "String"
-												}
-											}
-										],
-										"typeConversion": true,
-										"typeConversionSettings": {
-											"allowDataTruncation": true,
-											"treatBooleanAsNumber": false
-										}
-									}
-								}
-							}
-						]
-					}
-				},
-				"annotations": [],
-				"lastPublishTime": "2021-01-19T16:42:31Z"
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/SourceDataset_k3b')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/CopyPipeline_sqi')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Copy_sqi",
-						"type": "Copy",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [
-							{
-								"name": "Source",
-								"value": "dbo.tmpBranchMultipleDSEData"
-							},
-							{
-								"name": "Destination",
-								"value": "tempfolderfordelete//tmpBranchMultipleDSEData.csv"
-							}
-						],
-						"typeProperties": {
-							"source": {
-								"type": "SqlDWSource",
-								"partitionOption": "None"
-							},
-							"sink": {
-								"type": "DelimitedTextSink",
-								"storeSettings": {
-									"type": "AzureBlobStorageWriteSettings"
-								},
-								"formatSettings": {
-									"type": "DelimitedTextWriteSettings",
-									"quoteAllText": true,
-									"fileExtension": ".txt"
-								}
-							},
-							"enableStaging": false,
-							"validateDataConsistency": false
-						},
-						"inputs": [
-							{
-								"referenceName": "SourceDataset_sqi",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "DestinationDataset_sqi",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
-					}
-				],
-				"annotations": [],
-				"lastPublishTime": "2020-12-11T07:22:18Z"
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/SourceDataset_sqi')]"
 			]
 		}
 	]

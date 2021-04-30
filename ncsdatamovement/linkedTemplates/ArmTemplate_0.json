@@ -61,13 +61,13 @@
 	},
 	"resources": [
 		{
-			"name": "[concat(parameters('factoryName'), '/IncreaseDWScale')]",
+			"name": "[concat(parameters('factoryName'), '/DWScaleUpDown')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"activities": [
 					{
-						"name": "ADF_Scale_Azure_SQLDB",
+						"name": "Web1",
 						"type": "WebActivity",
 						"dependsOn": [],
 						"policy": {
@@ -79,59 +79,85 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"url": {
-								"value": "https://management.azure.com/subscriptions/@{pipeline().parameters.SubsriptionId}/resourceGroups/@{pipeline().parameters.SQLServer_ResourceGroupName}/providers/Microsoft.Synapse/workspaces/@{pipeline().parameters.SynapseWorkspace}/sqlPools/@{pipeline().parameters.SQLServerDedicatedSQLPool}?api-version=2019-06-01-preview",
-								"type": "Expression"
-							},
-							"method": "PATCH",
-							"headers": {
-								"Content-Type": "application/json"
-							},
-							"body": {
-								"value": "{ “sku”: { “name”: ‘@{pipeline().parameters.PerformanceLevel}’ } }",
-								"type": "Expression"
-							},
+							"url": "https://management.azure.com/subscriptions/15354be3-bb86-4045-a1a1-7bf7d9ba1c31/resourceGroups/DataFoundation/providers/Microsoft.Sql/servers/pgdatafoundation/databases/DataFoundation?api-version=2020-08-01-preview",
+							"method": "PUT",
+							"headers": {},
+							"body": "{\n\tlocation: \"eastus2\",\n    \"sku\": {\n    \"name\": \"DW200c\"\n    }\n}",
 							"authentication": {
 								"type": "MSI",
-								"resource": "https://management.azure.com/"
+								"resource": "https://management.core.windows.net"
 							}
 						}
 					}
 				],
-				"parameters": {
-					"Action": {
-						"type": "string",
-						"defaultValue": "Resume"
-					},
-					"WaitTime": {
-						"type": "int",
-						"defaultValue": 10
-					},
-					"WaitTimeUntil": {
-						"type": "int",
-						"defaultValue": 30
-					},
-					"SQLServer_ResourceGroupName": {
-						"type": "string",
-						"defaultValue": "DataFoundation"
-					},
-					"SynapseWorkspace": {
-						"type": "string",
-						"defaultValue": "SYNAPSEWORKSPACE"
-					},
-					"SQLServerDedicatedSQLPool": {
-						"type": "string",
-						"defaultValue": "dwh"
-					},
-					"SubsriptionId": {
-						"type": "string",
-						"defaultValue": "15354be3-bb86-4045-a1a1-7bf7d9ba1c31"
-					},
-					"PerformanceLevel": {
-						"type": "string",
-						"defaultValue": "DW300c"
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/PauseDW')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Pause",
+						"type": "WebActivity",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"url": "https://management.azure.com/subscriptions/15354be3-bb86-4045-a1a1-7bf7d9ba1c31/resourceGroups/DataFoundation/providers/Microsoft.Sql/servers/pgdatafoundation/databases/DataFoundation/pause?api-version=2020-08-01-preview",
+							"method": "POST",
+							"headers": {},
+							"body": "{\n\tlocation: \"eastus2\"\n}",
+							"authentication": {
+								"type": "MSI",
+								"resource": "https://management.core.windows.net"
+							}
+						}
 					}
-				},
+				],
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ResumeDW')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Web1",
+						"type": "WebActivity",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"url": "https://management.azure.com/subscriptions/15354be3-bb86-4045-a1a1-7bf7d9ba1c31/resourceGroups/DataFoundation/providers/Microsoft.Sql/servers/pgdatafoundation/databases/DataFoundation/resume?api-version=2020-08-01-preview",
+							"method": "POST",
+							"headers": {},
+							"body": "{\n\tlocation: \"eastus2\"\n}",
+							"authentication": {
+								"type": "MSI",
+								"resource": "https://management.core.windows.net"
+							}
+						}
+					}
+				],
 				"annotations": []
 			},
 			"dependsOn": []
@@ -839,270 +865,6 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/DataFoundationDW')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DestinationDataset_llg')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "DataFoundationDW",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlDWTable",
-				"schema": [
-					{
-						"name": "branch_code",
-						"type": "nvarchar"
-					},
-					{
-						"name": "branch_location",
-						"type": "nvarchar"
-					},
-					{
-						"name": "retailer_code",
-						"type": "nvarchar"
-					},
-					{
-						"name": "retailer_name",
-						"type": "nvarchar"
-					},
-					{
-						"name": "address_1",
-						"type": "nvarchar"
-					},
-					{
-						"name": "address_2",
-						"type": "nvarchar"
-					},
-					{
-						"name": "pin_number",
-						"type": "nvarchar"
-					},
-					{
-						"name": "area_code",
-						"type": "nvarchar"
-					},
-					{
-						"name": "area",
-						"type": "nvarchar"
-					},
-					{
-						"name": "town_code",
-						"type": "nvarchar"
-					},
-					{
-						"name": "town",
-						"type": "nvarchar"
-					},
-					{
-						"name": "town_class",
-						"type": "nvarchar"
-					},
-					{
-						"name": "city",
-						"type": "nvarchar"
-					},
-					{
-						"name": "state",
-						"type": "nvarchar"
-					},
-					{
-						"name": "mobile_number",
-						"type": "nvarchar"
-					},
-					{
-						"name": "phone_number",
-						"type": "nvarchar"
-					},
-					{
-						"name": "contact_person",
-						"type": "nvarchar"
-					},
-					{
-						"name": "stl_name",
-						"type": "nvarchar"
-					},
-					{
-						"name": "dse_name",
-						"type": "nvarchar"
-					},
-					{
-						"name": "frequency",
-						"type": "nvarchar"
-					},
-					{
-						"name": "distance",
-						"type": "nvarchar"
-					},
-					{
-						"name": "class_code",
-						"type": "nvarchar"
-					},
-					{
-						"name": "class",
-						"type": "nvarchar"
-					},
-					{
-						"name": "channel_code",
-						"type": "nvarchar"
-					},
-					{
-						"name": "channel",
-						"type": "nvarchar"
-					},
-					{
-						"name": "subchannel_code",
-						"type": "nvarchar"
-					},
-					{
-						"name": "subchannel",
-						"type": "nvarchar"
-					},
-					{
-						"name": "mr_account_code",
-						"type": "nvarchar"
-					},
-					{
-						"name": "mr_account_name",
-						"type": "nvarchar"
-					},
-					{
-						"name": "credit_limit",
-						"type": "nvarchar"
-					},
-					{
-						"name": "credit_period",
-						"type": "nvarchar"
-					},
-					{
-						"name": "invoice_limit",
-						"type": "nvarchar"
-					},
-					{
-						"name": "certificate_type",
-						"type": "nvarchar"
-					},
-					{
-						"name": "gst_number",
-						"type": "nvarchar"
-					},
-					{
-						"name": "pan_no",
-						"type": "nvarchar"
-					},
-					{
-						"name": "dl_number",
-						"type": "nvarchar"
-					},
-					{
-						"name": "dl_expiry_date",
-						"type": "nvarchar"
-					},
-					{
-						"name": "email",
-						"type": "nvarchar"
-					},
-					{
-						"name": "dob",
-						"type": "nvarchar"
-					},
-					{
-						"name": "doa",
-						"type": "nvarchar"
-					},
-					{
-						"name": "status",
-						"type": "nvarchar"
-					},
-					{
-						"name": "default_warehouse_code",
-						"type": "nvarchar"
-					},
-					{
-						"name": "default_warehouse",
-						"type": "nvarchar"
-					},
-					{
-						"name": "restricted_orderswap_status",
-						"type": "nvarchar"
-					},
-					{
-						"name": "lattitude",
-						"type": "nvarchar"
-					},
-					{
-						"name": "longitude",
-						"type": "nvarchar"
-					},
-					{
-						"name": "retailer_radius",
-						"type": "nvarchar"
-					},
-					{
-						"name": "FileSetId",
-						"type": "bigint",
-						"precision": 19
-					},
-					{
-						"name": "Filename",
-						"type": "varchar"
-					},
-					{
-						"name": "LastModifiedDatetime",
-						"type": "smalldatetime",
-						"precision": 16,
-						"scale": 0
-					},
-					{
-						"name": "TimeStampIns",
-						"type": "smalldatetime",
-						"precision": 16,
-						"scale": 0
-					},
-					{
-						"name": "id",
-						"type": "int",
-						"precision": 10
-					}
-				],
-				"typeProperties": {
-					"schema": "dbo",
-					"table": "tmpRawLEAPTAS_RTRM"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/DataFoundationDW')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DestinationDataset_sqi')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureBlobNCSArchive",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"fileName": "tmpBranchMultipleDSEData.csv",
-						"container": "tempfolderfordelete"
-					},
-					"columnDelimiter": "|",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"quoteChar": "\""
-				},
-				"schema": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureBlobNCSArchive')]"
 			]
 		}
 	]
