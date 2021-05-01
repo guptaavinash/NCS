@@ -83,7 +83,7 @@
 							"method": "PUT",
 							"headers": {},
 							"body": {
-								"value": "@'{\n\tlocation: \"eastus2\",\n    \"sku\": {\n    \"name\": \"'+pipeline().parameters.DWScale+'\"\n    }\n}'",
+								"value": "{\n\tlocation: \"eastus2\",\n    \"sku\": {\n    \"name\": \"DW200c\"\n    }\n}",
 								"type": "Expression"
 							},
 							"authentication": {
@@ -93,12 +93,6 @@
 						}
 					}
 				],
-				"parameters": {
-					"DWScale": {
-						"type": "string",
-						"defaultValue": "DW200c"
-					}
-				},
 				"annotations": []
 			},
 			"dependsOn": []

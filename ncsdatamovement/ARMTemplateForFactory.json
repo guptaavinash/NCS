@@ -609,7 +609,7 @@
 							"method": "PUT",
 							"headers": {},
 							"body": {
-								"value": "@'{\n\tlocation: \"eastus2\",\n    \"sku\": {\n    \"name\": \"'+pipeline().parameters.DWScale+'\"\n    }\n}'",
+								"value": "{\n\tlocation: \"eastus2\",\n    \"sku\": {\n    \"name\": \"DW200c\"\n    }\n}",
 								"type": "Expression"
 							},
 							"authentication": {
@@ -619,12 +619,6 @@
 						}
 					}
 				],
-				"parameters": {
-					"DWScale": {
-						"type": "string",
-						"defaultValue": "DW200c"
-					}
-				},
 				"annotations": []
 			},
 			"dependsOn": []
@@ -7899,74 +7893,6 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/pipelines/ORDHistoryLoading')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/RunAt0530')]",
-			"type": "Microsoft.DataFactory/factories/triggers",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"runtimeState": "Started",
-				"pipelines": [
-					{
-						"pipelineReference": {
-							"referenceName": "DWScaleUpDown",
-							"type": "PipelineReference"
-						},
-						"parameters": {}
-					}
-				],
-				"type": "ScheduleTrigger",
-				"typeProperties": {
-					"recurrence": {
-						"frequency": "Day",
-						"interval": 1,
-						"startTime": "2021-04-30T05:30:00",
-						"timeZone": "India Standard Time"
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/DWScaleUpDown')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/RunAt8PMOClock')]",
-			"type": "Microsoft.DataFactory/factories/triggers",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"runtimeState": "Started",
-				"pipelines": [
-					{
-						"pipelineReference": {
-							"referenceName": "PauseDW",
-							"type": "PipelineReference"
-						},
-						"parameters": {}
-					}
-				],
-				"type": "ScheduleTrigger",
-				"typeProperties": {
-					"recurrence": {
-						"frequency": "Day",
-						"interval": 1,
-						"startTime": "2021-05-01T14:24:00",
-						"timeZone": "India Standard Time",
-						"schedule": {
-							"minutes": [
-								0
-							],
-							"hours": [
-								20
-							]
-						}
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/PauseDW')]"
 			]
 		}
 	]
