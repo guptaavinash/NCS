@@ -608,7 +608,10 @@
 							"url": "https://management.azure.com/subscriptions/15354be3-bb86-4045-a1a1-7bf7d9ba1c31/resourceGroups/DataFoundation/providers/Microsoft.Sql/servers/pgdatafoundation/databases/DataFoundation?api-version=2020-08-01-preview",
 							"method": "PUT",
 							"headers": {},
-							"body": "{\n\tlocation: \"eastus2\",\n    \"sku\": {\n    \"name\": \"DW400c\"\n    }\n}",
+							"body": {
+								"value": "@'{\n\tlocation: \"eastus2\",\n    \"sku\": {\n    \"name\": \"'+pipeline().parameters.DWScale+'\"\n    }\n}'",
+								"type": "Expression"
+							},
 							"authentication": {
 								"type": "MSI",
 								"resource": "https://management.core.windows.net"
@@ -616,6 +619,12 @@
 						}
 					}
 				],
+				"parameters": {
+					"DWScale": {
+						"type": "string",
+						"defaultValue": "DW200c"
+					}
+				},
 				"annotations": []
 			},
 			"dependsOn": []
@@ -7876,12 +7885,88 @@
 						"frequency": "Day",
 						"interval": 1,
 						"startTime": "2021-04-30T09:30:00",
-						"timeZone": "India Standard Time"
+						"timeZone": "India Standard Time",
+						"schedule": {
+							"minutes": [
+								30
+							],
+							"hours": [
+								9
+							]
+						}
 					}
 				}
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/pipelines/ORDHistoryLoading')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/RunAt0530')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Started",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "DWScaleUpDown",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
+					}
+				],
+				"type": "ScheduleTrigger",
+				"typeProperties": {
+					"recurrence": {
+						"frequency": "Day",
+						"interval": 1,
+						"startTime": "2021-04-30T05:30:00",
+						"timeZone": "India Standard Time"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/DWScaleUpDown')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/RunAt8PMOClock')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Started",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "PauseDW",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
+					}
+				],
+				"type": "ScheduleTrigger",
+				"typeProperties": {
+					"recurrence": {
+						"frequency": "Day",
+						"interval": 1,
+						"startTime": "2021-05-01T14:24:00",
+						"timeZone": "India Standard Time",
+						"schedule": {
+							"minutes": [
+								0
+							],
+							"hours": [
+								20
+							]
+						}
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/PauseDW')]"
 			]
 		}
 	]
