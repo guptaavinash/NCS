@@ -30,8 +30,7 @@
 		],
 		"parameters": {
 			"DWScale": {
-				"type": "string",
-				"defaultValue": "DW200c"
+				"type": "string"
 			}
 		},
 		"annotations": []
