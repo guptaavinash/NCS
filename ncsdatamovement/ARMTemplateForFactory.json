@@ -606,7 +606,7 @@
 						"userProperties": [],
 						"typeProperties": {
 							"url": {
-								"value": "@concat('https://',pipeline().parameters.region,'.asazure.windows.net/servers/',pipeline().parameters.server,'/models/',pipeline().parameters.model,'/refreshes')",
+								"value": "https://eastus2.asazure.windows.net/servers/dbrdashboard/models/PG_DMS/refreshes",
 								"type": "Expression"
 							},
 							"method": "POST",
