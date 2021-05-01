@@ -80,7 +80,7 @@
 						"userProperties": [],
 						"typeProperties": {
 							"url": {
-								"value": "@https://pipeline().parameters.region.asazure.windows.net/servers/pipeline().parameters.server/models/pipeline().parameters.model/refreshes",
+								"value": "@concat('https://',pipeline().parameters.region,'.asazure.windows.net/servers/',pipeline().parameters.server,'/models/',pipeline().parameters.model,'/refreshes')",
 								"type": "Expression"
 							},
 							"method": "POST",
