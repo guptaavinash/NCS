@@ -742,7 +742,7 @@
 							"method": "PUT",
 							"headers": {},
 							"body": {
-								"value": "{\n\tlocation: \"eastus2\",\n    \"sku\": {\n    \"name\": \"DW200c\"\n    }\n}",
+								"value": "{\n\tlocation: \"eastus2\",\n    \"sku\": {\n    \"name\": \"DW400c\"\n    }\n}",
 								"type": "Expression"
 							},
 							"authentication": {
