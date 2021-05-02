@@ -132,22 +132,39 @@
 								"RetryCount": 2,
 								"Objects": [
 									{
-										"table": "DSR Hierarchy"
+										"database": "PG_DMS",
+										"table": "tblFactCFR",
+										"partition": "PartitionCurrentQuarter_FactCFRData"
 									},
 									{
-										"table": "Location Hierarchy"
+										"database": "PG_DMS",
+										"table": "tblFactCOS",
+										"partition": "PartitionCurrentQuarter_FactCOSData"
 									},
 									{
-										"table": "Channel Hierarchy"
+										"database": "PG_DMS",
+										"table": "tblFactFocusBrandData",
+										"partition": "PartitionCurrentQuarter_FactFocusBrandData"
 									},
 									{
-										"table": "Store Master"
+										"database": "PG_DMS",
+										"table": "tblFactInventory",
+										"partition": "PartitionCurrentQuarter_FactInventory"
 									},
 									{
-										"table": "Date"
+										"database": "PG_DMS",
+										"table": "tblFactSBDData",
+										"partition": "PartitionCurrentQuarter_FactSBDData"
 									},
 									{
-										"table": "SRN Reason"
+										"database": "PG_DMS",
+										"table": "tblFactStoreLvlSBDData",
+										"partition": "PartitionCurrentQuarter_FactStoreLvlSBDData"
+									},
+									{
+										"database": "PG_DMS",
+										"table": "tblFactTargetData",
+										"partition": "PartitionCurrentQuarter_FactTargetData"
 									}
 								]
 							},
