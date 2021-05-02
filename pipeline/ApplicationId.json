@@ -1,0 +1,36 @@
+{
+	"name": "ApplicationId",
+	"properties": {
+		"activities": [
+			{
+				"name": "Web1",
+				"type": "WebActivity",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": "https://management.azure.com/subscriptions/15354be3-bb86-4045-a1a1-7bf7d9ba1c31/resourceGroups/DataFoundation/providers/Microsoft.DataFactory/factories/ncsdatamovement?api-version=2018-06-01",
+					"method": "PATCH",
+					"body": {
+						"name": "ncsdatamovement",
+						"location": "eastus2",
+						"identity": {
+							"type": "SystemAssigned"
+						}
+					},
+					"authentication": {
+						"type": "MSI",
+						"resource": "https://management.azure.com"
+					}
+				}
+			}
+		],
+		"annotations": []
+	}
+}
