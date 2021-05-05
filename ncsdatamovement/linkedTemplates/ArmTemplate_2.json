@@ -13,6 +13,286 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/SourceDataset_k3b')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "67Server",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"cw_table": {
+						"type": "String"
+					}
+				},
+				"annotations": [],
+				"type": "SqlServerTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": {
+						"value": "@dataset().cw_table",
+						"type": "Expression"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SourceDataset_llg')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDatafoundation",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"YearMonthDate": {
+						"type": "string",
+						"defaultValue": "2020/08/31"
+					},
+					"AFileName": {
+						"type": "string",
+						"defaultValue": "RTRM_cloud03_2020Aug31.gz"
+					}
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": {
+							"value": "@dataset().AFileName",
+							"type": "Expression"
+						},
+						"folderPath": {
+							"value": "@dataset().YearMonthDate",
+							"type": "Expression"
+						},
+						"container": "cntleap"
+					},
+					"columnDelimiter": "|",
+					"compressionCodec": "gzip",
+					"compressionLevel": "Optimal",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "branch_code",
+						"type": "String"
+					},
+					{
+						"name": "branch_location",
+						"type": "String"
+					},
+					{
+						"name": "retailer_code",
+						"type": "String"
+					},
+					{
+						"name": "retailer_name",
+						"type": "String"
+					},
+					{
+						"name": "address_1",
+						"type": "String"
+					},
+					{
+						"name": "address_2",
+						"type": "String"
+					},
+					{
+						"name": "pin_number",
+						"type": "String"
+					},
+					{
+						"name": "area_code",
+						"type": "String"
+					},
+					{
+						"name": "area",
+						"type": "String"
+					},
+					{
+						"name": "town_code",
+						"type": "String"
+					},
+					{
+						"name": "town",
+						"type": "String"
+					},
+					{
+						"name": "town_class",
+						"type": "String"
+					},
+					{
+						"name": "city",
+						"type": "String"
+					},
+					{
+						"name": "state",
+						"type": "String"
+					},
+					{
+						"name": "mobile_number",
+						"type": "String"
+					},
+					{
+						"name": "phone_number",
+						"type": "String"
+					},
+					{
+						"name": "contact_person",
+						"type": "String"
+					},
+					{
+						"name": "stl_name",
+						"type": "String"
+					},
+					{
+						"name": "dse_name",
+						"type": "String"
+					},
+					{
+						"name": "frequency",
+						"type": "String"
+					},
+					{
+						"name": "distance",
+						"type": "String"
+					},
+					{
+						"name": "class_code",
+						"type": "String"
+					},
+					{
+						"name": "class",
+						"type": "String"
+					},
+					{
+						"name": "channel_code",
+						"type": "String"
+					},
+					{
+						"name": "channel",
+						"type": "String"
+					},
+					{
+						"name": "subchannel_code",
+						"type": "String"
+					},
+					{
+						"name": "subchannel",
+						"type": "String"
+					},
+					{
+						"name": "mr_account_code",
+						"type": "String"
+					},
+					{
+						"name": "mr_account_name",
+						"type": "String"
+					},
+					{
+						"name": "credit_limit",
+						"type": "String"
+					},
+					{
+						"name": "credit_period",
+						"type": "String"
+					},
+					{
+						"name": "invoice_limit",
+						"type": "String"
+					},
+					{
+						"name": "certificate_type",
+						"type": "String"
+					},
+					{
+						"name": "gst_number",
+						"type": "String"
+					},
+					{
+						"name": "pan_no",
+						"type": "String"
+					},
+					{
+						"name": "dl_number",
+						"type": "String"
+					},
+					{
+						"name": "dl_expiry_date",
+						"type": "String"
+					},
+					{
+						"name": "email",
+						"type": "String"
+					},
+					{
+						"name": "dob",
+						"type": "String"
+					},
+					{
+						"name": "doa",
+						"type": "String"
+					},
+					{
+						"name": "status",
+						"type": "String"
+					},
+					{
+						"name": "default_warehouse_code",
+						"type": "String"
+					},
+					{
+						"name": "default_warehouse",
+						"type": "String"
+					},
+					{
+						"name": "restricted_orderswap_status",
+						"type": "String"
+					},
+					{
+						"name": "lattitude",
+						"type": "String"
+					},
+					{
+						"name": "longitude",
+						"type": "String"
+					},
+					{
+						"name": "retailer_radius",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SourceDataset_sqi')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "DataFoundationDW",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlDWTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "tmpBranchMultipleDSEData"
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/SourceDataset_xvt')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -521,7 +801,9 @@
 				"annotations": [],
 				"lastPublishTime": "2021-01-19T16:42:31Z"
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/SourceDataset_k3b')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/CopyPipeline_sqi')]",
@@ -588,7 +870,9 @@
 				"annotations": [],
 				"lastPublishTime": "2020-12-11T07:22:18Z"
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/SourceDataset_sqi')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/ORDHistoryLoading')]",
@@ -3100,7 +3384,9 @@
 				"annotations": [],
 				"lastPublishTime": "2021-02-14T07:54:29Z"
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/SourceDataset_llg')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/SBDFileLoading')]",
