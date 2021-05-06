@@ -1,0 +1,108 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "ncsdatamovement"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/CubeProcess')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "CubeProcess",
+						"type": "WebActivity",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"url": {
+								"value": "https://aspaaseastus2.asazure.windows.net/servers/dbrdashboard/models/PG_DMS/refreshes/sync",
+								"type": "Expression"
+							},
+							"method": "POST",
+							"body": {
+								"Type": "Full",
+								"CommitMode": "transactional",
+								"MaxParallelism": 2,
+								"RetryCount": 2,
+								"Objects": [
+									{
+										"database": "PG_DMS",
+										"table": "tblFactCFR",
+										"partition": "PartitionCurrentQuarter_FactCFRData"
+									},
+									{
+										"database": "PG_DMS",
+										"table": "tblFactCOS",
+										"partition": "PartitionCurrentQuarter_FactCOSData"
+									},
+									{
+										"database": "PG_DMS",
+										"table": "tblFactFocusBrandData",
+										"partition": "PartitionCurrentQuarter_FactFocusBrandData"
+									},
+									{
+										"database": "PG_DMS",
+										"table": "tblFactInventory",
+										"partition": "PartitionCurrentQuarter_FactInventory"
+									},
+									{
+										"database": "PG_DMS",
+										"table": "tblFactSBDData",
+										"partition": "PartitionCurrentQuarter_FactSBDData"
+									},
+									{
+										"database": "PG_DMS",
+										"table": "tblFactStoreLvlSBDData",
+										"partition": "PartitionCurrentQuarter_FactStoreLvlSBDData"
+									},
+									{
+										"database": "PG_DMS",
+										"table": "tblFactTargetData",
+										"partition": "PartitionCurrentQuarter_FactTargetData"
+									}
+								]
+							},
+							"authentication": {
+								"type": "MSI",
+								"resource": "https://*.asazure.windows.net"
+							}
+						}
+					}
+				],
+				"parameters": {
+					"region": {
+						"type": "string",
+						"defaultValue": "aspaaseastus2"
+					},
+					"server": {
+						"type": "string",
+						"defaultValue": "dbrdashboard"
+					},
+					"model": {
+						"type": "string",
+						"defaultValue": "PG_DMS"
+					}
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		}
+	]
+}

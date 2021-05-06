@@ -751,10 +751,10 @@
 						"userProperties": [],
 						"typeProperties": {
 							"url": {
-								"value": "https://aspaaseastus2.asazure.windows.net/servers/dbrdashboard/models/PG_DMS/refreshes",
+								"value": "https://aspaaseastus2.asazure.windows.net/servers/dbrdashboard/models/PG_DMS/refreshes/sync",
 								"type": "Expression"
 							},
-							"method": "GET",
+							"method": "POST",
 							"headers": {},
 							"body": {
 								"Type": "Full",
@@ -8172,44 +8172,6 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/RunAt9PM')]",
-			"type": "Microsoft.DataFactory/factories/triggers",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"runtimeState": "Started",
-				"pipelines": [
-					{
-						"pipelineReference": {
-							"referenceName": "AASPause",
-							"type": "PipelineReference"
-						},
-						"parameters": {}
-					}
-				],
-				"type": "ScheduleTrigger",
-				"typeProperties": {
-					"recurrence": {
-						"frequency": "Day",
-						"interval": 1,
-						"startTime": "2021-05-05T07:13:00",
-						"timeZone": "India Standard Time",
-						"schedule": {
-							"minutes": [
-								0
-							],
-							"hours": [
-								21
-							]
-						}
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/AASPause')]"
-			]
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/RunAt8OClock')]",
 			"type": "Microsoft.DataFactory/factories/triggers",
 			"apiVersion": "2018-06-01",
@@ -8245,6 +8207,44 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/pipelines/AASResume')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/RunAt9PM')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Started",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "AASPause",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
+					}
+				],
+				"type": "ScheduleTrigger",
+				"typeProperties": {
+					"recurrence": {
+						"frequency": "Day",
+						"interval": 1,
+						"startTime": "2021-05-05T07:13:00",
+						"timeZone": "India Standard Time",
+						"schedule": {
+							"minutes": [
+								0
+							],
+							"hours": [
+								21
+							]
+						}
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/AASPause')]"
 			]
 		}
 	]
