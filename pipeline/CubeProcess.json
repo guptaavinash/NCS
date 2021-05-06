@@ -16,10 +16,10 @@
 				"userProperties": [],
 				"typeProperties": {
 					"url": {
-						"value": "https://aspaaseastus2.asazure.windows.net/servers/dbrdashboard/models/PG_DMS/refreshes",
+						"value": "https://aspaaseastus2.asazure.windows.net/servers/dbrdashboard/models/PG_DMS/refreshes/sync",
 						"type": "Expression"
 					},
-					"method": "GET",
+					"method": "POST",
 					"body": {
 						"Type": "Full",
 						"CommitMode": "transactional",
