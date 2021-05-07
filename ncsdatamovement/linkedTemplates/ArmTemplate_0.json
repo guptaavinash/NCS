@@ -225,7 +225,7 @@
 						"userProperties": [],
 						"typeProperties": {
 							"url": {
-								"value": "https://aspaaseastus2.asazure.windows.net/servers/dbrdashboard/models/PG_DMS/sync",
+								"value": "https://aspaaseastus2.asazure.windows.net/servers/dbrdashboard/models/PG_DMS/refreshes",
 								"type": "Expression"
 							},
 							"method": "POST",
@@ -236,6 +236,59 @@
 								"MaxParallelism": 2,
 								"RetryCount": 2,
 								"Objects": [
+									{
+										"database": "PG_DMS",
+										"table": "DSR Hierarchy"
+									},
+									{
+										"database": "PG_DMS",
+										"table": "Location Hierarchy"
+									},
+									{
+										"database": "PG_DMS",
+										"table": "Channel Hierarchy"
+									},
+									{
+										"database": "PG_DMS",
+										"table": "Store Master"
+									},
+									{
+										"database": "PG_DMS",
+										"table": "Product Hierarchy"
+									},
+									{
+										"database": "PG_DMS",
+										"table": "Date"
+									},
+									{
+										"database": "PG_DMS",
+										"table": "SRN Reason"
+									},
+									{
+										"database": "PG_DMS",
+										"table": "tblFactSalesDetail",
+										"partition": "PartitionCurrentQuarter_FactSalesDetails"
+									},
+									{
+										"database": "PG_DMS",
+										"table": "tblFactCoverage",
+										"partition": "PartitionCurrentQuarter_FactCoverage"
+									},
+									{
+										"database": "PG_DMS",
+										"table": "tblFactCoverageStoreLvl",
+										"partition": "PartitionCurrentQuarter_FactCoverageStoreLvl"
+									},
+									{
+										"database": "PG_DMS",
+										"table": "tblFactCoverageLPB",
+										"partition": "PartitionCurrentQuarter_FactCoverageLPB"
+									},
+									{
+										"database": "PG_DMS",
+										"table": "tblFactARData",
+										"partition": "PartitionCurrentQuarter_FactARData"
+									},
 									{
 										"database": "PG_DMS",
 										"table": "tblFactCFR",
