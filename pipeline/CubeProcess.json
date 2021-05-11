@@ -214,7 +214,7 @@
 			},
 			"var3": {
 				"type": "Boolean",
-				"defaultValue": true
+				"defaultValue": false
 			}
 		},
 		"annotations": []
