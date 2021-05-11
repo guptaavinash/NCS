@@ -474,6 +474,117 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/testjsonread')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Set variable1",
+						"type": "SetVariable",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "yrdy",
+							"value": {
+								"value": "@variables('test')[1].status",
+								"type": "Expression"
+							}
+						}
+					}
+				],
+				"variables": {
+					"test": {
+						"type": "Array",
+						"defaultValue": [
+							{
+								"refreshId": "b7bb233d-6111-4d7a-bb7d-95e1116c3d87",
+								"startTime": "2021-05-11T13:22:43.803Z",
+								"status": "inProgress"
+							},
+							{
+								"refreshId": "0fdb3e7e-74c6-4282-9515-5efcd7b89a63",
+								"startTime": "2021-05-02T06:25:03.657Z",
+								"endTime": "2021-05-02T06:26:08.657Z",
+								"status": "succeeded"
+							},
+							{
+								"refreshId": "140e8955-a3dd-400a-bd55-af47d1032fff",
+								"startTime": "2021-05-02T06:22:34.967Z",
+								"endTime": "2021-05-02T06:23:46.52Z",
+								"status": "succeeded"
+							},
+							{
+								"refreshId": "368d999f-cc98-42d8-bb6f-df00053a6f94",
+								"startTime": "2021-05-11T09:15:34.31Z",
+								"endTime": "2021-05-11T09:17:36.91Z",
+								"status": "succeeded"
+							},
+							{
+								"refreshId": "3f741cde-b871-4c76-a702-2282479538fa",
+								"startTime": "2021-05-11T13:06:34.69Z",
+								"endTime": "2021-05-11T13:08:40.71Z",
+								"status": "succeeded"
+							},
+							{
+								"refreshId": "4133cb46-0a8f-4dd1-aec9-64fe293a160a",
+								"startTime": "2021-05-11T08:22:27.78Z",
+								"endTime": "2021-05-11T08:24:29.71Z",
+								"status": "succeeded"
+							},
+							{
+								"refreshId": "87ed0870-4f42-4568-9de1-955899b53c6b",
+								"startTime": "2021-05-11T09:12:14.49Z",
+								"endTime": "2021-05-11T09:14:20.273Z",
+								"status": "succeeded"
+							},
+							{
+								"refreshId": "88c479c6-30c0-40e9-94ff-743f512e173b",
+								"startTime": "2021-05-11T07:25:35.51Z",
+								"endTime": "2021-05-11T07:41:04.8Z",
+								"status": "succeeded"
+							},
+							{
+								"refreshId": "978df1dd-cdbf-4456-8d6d-10eb46d779f3",
+								"startTime": "2021-05-11T07:48:48.24Z",
+								"endTime": "2021-05-11T07:50:53.097Z",
+								"status": "succeeded"
+							},
+							{
+								"refreshId": "af46baf4-2842-49bc-ae17-d10552183c72",
+								"startTime": "2021-05-11T13:16:25.69Z",
+								"endTime": "2021-05-11T13:18:28.767Z",
+								"status": "succeeded"
+							},
+							{
+								"refreshId": "c3ffdca2-2d89-4c6e-9ff5-1de8e4b2c804",
+								"startTime": "2021-05-10T06:47:25.25Z",
+								"endTime": "2021-05-10T07:49:25.19Z",
+								"status": "succeeded"
+							},
+							{
+								"refreshId": "ed4d89fd-df0a-4fa7-95e6-1393d9649c6b",
+								"startTime": "2021-05-11T08:02:34.663Z",
+								"endTime": "2021-05-11T08:04:38.2Z",
+								"status": "succeeded"
+							},
+							{
+								"refreshId": "f5aec9ee-92e2-4fb4-bf83-de7ce7d9fcd7",
+								"startTime": "2021-05-02T06:28:41.837Z",
+								"endTime": "2021-05-02T06:42:12.54Z",
+								"status": "succeeded"
+							}
+						]
+					},
+					"yrdy": {
+						"type": "String"
+					}
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/67Server')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
@@ -874,24 +985,6 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/67ServerNew')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/AzureSqlMITable1')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureSqlMI1",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlMITable",
-				"schema": [],
-				"typeProperties": {}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureSqlMI1')]"
 			]
 		}
 	]
