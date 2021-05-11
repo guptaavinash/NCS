@@ -862,7 +862,7 @@
 						"typeProperties": {
 							"variableName": "testStatus",
 							"value": {
-								"value": "@activity('CubeProcess_copy1').output.Response",
+								"value": "@json(activity('CubeProcess_copy1').output.Response)\n",
 								"type": "Expression"
 							}
 						}
@@ -2550,7 +2550,10 @@
 											"referenceName": "DPSRFileCon",
 											"type": "DatasetReference",
 											"parameters": {
-												"DT": "2021/05/08",
+												"DT": {
+													"value": "@pipeline().parameters.DT",
+													"type": "Expression"
+												},
 												"FileCon": "@item().name"
 											}
 										}
