@@ -860,7 +860,7 @@
 						"typeProperties": {
 							"variableName": "testStatus",
 							"value": {
-								"value": "@string(activity('CubeProcess_copy1').output.item())",
+								"value": "@activity('CubeProcess_copy1').output.item()",
 								"type": "Expression"
 							}
 						}
@@ -882,8 +882,10 @@
 				},
 				"variables": {
 					"testStatus": {
-						"type": "String",
-						"defaultValue": "test"
+						"type": "Array",
+						"defaultValue": [
+							"test"
+						]
 					}
 				},
 				"annotations": []
