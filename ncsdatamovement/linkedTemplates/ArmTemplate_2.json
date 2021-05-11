@@ -1953,7 +1953,12 @@
 							"dataset": {
 								"referenceName": "DPSRFileCont",
 								"type": "DatasetReference",
-								"parameters": {}
+								"parameters": {
+									"DT": {
+										"value": "@pipeline().parameters.DT",
+										"type": "Expression"
+									}
+								}
 							},
 							"fieldList": [
 								"childItems"

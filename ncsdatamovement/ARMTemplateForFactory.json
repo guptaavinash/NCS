@@ -804,7 +804,9 @@
 								"type": "Expression"
 							},
 							"method": "GET",
-							"headers": {},
+							"headers": {
+								"": "application/json"
+							},
 							"body": {
 								"Type": "Full",
 								"CommitMode": "transactional",
@@ -1713,7 +1715,12 @@
 							"dataset": {
 								"referenceName": "DPSRFileCont",
 								"type": "DatasetReference",
-								"parameters": {}
+								"parameters": {
+									"DT": {
+										"value": "@pipeline().parameters.DT",
+										"type": "Expression"
+									}
+								}
 							},
 							"fieldList": [
 								"childItems"

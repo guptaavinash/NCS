@@ -278,7 +278,9 @@
 								"type": "Expression"
 							},
 							"method": "GET",
-							"headers": {},
+							"headers": {
+								"": "application/json"
+							},
 							"body": {
 								"Type": "Full",
 								"CommitMode": "transactional",
