@@ -10,7 +10,7 @@
 				"typeProperties": {
 					"variableName": "yrdy",
 					"value": {
-						"value": "@variables('test')[1].status",
+						"value": "@variables('test')[0].status",
 						"type": "Expression"
 					}
 				}
