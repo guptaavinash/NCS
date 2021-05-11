@@ -882,6 +882,326 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/DPSRFileCon')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "DatafoundationADLS",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"DT": {
+						"type": "string",
+						"defaultValue": "2021/05/08"
+					},
+					"FileCon": {
+						"type": "string",
+						"defaultValue": "DPSR_MOR_cloud01_2021May08.csv.gz"
+					}
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": {
+							"value": "@dataset().FileCon",
+							"type": "Expression"
+						},
+						"folderPath": {
+							"value": "@dataset().DT",
+							"type": "Expression"
+						},
+						"container": "cntleap"
+					},
+					"columnDelimiter": "|",
+					"compressionCodec": "gzip",
+					"compressionLevel": "Fastest",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "document_no",
+						"type": "String"
+					},
+					{
+						"name": "apply_to_doc",
+						"type": "String"
+					},
+					{
+						"name": "document_date",
+						"type": "String"
+					},
+					{
+						"name": "apply_to_doc_date",
+						"type": "String"
+					},
+					{
+						"name": "transaction_type",
+						"type": "String"
+					},
+					{
+						"name": "subbrandform_name",
+						"type": "String"
+					},
+					{
+						"name": "prod_name",
+						"type": "String"
+					},
+					{
+						"name": "customer_name",
+						"type": "String"
+					},
+					{
+						"name": "customer_code",
+						"type": "String"
+					},
+					{
+						"name": "retailer_gst_no",
+						"type": "String"
+					},
+					{
+						"name": "channel_description",
+						"type": "String"
+					},
+					{
+						"name": "dse",
+						"type": "String"
+					},
+					{
+						"name": "pcode",
+						"type": "String"
+					},
+					{
+						"name": "batch",
+						"type": "String"
+					},
+					{
+						"name": "customer_type",
+						"type": "String"
+					},
+					{
+						"name": "hsn_code",
+						"type": "String"
+					},
+					{
+						"name": "category",
+						"type": "String"
+					},
+					{
+						"name": "brand",
+						"type": "String"
+					},
+					{
+						"name": "brandform",
+						"type": "String"
+					},
+					{
+						"name": "upc",
+						"type": "String"
+					},
+					{
+						"name": "quantity",
+						"type": "String"
+					},
+					{
+						"name": "gross_value",
+						"type": "String"
+					},
+					{
+						"name": "discount",
+						"type": "String"
+					},
+					{
+						"name": "taxable_scheme",
+						"type": "String"
+					},
+					{
+						"name": "cgst_amount",
+						"type": "String"
+					},
+					{
+						"name": "sgst_amount",
+						"type": "String"
+					},
+					{
+						"name": "igst_amount",
+						"type": "String"
+					},
+					{
+						"name": "cess_amount",
+						"type": "String"
+					},
+					{
+						"name": "tcs_amount",
+						"type": "String"
+					},
+					{
+						"name": "mracc_code",
+						"type": "String"
+					},
+					{
+						"name": "mracc_desc",
+						"type": "String"
+					},
+					{
+						"name": "vendor",
+						"type": "String"
+					},
+					{
+						"name": "net_amount",
+						"type": "String"
+					},
+					{
+						"name": "tax_on_discount",
+						"type": "String"
+					},
+					{
+						"name": "tax_on_scheme",
+						"type": "String"
+					},
+					{
+						"name": "tax_in_rlp",
+						"type": "String"
+					},
+					{
+						"name": "retailing",
+						"type": "String"
+					},
+					{
+						"name": "gross_in_slp",
+						"type": "String"
+					},
+					{
+						"name": "po_no",
+						"type": "String"
+					},
+					{
+						"name": "dse_code",
+						"type": "String"
+					},
+					{
+						"name": "msu",
+						"type": "String"
+					},
+					{
+						"name": "reason",
+						"type": "String"
+					},
+					{
+						"name": "remarks",
+						"type": "String"
+					},
+					{
+						"name": "srn_ref_no",
+						"type": "String"
+					},
+					{
+						"name": "composite",
+						"type": "String"
+					},
+					{
+						"name": "cgst_rate",
+						"type": "String"
+					},
+					{
+						"name": "sgst_rate",
+						"type": "String"
+					},
+					{
+						"name": "igst_rate",
+						"type": "String"
+					},
+					{
+						"name": "cess_rate",
+						"type": "String"
+					},
+					{
+						"name": "tcs_rate",
+						"type": "String"
+					},
+					{
+						"name": "branch_code",
+						"type": "String"
+					},
+					{
+						"name": "branch_name",
+						"type": "String"
+					},
+					{
+						"name": "distributor_gst_no",
+						"type": "String"
+					},
+					{
+						"name": "order_mode",
+						"type": "String"
+					},
+					{
+						"name": "branch_gst_no",
+						"type": "String"
+					},
+					{
+						"name": "dl_no",
+						"type": "String"
+					},
+					{
+						"name": "dl_expiry_date",
+						"type": "String"
+					},
+					{
+						"name": "tc_code",
+						"type": "String"
+					},
+					{
+						"name": "tc_name",
+						"type": "String"
+					},
+					{
+						"name": "irn_no",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DPSRFileCont')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "DatafoundationADLS",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"DT": {
+						"type": "string",
+						"defaultValue": "2021/05/08"
+					}
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"folderPath": {
+							"value": "@dataset().DT",
+							"type": "Expression"
+						},
+						"container": "cntleap"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/DestinationDataset_07h')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -2193,113 +2513,6 @@
 					"schema": "dbo",
 					"table": "tmpRawLEAPTAS_ORDHTR"
 				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/SBDBranchMappingTable')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "DataFoundationDW",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlDWTable",
-				"schema": [
-					{
-						"name": "SBDName",
-						"type": "nvarchar"
-					},
-					{
-						"name": "DistributorCode",
-						"type": "nvarchar"
-					},
-					{
-						"name": "BranchCode",
-						"type": "nvarchar"
-					}
-				],
-				"typeProperties": {
-					"schema": "dbo",
-					"table": "tmpSBDBranchMapping"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/SBDFileCon')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureBlobNCSArchive",
-					"type": "LinkedServiceReference"
-				},
-				"parameters": {
-					"SBDFileName": {
-						"type": "string",
-						"defaultValue": "SBD_AP,TL.xlsx"
-					}
-				},
-				"annotations": [],
-				"type": "Excel",
-				"typeProperties": {
-					"sheetName": "Sheet1",
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"fileName": {
-							"value": "@dataset().SBDFileName",
-							"type": "Expression"
-						},
-						"folderPath": "SBD/SBDDetailFile",
-						"container": "subddata"
-					},
-					"firstRowAsHeader": true
-				},
-				"schema": [
-					{
-						"name": "SBD Name",
-						"type": "String"
-					},
-					{
-						"name": "Channel Code",
-						"type": "String"
-					},
-					{
-						"name": "Channel Name",
-						"type": "String"
-					},
-					{
-						"name": "Group Code",
-						"type": "String"
-					},
-					{
-						"name": "SBF Code",
-						"type": "String"
-					},
-					{
-						"name": "SBF Name",
-						"type": "String"
-					},
-					{
-						"name": "MOQ",
-						"type": "String"
-					},
-					{
-						"name": "Effective From",
-						"type": "String"
-					},
-					{
-						"name": "Effective To",
-						"type": "String"
-					},
-					{
-						"name": "Is Base",
-						"type": "String"
-					}
-				]
 			},
 			"dependsOn": []
 		}
