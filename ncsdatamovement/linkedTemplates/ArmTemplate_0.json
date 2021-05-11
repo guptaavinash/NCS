@@ -387,7 +387,7 @@
 									"typeProperties": {
 										"variableName": "var3",
 										"value": {
-											"value": "@equals(variables('status'),'inProgress')",
+											"value": "@not(contains(variables('status'),'inProgress'))",
 											"type": "Expression"
 										}
 									}
