@@ -853,7 +853,10 @@
 									"referenceName": "DPSRFileCon",
 									"type": "DatasetReference",
 									"parameters": {
-										"DT": "2021/05/08",
+										"DT": {
+											"value": "@pipeline().parameters.DT",
+											"type": "Expression"
+										},
 										"FileCon": "@item().name"
 									}
 								}
