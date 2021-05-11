@@ -267,7 +267,7 @@
 						"userProperties": [],
 						"typeProperties": {
 							"expression": {
-								"value": "@variables('status').equals(\"inProgress\")",
+								"value": "@equals(variables('status'),'inProgress')",
 								"type": "Expression"
 							},
 							"activities": [
@@ -354,6 +354,22 @@
 											"value": "@variables('ArrayVar')[0].status",
 											"type": "Expression"
 										}
+									}
+								},
+								{
+									"name": "Wait For 30 sec",
+									"type": "Wait",
+									"dependsOn": [
+										{
+											"activity": "Set Status variable",
+											"dependencyConditions": [
+												"Succeeded"
+											]
+										}
+									],
+									"userProperties": [],
+									"typeProperties": {
+										"waitTimeInSeconds": 30
 									}
 								}
 							],
