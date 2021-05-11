@@ -53,7 +53,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"expression": {
-						"value": "@equals('inProgress',variables('status'))",
+						"value": "@equals('inProgress',string(variables('status')))",
 						"type": "Expression"
 					},
 					"activities": [
@@ -195,6 +195,10 @@
 			"model": {
 				"type": "string",
 				"defaultValue": "PG_DMS"
+			},
+			"test": {
+				"type": "string",
+				"defaultValue": "inProgress"
 			}
 		},
 		"variables": {
