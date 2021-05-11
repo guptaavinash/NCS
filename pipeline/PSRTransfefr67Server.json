@@ -738,18 +738,6 @@
 							},
 							{
 								"source": {
-									"name": "FileSetId",
-									"type": "Int64",
-									"physicalType": "bigint"
-								},
-								"sink": {
-									"name": "FileSetId",
-									"type": "Int32",
-									"physicalType": "int"
-								}
-							},
-							{
-								"source": {
 									"name": "apply_to_doc_date",
 									"type": "String",
 									"physicalType": "nvarchar"
