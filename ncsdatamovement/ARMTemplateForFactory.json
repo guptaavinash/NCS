@@ -793,7 +793,7 @@
 						"userProperties": [],
 						"typeProperties": {
 							"expression": {
-								"value": "@equals('inProgress',string(variables('status')))",
+								"value": "@variables('var3')",
 								"type": "Expression"
 							},
 							"activities": [
@@ -913,7 +913,7 @@
 									"typeProperties": {
 										"variableName": "var3",
 										"value": {
-											"value": "@variables('status')",
+											"value": "@equals(variables('status'),'inProgress')",
 											"type": "Expression"
 										}
 									}
@@ -953,7 +953,8 @@
 						"defaultValue": "inProgress"
 					},
 					"var3": {
-						"type": "String"
+						"type": "Boolean",
+						"defaultValue": true
 					}
 				},
 				"annotations": []
