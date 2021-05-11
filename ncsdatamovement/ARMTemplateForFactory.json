@@ -805,7 +805,7 @@
 							},
 							"method": "GET",
 							"headers": {
-								"": "application/json"
+								"Content-Type": "application/json"
 							},
 							"body": {
 								"Type": "Full",
