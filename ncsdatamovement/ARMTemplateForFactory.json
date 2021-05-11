@@ -844,6 +844,26 @@
 						"typeProperties": {
 							"waitTimeInSeconds": 30
 						}
+					},
+					{
+						"name": "Set variable1",
+						"type": "SetVariable",
+						"dependsOn": [
+							{
+								"activity": "CubeProcess_copy1",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "testStatus",
+							"value": {
+								"value": "@activity('CubeProcess_copy1').output.Response.status",
+								"type": "Expression"
+							}
+						}
 					}
 				],
 				"parameters": {
@@ -858,6 +878,12 @@
 					"model": {
 						"type": "string",
 						"defaultValue": "PG_DMS"
+					}
+				},
+				"variables": {
+					"testStatus": {
+						"type": "String",
+						"defaultValue": "test"
 					}
 				},
 				"annotations": []
