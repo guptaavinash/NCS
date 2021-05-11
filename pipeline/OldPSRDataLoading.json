@@ -73,6 +73,12 @@
 							"typeProperties": {
 								"source": {
 									"type": "DelimitedTextSource",
+									"additionalColumns": [
+										{
+											"name": "FileName",
+											"value": "$$FILEPATH"
+										}
+									],
 									"storeSettings": {
 										"type": "AzureBlobStorageReadSettings",
 										"recursive": true,
@@ -807,6 +813,17 @@
 												"name": "apply_to_doc_date",
 												"type": "String",
 												"physicalType": "nvarchar"
+											}
+										},
+										{
+											"source": {
+												"name": "FileName",
+												"type": "String"
+											},
+											"sink": {
+												"name": "FileNameTxt",
+												"type": "String",
+												"physicalType": "varchar"
 											}
 										}
 									],
