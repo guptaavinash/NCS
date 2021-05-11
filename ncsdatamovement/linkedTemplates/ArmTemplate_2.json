@@ -2013,6 +2013,10 @@
 												{
 													"name": "FileName",
 													"value": "$$FILEPATH"
+												},
+												{
+													"name": "FileSetId",
+													"value": "0"
 												}
 											],
 											"storeSettings": {
@@ -2737,6 +2741,17 @@
 														"name": "irn_no",
 														"type": "String",
 														"physicalType": "nvarchar"
+													}
+												},
+												{
+													"source": {
+														"name": "FileSetId",
+														"type": "String"
+													},
+													"sink": {
+														"name": "FileSetId",
+														"type": "Int32",
+														"physicalType": "int"
 													}
 												},
 												{
