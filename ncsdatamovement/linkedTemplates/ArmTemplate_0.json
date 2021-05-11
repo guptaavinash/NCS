@@ -334,7 +334,7 @@
 						"typeProperties": {
 							"variableName": "testStatus",
 							"value": {
-								"value": "@activity('CubeProcess_copy1').output.Response.item().status",
+								"value": "@string(activity('CubeProcess_copy1').output.Response.item().status)",
 								"type": "Expression"
 							}
 						}
