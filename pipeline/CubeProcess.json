@@ -64,6 +64,9 @@
 						"type": "Expression"
 					},
 					"method": "GET",
+					"headers": {
+						"Content-Type": "application/json"
+					},
 					"body": {
 						"Type": "Full",
 						"CommitMode": "transactional",
