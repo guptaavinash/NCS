@@ -8816,6 +8816,7 @@
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobStorageLocation",
+						"fileName": "DPSR*.gz",
 						"folderPath": {
 							"value": "@dataset().DT",
 							"type": "Expression"
