@@ -53,7 +53,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"expression": {
-						"value": "@variables('var3')",
+						"value": "@not(equals(variables('status'),'inProgress'))",
 						"type": "Expression"
 					},
 					"activities": [
@@ -183,24 +183,6 @@
 				}
 			}
 		],
-		"parameters": {
-			"region": {
-				"type": "string",
-				"defaultValue": "aspaaseastus2"
-			},
-			"server": {
-				"type": "string",
-				"defaultValue": "dbrdashboard"
-			},
-			"model": {
-				"type": "string",
-				"defaultValue": "PG_DMS"
-			},
-			"test": {
-				"type": "string",
-				"defaultValue": "inProgress"
-			}
-		},
 		"variables": {
 			"ArrayVar": {
 				"type": "Array",
@@ -213,7 +195,8 @@
 				"defaultValue": "inProgress"
 			},
 			"var3": {
-				"type": "Boolean"
+				"type": "Boolean",
+				"defaultValue": false
 			}
 		},
 		"annotations": []
