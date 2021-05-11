@@ -897,6 +897,26 @@
 									"typeProperties": {
 										"waitTimeInSeconds": 30
 									}
+								},
+								{
+									"name": "Set variable1",
+									"type": "SetVariable",
+									"dependsOn": [
+										{
+											"activity": "Wait For 30 sec",
+											"dependencyConditions": [
+												"Succeeded"
+											]
+										}
+									],
+									"userProperties": [],
+									"typeProperties": {
+										"variableName": "var3",
+										"value": {
+											"value": "@variables('status')",
+											"type": "Expression"
+										}
+									}
 								}
 							],
 							"timeout": "7.00:00:00"
@@ -927,6 +947,9 @@
 					"status": {
 						"type": "String",
 						"defaultValue": "inProgress"
+					},
+					"var3": {
+						"type": "String"
 					}
 				},
 				"annotations": []
