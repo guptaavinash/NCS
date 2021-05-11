@@ -9,6 +9,10 @@
 			"DT": {
 				"type": "string",
 				"defaultValue": "2021/05/08"
+			},
+			"FileCon": {
+				"type": "string",
+				"defaultValue": "DPSR_MOR_cloud01_2021May08.csv.gz"
 			}
 		},
 		"annotations": [],
@@ -16,7 +20,10 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "DPSR_MOR_cloud01_2021May08.csv.gz",
+				"fileName": {
+					"value": "@dataset().FileCon",
+					"type": "Expression"
+				},
 				"folderPath": {
 					"value": "@dataset().DT",
 					"type": "Expression"
