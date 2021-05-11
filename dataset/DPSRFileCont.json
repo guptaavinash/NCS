@@ -1,0 +1,31 @@
+{
+	"name": "DPSRFileCont",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "DatafoundationADLS",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"DT": {
+				"type": "string",
+				"defaultValue": "2021/05/08"
+			}
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"folderPath": {
+					"value": "@dataset().DT",
+					"type": "Expression"
+				},
+				"container": "cntleap"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"quoteChar": "\""
+		},
+		"schema": []
+	}
+}
