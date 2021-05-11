@@ -229,7 +229,7 @@
 						"userProperties": [],
 						"typeProperties": {
 							"url": {
-								"value": "https://aspaaseastus2.asazure.windows.net/servers/dbrdashboard/models/PG_DMS/sync",
+								"value": "https://aspaaseastus2.asazure.windows.net/servers/dbrdashboard/models/PG_DMS/refreshes",
 								"type": "Expression"
 							},
 							"method": "POST",
@@ -263,7 +263,7 @@
 						"type": "WebActivity",
 						"dependsOn": [
 							{
-								"activity": "CubeProcess",
+								"activity": "Wait1",
 								"dependencyConditions": [
 									"Succeeded"
 								]
@@ -279,7 +279,7 @@
 						"userProperties": [],
 						"typeProperties": {
 							"url": {
-								"value": "https://aspaaseastus2.asazure.windows.net/servers/dbrdashboard/models/PG_DMS/sync",
+								"value": "https://aspaaseastus2.asazure.windows.net/servers/dbrdashboard/models/PG_DMS/refresh",
 								"type": "Expression"
 							},
 							"method": "GET",
@@ -306,6 +306,22 @@
 								"type": "MSI",
 								"resource": "https://*.asazure.windows.net"
 							}
+						}
+					},
+					{
+						"name": "Wait1",
+						"type": "Wait",
+						"dependsOn": [
+							{
+								"activity": "CubeProcess",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"waitTimeInSeconds": 30
 						}
 					}
 				],

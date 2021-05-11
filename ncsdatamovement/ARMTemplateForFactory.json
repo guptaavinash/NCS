@@ -755,7 +755,7 @@
 						"userProperties": [],
 						"typeProperties": {
 							"url": {
-								"value": "https://aspaaseastus2.asazure.windows.net/servers/dbrdashboard/models/PG_DMS/sync",
+								"value": "https://aspaaseastus2.asazure.windows.net/servers/dbrdashboard/models/PG_DMS/refreshes",
 								"type": "Expression"
 							},
 							"method": "POST",
@@ -789,7 +789,7 @@
 						"type": "WebActivity",
 						"dependsOn": [
 							{
-								"activity": "CubeProcess",
+								"activity": "Wait1",
 								"dependencyConditions": [
 									"Succeeded"
 								]
@@ -805,7 +805,7 @@
 						"userProperties": [],
 						"typeProperties": {
 							"url": {
-								"value": "https://aspaaseastus2.asazure.windows.net/servers/dbrdashboard/models/PG_DMS/sync",
+								"value": "https://aspaaseastus2.asazure.windows.net/servers/dbrdashboard/models/PG_DMS/refresh",
 								"type": "Expression"
 							},
 							"method": "GET",
@@ -832,6 +832,22 @@
 								"type": "MSI",
 								"resource": "https://*.asazure.windows.net"
 							}
+						}
+					},
+					{
+						"name": "Wait1",
+						"type": "Wait",
+						"dependsOn": [
+							{
+								"activity": "CubeProcess",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"waitTimeInSeconds": 30
 						}
 					}
 				],
@@ -9628,6 +9644,44 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/PSRDataTransferTo67AT10')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Started",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "PSRTransfefr67Server",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
+					}
+				],
+				"type": "ScheduleTrigger",
+				"typeProperties": {
+					"recurrence": {
+						"frequency": "Day",
+						"interval": 1,
+						"startTime": "2021-05-11T06:48:00",
+						"timeZone": "India Standard Time",
+						"schedule": {
+							"minutes": [
+								0
+							],
+							"hours": [
+								10
+							]
+						}
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/PSRTransfefr67Server')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/RunAt6AM')]",
 			"type": "Microsoft.DataFactory/factories/triggers",
 			"apiVersion": "2018-06-01",
@@ -9739,44 +9793,6 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/pipelines/AASPause')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/PSRDataTransferTo67AT10')]",
-			"type": "Microsoft.DataFactory/factories/triggers",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"runtimeState": "Started",
-				"pipelines": [
-					{
-						"pipelineReference": {
-							"referenceName": "PSRTransfefr67Server",
-							"type": "PipelineReference"
-						},
-						"parameters": {}
-					}
-				],
-				"type": "ScheduleTrigger",
-				"typeProperties": {
-					"recurrence": {
-						"frequency": "Day",
-						"interval": 1,
-						"startTime": "2021-05-11T06:48:00",
-						"timeZone": "India Standard Time",
-						"schedule": {
-							"minutes": [
-								0
-							],
-							"hours": [
-								10
-							]
-						}
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/PSRTransfefr67Server')]"
 			]
 		}
 	]
