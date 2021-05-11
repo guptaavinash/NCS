@@ -8,6 +8,9 @@
 		"67Server_connectionString": {
 			"value": ""
 		},
+		"67ServerNew_connectionString": {
+			"value": ""
+		},
 		"AzureBlobNCSArchive_connectionString": {
 			"value": ""
 		},

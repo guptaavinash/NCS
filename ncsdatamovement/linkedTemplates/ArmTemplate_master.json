@@ -11,6 +11,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of '67Server'"
 		},
+		"67ServerNew_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of '67ServerNew'"
+		},
 		"AzureBlobNCSArchive_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'AzureBlobNCSArchive'"
@@ -84,6 +88,9 @@
 					},
 					"67Server_connectionString": {
 						"value": "[parameters('67Server_connectionString')]"
+					},
+					"67ServerNew_connectionString": {
+						"value": "[parameters('67ServerNew_connectionString')]"
 					},
 					"AzureBlobNCSArchive_connectionString": {
 						"value": "[parameters('AzureBlobNCSArchive_connectionString')]"
@@ -160,6 +167,26 @@
 			},
 			"dependsOn": [
 				"[resourceId('Microsoft.Resources/deployments', 'ncsdatamovement_ArmTemplate_1')]"
+			]
+		},
+		{
+			"name": "ncsdatamovement_ArmTemplate_3",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_3.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'ncsdatamovement_ArmTemplate_2')]"
 			]
 		}
 	]
