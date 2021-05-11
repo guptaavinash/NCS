@@ -793,7 +793,7 @@
 						"userProperties": [],
 						"typeProperties": {
 							"expression": {
-								"value": "@equals(variables('status'),'inProgress')",
+								"value": "@equals('inProgress',variables('status'))",
 								"type": "Expression"
 							},
 							"activities": [
@@ -895,7 +895,7 @@
 									],
 									"userProperties": [],
 									"typeProperties": {
-										"waitTimeInSeconds": 30
+										"waitTimeInSeconds": 3
 									}
 								},
 								{
