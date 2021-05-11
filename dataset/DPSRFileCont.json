@@ -16,7 +16,6 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "DPSR_MOR_*.gz",
 				"folderPath": {
 					"value": "@dataset().DT",
 					"type": "Expression"
