@@ -179,7 +179,7 @@
 							}
 						}
 					],
-					"timeout": "00:01:00"
+					"timeout": ""
 				}
 			}
 		],
@@ -213,8 +213,7 @@
 				"defaultValue": "inProgress"
 			},
 			"var3": {
-				"type": "Boolean",
-				"defaultValue": false
+				"type": "Boolean"
 			}
 		},
 		"annotations": []
