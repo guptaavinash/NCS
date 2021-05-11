@@ -953,8 +953,7 @@
 						"defaultValue": "inProgress"
 					},
 					"var3": {
-						"type": "Boolean",
-						"defaultValue": true
+						"type": "Boolean"
 					}
 				},
 				"annotations": []
