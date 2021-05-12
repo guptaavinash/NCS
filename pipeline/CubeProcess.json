@@ -103,7 +103,7 @@
 							}
 						},
 						{
-							"name": "Set Array Var",
+							"name": "Set Status variable",
 							"type": "SetVariable",
 							"dependsOn": [
 								{
@@ -115,29 +115,9 @@
 							],
 							"userProperties": [],
 							"typeProperties": {
-								"variableName": "ArrayVar",
-								"value": {
-									"value": "@json(activity('CubeProcessingCheck').output.Response)",
-									"type": "Expression"
-								}
-							}
-						},
-						{
-							"name": "Set Status variable",
-							"type": "SetVariable",
-							"dependsOn": [
-								{
-									"activity": "Set Array Var",
-									"dependencyConditions": [
-										"Succeeded"
-									]
-								}
-							],
-							"userProperties": [],
-							"typeProperties": {
 								"variableName": "status",
 								"value": {
-									"value": "@variables('ArrayVar')[0].status",
+									"value": "@activity('CubeProcessingCheck').output.status",
 									"type": "Expression"
 								}
 							}
@@ -156,26 +136,6 @@
 							"userProperties": [],
 							"typeProperties": {
 								"waitTimeInSeconds": 3
-							}
-						},
-						{
-							"name": "Set variable1",
-							"type": "SetVariable",
-							"dependsOn": [
-								{
-									"activity": "Wait For 30 sec",
-									"dependencyConditions": [
-										"Succeeded"
-									]
-								}
-							],
-							"userProperties": [],
-							"typeProperties": {
-								"variableName": "RefreshId",
-								"value": {
-									"value": "@not(contains(variables('status'),'inProgress'))",
-									"type": "Expression"
-								}
 							}
 						}
 					],
