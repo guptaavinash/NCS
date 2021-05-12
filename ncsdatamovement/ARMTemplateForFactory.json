@@ -784,7 +784,7 @@
 						"type": "Until",
 						"dependsOn": [
 							{
-								"activity": "CubeProcess",
+								"activity": "Set RefreshId variable",
 								"dependencyConditions": [
 									"Succeeded"
 								]
@@ -811,7 +811,7 @@
 									"userProperties": [],
 									"typeProperties": {
 										"url": {
-											"value": "https://aspaaseastus2.asazure.windows.net/servers/dbrdashboard/models/PG_DMS/refreshes",
+											"value": "@concat('https://aspaaseastus2.asazure.windows.net/servers/dbrdashboard/models/PG_DMS/refreshes/',variables('RefreshId'))",
 											"type": "Expression"
 										},
 										"method": "GET",
@@ -911,7 +911,7 @@
 									],
 									"userProperties": [],
 									"typeProperties": {
-										"variableName": "var3",
+										"variableName": "RefreshId",
 										"value": {
 											"value": "@not(contains(variables('status'),'inProgress'))",
 											"type": "Expression"
@@ -920,6 +920,118 @@
 								}
 							],
 							"timeout": "7.00:00:00"
+						}
+					},
+					{
+						"name": "GetRefreshId",
+						"type": "WebActivity",
+						"dependsOn": [
+							{
+								"activity": "CubeProcess",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"url": {
+								"value": "https://aspaaseastus2.asazure.windows.net/servers/dbrdashboard/models/PG_DMS/refreshes",
+								"type": "Expression"
+							},
+							"method": "GET",
+							"headers": {
+								"Content-Type": "application/json"
+							},
+							"body": {
+								"Type": "Full",
+								"CommitMode": "transactional",
+								"MaxParallelism": 2,
+								"RetryCount": 2,
+								"Objects": [
+									{
+										"database": "PG_DMS",
+										"table": "tblFactCFR",
+										"partition": "PartitionCurrentQuarter_FactCFRData"
+									},
+									{
+										"database": "PG_DMS",
+										"table": "tblFactCOS",
+										"partition": "PartitionCurrentQuarter_FactCOSData"
+									}
+								]
+							},
+							"authentication": {
+								"type": "MSI",
+								"resource": "https://*.asazure.windows.net"
+							}
+						}
+					},
+					{
+						"name": "Set Array VarOuter",
+						"type": "SetVariable",
+						"dependsOn": [
+							{
+								"activity": "GetRefreshId",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "ArrayVar",
+							"value": {
+								"value": "@json(activity('GetRefreshId').output.Response)\n",
+								"type": "Expression"
+							}
+						}
+					},
+					{
+						"name": "Set Status variableOuter",
+						"type": "SetVariable",
+						"dependsOn": [
+							{
+								"activity": "Set Array VarOuter",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "status",
+							"value": {
+								"value": "@variables('ArrayVar')[0].status",
+								"type": "Expression"
+							}
+						}
+					},
+					{
+						"name": "Set RefreshId variable",
+						"type": "SetVariable",
+						"dependsOn": [
+							{
+								"activity": "Set Status variableOuter",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "RefreshId",
+							"value": {
+								"value": "@variables('ArrayVar')[0].refreshId",
+								"type": "Expression"
+							}
 						}
 					}
 				],
@@ -934,8 +1046,8 @@
 						"type": "String",
 						"defaultValue": "inProgress"
 					},
-					"var3": {
-						"type": "Boolean"
+					"RefreshId": {
+						"type": "String"
 					}
 				},
 				"annotations": []
