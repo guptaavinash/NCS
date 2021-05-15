@@ -1,0 +1,22 @@
+{
+	"name": "CSVData",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "DatafoundationADLS",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"folderPath": "2021/05/13",
+				"container": "cntleap"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"quoteChar": "\""
+		},
+		"schema": []
+	}
+}
