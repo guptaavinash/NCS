@@ -761,10 +761,38 @@
 							"method": "POST",
 							"headers": {},
 							"body": {
-								"Type": "Full",
+								"Type": "automatic",
 								"CommitMode": "transactional",
 								"RetryCount": 2,
 								"Objects": [
+									{
+										"database": "PG_DMS",
+										"table": "DSR Hierarchy"
+									},
+									{
+										"database": "PG_DMS",
+										"table": "Location Hierarchy"
+									},
+									{
+										"database": "PG_DMS",
+										"table": "Channel Hierarchy"
+									},
+									{
+										"database": "PG_DMS",
+										"table": "Store Master"
+									},
+									{
+										"database": "PG_DMS",
+										"table": "Product Hierarchy"
+									},
+									{
+										"database": "PG_DMS",
+										"table": "Date"
+									},
+									{
+										"database": "PG_DMS",
+										"table": "SRN Reason"
+									},
 									{
 										"database": "PG_DMS",
 										"table": "tblFactSalesDetail",
