@@ -763,37 +763,8 @@
 							"body": {
 								"Type": "Full",
 								"CommitMode": "transactional",
-								"MaxParallelism": 2,
 								"RetryCount": 2,
 								"Objects": [
-									{
-										"database": "PG_DMS",
-										"table": "DSR Hierarchy"
-									},
-									{
-										"database": "PG_DMS",
-										"table": "Location Hierarchy"
-									},
-									{
-										"database": "PG_DMS",
-										"table": "Channel Hierarchy"
-									},
-									{
-										"database": "PG_DMS",
-										"table": "Store Master"
-									},
-									{
-										"database": "PG_DMS",
-										"table": "Product Hierarchy"
-									},
-									{
-										"database": "PG_DMS",
-										"table": "Date"
-									},
-									{
-										"database": "PG_DMS",
-										"table": "SRN Reason"
-									},
 									{
 										"database": "PG_DMS",
 										"table": "tblFactSalesDetail",
@@ -968,7 +939,7 @@
 									],
 									"userProperties": [],
 									"typeProperties": {
-										"waitTimeInSeconds": 30
+										"waitTimeInSeconds": 300
 									}
 								}
 							],
