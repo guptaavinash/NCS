@@ -309,7 +309,7 @@
 							"value": "@dataset().FileName",
 							"type": "Expression"
 						},
-						"folderPath": "2021/06/01",
+						"folderPath": "2021/05/01",
 						"container": "cntleap"
 					},
 					"columnDelimiter": "|",
@@ -507,7 +507,7 @@
 					"location": {
 						"type": "AzureBlobStorageLocation",
 						"fileName": "SBDGAP*",
-						"folderPath": "2021/06/01",
+						"folderPath": "2021/05/01",
 						"container": "cntleap"
 					},
 					"columnDelimiter": "|",
