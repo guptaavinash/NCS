@@ -1,0 +1,57 @@
+{
+	"name": "SBDGAPTable",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "DataFoundationDW",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlDWTable",
+		"schema": [
+			{
+				"name": "rtrcode",
+				"type": "nvarchar"
+			},
+			{
+				"name": "retailer",
+				"type": "nvarchar"
+			},
+			{
+				"name": "dsecode",
+				"type": "nvarchar"
+			},
+			{
+				"name": "dsename",
+				"type": "nvarchar"
+			},
+			{
+				"name": "channel_desc",
+				"type": "nvarchar"
+			},
+			{
+				"name": "gap_status",
+				"type": "nvarchar"
+			},
+			{
+				"name": "no_sale",
+				"type": "nvarchar"
+			},
+			{
+				"name": "report_month",
+				"type": "nvarchar"
+			},
+			{
+				"name": "report_year",
+				"type": "nvarchar"
+			},
+			{
+				"name": "branch",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "tmpRawLEAPTAS_SBDGAP"
+		}
+	}
+}

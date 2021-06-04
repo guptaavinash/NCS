@@ -1,0 +1,76 @@
+{
+	"name": "SBDFileGAPCon",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "DatafoundationADLS",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"FileName": {
+				"type": "string",
+				"defaultValue": "SBDGAP_cloud01_2021May11.csv.gz"
+			}
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": {
+					"value": "@dataset().FileName",
+					"type": "Expression"
+				},
+				"folderPath": "2021/05/11",
+				"container": "cntleap"
+			},
+			"columnDelimiter": "|",
+			"compressionCodec": "gzip",
+			"compressionLevel": "Fastest",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "rtrcode",
+				"type": "String"
+			},
+			{
+				"name": "retailer",
+				"type": "String"
+			},
+			{
+				"name": "dsecode",
+				"type": "String"
+			},
+			{
+				"name": "dsename",
+				"type": "String"
+			},
+			{
+				"name": "channel_desc",
+				"type": "String"
+			},
+			{
+				"name": "gap_status",
+				"type": "String"
+			},
+			{
+				"name": "no_sale",
+				"type": "String"
+			},
+			{
+				"name": "report_month",
+				"type": "String"
+			},
+			{
+				"name": "report_year",
+				"type": "String"
+			},
+			{
+				"name": "branch",
+				"type": "String"
+			}
+		]
+	}
+}
