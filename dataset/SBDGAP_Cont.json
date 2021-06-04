@@ -14,7 +14,7 @@
 				"folderPath": "2021/05/11",
 				"container": "cntleap"
 			},
-			"columnDelimiter": ",",
+			"columnDelimiter": "|",
 			"escapeChar": "\\",
 			"quoteChar": "\""
 		},
