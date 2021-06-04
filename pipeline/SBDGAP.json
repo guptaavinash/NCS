@@ -24,6 +24,7 @@
 					],
 					"storeSettings": {
 						"type": "AzureBlobStorageReadSettings",
+						"recursive": true,
 						"enablePartitionDiscovery": false
 					},
 					"formatSettings": {
@@ -75,13 +76,7 @@
 									}
 								},
 								"sink": {
-									"type": "SqlDWSink",
-									"allowPolyBase": true,
-									"polyBaseSettings": {
-										"rejectValue": 0,
-										"rejectType": "value",
-										"useTypeDefault": true
-									}
+									"type": "SqlDWSink"
 								},
 								"enableStaging": false,
 								"translator": {
