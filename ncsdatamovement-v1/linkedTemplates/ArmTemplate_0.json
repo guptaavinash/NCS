@@ -1,0 +1,1203 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "ncsdatamovement-v1"
+		},
+		"67Server_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of '67Server'"
+		},
+		"67ServerNew_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of '67ServerNew'"
+		},
+		"AzureBlobNCSArchive_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureBlobNCSArchive'"
+		},
+		"AzureDatafoundation_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureDatafoundation'"
+		},
+		"AzureSqlMI1_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureSqlMI1'"
+		},
+		"AzureSynapseAnalyticsBackup_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureSynapseAnalyticsBackup'"
+		},
+		"DFSQLDB_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'DFSQLDB'"
+		},
+		"DataFoundationDW_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'DataFoundationDW'"
+		},
+		"DataFoundationDW_servicePrincipalKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'servicePrincipalKey' of 'DataFoundationDW'"
+		},
+		"DatafoundationADLS_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'DatafoundationADLS'"
+		},
+		"TASDB_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'TASDB'"
+		},
+		"DataFoundationDW_properties_typeProperties_servicePrincipalId": {
+			"type": "string",
+			"defaultValue": "7ec6607e-638a-46bf-9ff0-ea38bacb5ea9"
+		},
+		"DataFoundationDW_properties_typeProperties_tenant": {
+			"type": "string",
+			"defaultValue": "515445df-f272-4c96-aa97-d670cbdeab20"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/AASPause')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Web1",
+						"type": "WebActivity",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"url": "https://management.azure.com/subscriptions/15354be3-bb86-4045-a1a1-7bf7d9ba1c31/resourceGroups/DBRDashboard/providers/Microsoft.AnalysisServices/servers/dbrdashboard/Suspend?api-version=2017-08-01",
+							"method": "POST",
+							"headers": {},
+							"body": {
+								"Dummy": "Dummy"
+							},
+							"authentication": {
+								"type": "MSI",
+								"resource": "https://management.azure.com/"
+							}
+						}
+					}
+				],
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AASResume')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Web1",
+						"type": "WebActivity",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"url": "https://management.azure.com/subscriptions/15354be3-bb86-4045-a1a1-7bf7d9ba1c31/resourceGroups/DBRDashboard/providers/Microsoft.AnalysisServices/servers/dbrdashboard/resume?api-version=2017-08-01",
+							"method": "POST",
+							"headers": {},
+							"body": {
+								"Dummy": "Dummy"
+							},
+							"authentication": {
+								"type": "MSI",
+								"resource": "https://management.azure.com/"
+							}
+						}
+					}
+				],
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AASServiceStatus')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Web1",
+						"type": "WebActivity",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"url": "https://management.azure.com/subscriptions/15354be3-bb86-4045-a1a1-7bf7d9ba1c31/resourceGroups/DBRDashboard/providers/Microsoft.AnalysisServices/servers/dbrdashboard?api-version=2017-08-01",
+							"method": "GET",
+							"headers": {},
+							"authentication": {
+								"type": "MSI",
+								"resource": "https://management.azure.com/"
+							}
+						}
+					}
+				],
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ApplicationId')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Web1",
+						"type": "WebActivity",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"url": "https://management.azure.com/subscriptions/15354be3-bb86-4045-a1a1-7bf7d9ba1c31/resourceGroups/DataFoundation/providers/Microsoft.DataFactory/factories/ncsdatamovement?api-version=2018-06-01",
+							"method": "PATCH",
+							"headers": {},
+							"body": {
+								"name": "ncsdatamovement",
+								"location": "eastus2",
+								"identity": {
+									"type": "SystemAssigned"
+								}
+							},
+							"authentication": {
+								"type": "MSI",
+								"resource": "https://management.azure.com"
+							}
+						}
+					}
+				],
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/CubeProcess')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "CubeProcess",
+						"type": "WebActivity",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"url": {
+								"value": "https://aspaaseastus2.asazure.windows.net/servers/dbrdashboard/models/PG_DMS/refreshes",
+								"type": "Expression"
+							},
+							"method": "POST",
+							"headers": {},
+							"body": {
+								"Type": "automatic",
+								"CommitMode": "transactional",
+								"RetryCount": 2,
+								"Objects": [
+									{
+										"database": "PG_DMS",
+										"table": "DSR Hierarchy"
+									},
+									{
+										"database": "PG_DMS",
+										"table": "Location Hierarchy"
+									},
+									{
+										"database": "PG_DMS",
+										"table": "Channel Hierarchy"
+									},
+									{
+										"database": "PG_DMS",
+										"table": "Store Master"
+									},
+									{
+										"database": "PG_DMS",
+										"table": "Product Hierarchy"
+									},
+									{
+										"database": "PG_DMS",
+										"table": "Date"
+									},
+									{
+										"database": "PG_DMS",
+										"table": "SRN Reason"
+									},
+									{
+										"database": "PG_DMS",
+										"table": "tblFactSalesDetail",
+										"partition": "PartitionCurrentQuarter_FactSalesDetails"
+									},
+									{
+										"database": "PG_DMS",
+										"table": "tblFactCoverage",
+										"partition": "PartitionCurrentQuarter_FactCoverage"
+									},
+									{
+										"database": "PG_DMS",
+										"table": "tblFactCoverageStoreLvl",
+										"partition": "PartitionCurrentQuarter_FactCoverageStoreLvl"
+									},
+									{
+										"database": "PG_DMS",
+										"table": "tblFactCoverageLPB",
+										"partition": "PartitionCurrentQuarter_FactCoverageLPB"
+									},
+									{
+										"database": "PG_DMS",
+										"table": "tblFactARData",
+										"partition": "PartitionCurrentQuarter_FactARData"
+									},
+									{
+										"database": "PG_DMS",
+										"table": "tblFactCFR",
+										"partition": "PartitionCurrentQuarter_FactCFRData"
+									},
+									{
+										"database": "PG_DMS",
+										"table": "tblFactCOS",
+										"partition": "PartitionCurrentQuarter_FactCOSData"
+									},
+									{
+										"database": "PG_DMS",
+										"table": "tblFactFocusBrandData",
+										"partition": "PartitionCurrentQuarter_FactFocusBrandData"
+									},
+									{
+										"database": "PG_DMS",
+										"table": "tblFactInventory",
+										"partition": "PartitionCurrentQuarter_FactInventory"
+									},
+									{
+										"database": "PG_DMS",
+										"table": "tblFactSBDData",
+										"partition": "PartitionCurrentQuarter_FactSBDData"
+									},
+									{
+										"database": "PG_DMS",
+										"table": "tblFactStoreLvlSBDData",
+										"partition": "PartitionCurrentQuarter_FactStoreLvlSBDData"
+									},
+									{
+										"database": "PG_DMS",
+										"table": "tblFactTargetData",
+										"partition": "PartitionCurrentQuarter_FactTargetData"
+									},
+									{
+										"database": "PG_DMS",
+										"table": "tblFactOrderData",
+										"partition": "PartitionCurrentQuarter_FactOrderData"
+									},
+									{
+										"database": "PG_DMS",
+										"table": "tblFactWorkingDays",
+										"partition": "Partition"
+									}
+								]
+							},
+							"authentication": {
+								"type": "MSI",
+								"resource": "https://*.asazure.windows.net"
+							}
+						}
+					},
+					{
+						"name": "Until1",
+						"type": "Until",
+						"dependsOn": [
+							{
+								"activity": "Set RefreshId variable",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"expression": {
+								"value": "@not(equals(variables('status'),'inProgress'))",
+								"type": "Expression"
+							},
+							"activities": [
+								{
+									"name": "CubeProcessingCheck",
+									"type": "WebActivity",
+									"dependsOn": [],
+									"policy": {
+										"timeout": "7.00:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"url": {
+											"value": "@concat('https://aspaaseastus2.asazure.windows.net/servers/dbrdashboard/models/PG_DMS/refreshes/',variables('RefreshId'))",
+											"type": "Expression"
+										},
+										"method": "GET",
+										"headers": {
+											"Content-Type": "application/json"
+										},
+										"body": {
+											"Type": "Full",
+											"CommitMode": "transactional",
+											"MaxParallelism": 2,
+											"RetryCount": 2,
+											"Objects": [
+												{
+													"database": "PG_DMS",
+													"table": "tblFactCFR",
+													"partition": "PartitionCurrentQuarter_FactCFRData"
+												},
+												{
+													"database": "PG_DMS",
+													"table": "tblFactCOS",
+													"partition": "PartitionCurrentQuarter_FactCOSData"
+												}
+											]
+										},
+										"authentication": {
+											"type": "MSI",
+											"resource": "https://*.asazure.windows.net"
+										}
+									}
+								},
+								{
+									"name": "Set Status variable",
+									"type": "SetVariable",
+									"dependsOn": [
+										{
+											"activity": "CubeProcessingCheck",
+											"dependencyConditions": [
+												"Succeeded"
+											]
+										}
+									],
+									"userProperties": [],
+									"typeProperties": {
+										"variableName": "status",
+										"value": {
+											"value": "@activity('CubeProcessingCheck').output.status",
+											"type": "Expression"
+										}
+									}
+								},
+								{
+									"name": "Wait For 30 sec",
+									"type": "Wait",
+									"dependsOn": [
+										{
+											"activity": "Set Status variable",
+											"dependencyConditions": [
+												"Succeeded"
+											]
+										}
+									],
+									"userProperties": [],
+									"typeProperties": {
+										"waitTimeInSeconds": 300
+									}
+								}
+							],
+							"timeout": "7.00:00:00"
+						}
+					},
+					{
+						"name": "GetRefreshId",
+						"type": "WebActivity",
+						"dependsOn": [
+							{
+								"activity": "CubeProcess",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"url": {
+								"value": "https://aspaaseastus2.asazure.windows.net/servers/dbrdashboard/models/PG_DMS/refreshes",
+								"type": "Expression"
+							},
+							"method": "GET",
+							"headers": {
+								"Content-Type": "application/json"
+							},
+							"body": {
+								"Type": "Full",
+								"CommitMode": "transactional",
+								"MaxParallelism": 2,
+								"RetryCount": 2,
+								"Objects": [
+									{
+										"database": "PG_DMS",
+										"table": "tblFactCFR",
+										"partition": "PartitionCurrentQuarter_FactCFRData"
+									},
+									{
+										"database": "PG_DMS",
+										"table": "tblFactCOS",
+										"partition": "PartitionCurrentQuarter_FactCOSData"
+									}
+								]
+							},
+							"authentication": {
+								"type": "MSI",
+								"resource": "https://*.asazure.windows.net"
+							}
+						}
+					},
+					{
+						"name": "Set Array VarOuter",
+						"type": "SetVariable",
+						"dependsOn": [
+							{
+								"activity": "GetRefreshId",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "ArrayVar",
+							"value": {
+								"value": "@json(activity('GetRefreshId').output.Response)\n",
+								"type": "Expression"
+							}
+						}
+					},
+					{
+						"name": "Set Status variableOuter",
+						"type": "SetVariable",
+						"dependsOn": [
+							{
+								"activity": "Set Array VarOuter",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "status",
+							"value": {
+								"value": "@variables('ArrayVar')[0].status",
+								"type": "Expression"
+							}
+						}
+					},
+					{
+						"name": "Set RefreshId variable",
+						"type": "SetVariable",
+						"dependsOn": [
+							{
+								"activity": "Set Status variableOuter",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "RefreshId",
+							"value": {
+								"value": "@variables('ArrayVar')[0].refreshId",
+								"type": "Expression"
+							}
+						}
+					}
+				],
+				"variables": {
+					"ArrayVar": {
+						"type": "Array",
+						"defaultValue": [
+							"test"
+						]
+					},
+					"status": {
+						"type": "String",
+						"defaultValue": "inProgress"
+					},
+					"RefreshId": {
+						"type": "String"
+					}
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DWScaleUpDown')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Web1",
+						"type": "WebActivity",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"url": "https://management.azure.com/subscriptions/15354be3-bb86-4045-a1a1-7bf7d9ba1c31/resourceGroups/DataFoundation/providers/Microsoft.Sql/servers/pgdatafoundation/databases/DataFoundation?api-version=2020-08-01-preview",
+							"method": "PUT",
+							"headers": {},
+							"body": {
+								"value": "{\n\tlocation: \"eastus2\",\n    \"sku\": {\n    \"name\": \"DW400c\"\n    }\n}",
+								"type": "Expression"
+							},
+							"authentication": {
+								"type": "MSI",
+								"resource": "https://management.core.windows.net"
+							}
+						}
+					}
+				],
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/PauseDW')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Pause",
+						"type": "WebActivity",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"url": "https://management.azure.com/subscriptions/15354be3-bb86-4045-a1a1-7bf7d9ba1c31/resourceGroups/DataFoundation/providers/Microsoft.Sql/servers/pgdatafoundation/databases/DataFoundation/pause?api-version=2020-08-01-preview",
+							"method": "POST",
+							"headers": {},
+							"body": "{\n\tlocation: \"eastus2\"\n}",
+							"authentication": {
+								"type": "MSI",
+								"resource": "https://management.core.windows.net"
+							}
+						}
+					}
+				],
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ResumeDW')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Web1",
+						"type": "WebActivity",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"url": "https://management.azure.com/subscriptions/15354be3-bb86-4045-a1a1-7bf7d9ba1c31/resourceGroups/DataFoundation/providers/Microsoft.Sql/servers/pgdatafoundation/databases/DataFoundation/resume?api-version=2020-08-01-preview",
+							"method": "POST",
+							"headers": {},
+							"body": "{\n\tlocation: \"eastus2\"\n}",
+							"authentication": {
+								"type": "MSI",
+								"resource": "https://management.core.windows.net"
+							}
+						}
+					}
+				],
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/testjsonread')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Set variable1",
+						"type": "SetVariable",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "yrdy",
+							"value": {
+								"value": "@variables('test')[0].status",
+								"type": "Expression"
+							}
+						}
+					}
+				],
+				"variables": {
+					"test": {
+						"type": "Array",
+						"defaultValue": [
+							{
+								"refreshId": "b7bb233d-6111-4d7a-bb7d-95e1116c3d87",
+								"startTime": "2021-05-11T13:22:43.803Z",
+								"status": "inProgress"
+							},
+							{
+								"refreshId": "0fdb3e7e-74c6-4282-9515-5efcd7b89a63",
+								"startTime": "2021-05-02T06:25:03.657Z",
+								"endTime": "2021-05-02T06:26:08.657Z",
+								"status": "succeeded"
+							},
+							{
+								"refreshId": "140e8955-a3dd-400a-bd55-af47d1032fff",
+								"startTime": "2021-05-02T06:22:34.967Z",
+								"endTime": "2021-05-02T06:23:46.52Z",
+								"status": "succeeded"
+							},
+							{
+								"refreshId": "368d999f-cc98-42d8-bb6f-df00053a6f94",
+								"startTime": "2021-05-11T09:15:34.31Z",
+								"endTime": "2021-05-11T09:17:36.91Z",
+								"status": "succeeded"
+							},
+							{
+								"refreshId": "3f741cde-b871-4c76-a702-2282479538fa",
+								"startTime": "2021-05-11T13:06:34.69Z",
+								"endTime": "2021-05-11T13:08:40.71Z",
+								"status": "succeeded"
+							},
+							{
+								"refreshId": "4133cb46-0a8f-4dd1-aec9-64fe293a160a",
+								"startTime": "2021-05-11T08:22:27.78Z",
+								"endTime": "2021-05-11T08:24:29.71Z",
+								"status": "succeeded"
+							},
+							{
+								"refreshId": "87ed0870-4f42-4568-9de1-955899b53c6b",
+								"startTime": "2021-05-11T09:12:14.49Z",
+								"endTime": "2021-05-11T09:14:20.273Z",
+								"status": "succeeded"
+							},
+							{
+								"refreshId": "88c479c6-30c0-40e9-94ff-743f512e173b",
+								"startTime": "2021-05-11T07:25:35.51Z",
+								"endTime": "2021-05-11T07:41:04.8Z",
+								"status": "succeeded"
+							},
+							{
+								"refreshId": "978df1dd-cdbf-4456-8d6d-10eb46d779f3",
+								"startTime": "2021-05-11T07:48:48.24Z",
+								"endTime": "2021-05-11T07:50:53.097Z",
+								"status": "succeeded"
+							},
+							{
+								"refreshId": "af46baf4-2842-49bc-ae17-d10552183c72",
+								"startTime": "2021-05-11T13:16:25.69Z",
+								"endTime": "2021-05-11T13:18:28.767Z",
+								"status": "succeeded"
+							},
+							{
+								"refreshId": "c3ffdca2-2d89-4c6e-9ff5-1de8e4b2c804",
+								"startTime": "2021-05-10T06:47:25.25Z",
+								"endTime": "2021-05-10T07:49:25.19Z",
+								"status": "succeeded"
+							},
+							{
+								"refreshId": "ed4d89fd-df0a-4fa7-95e6-1393d9649c6b",
+								"startTime": "2021-05-11T08:02:34.663Z",
+								"endTime": "2021-05-11T08:04:38.2Z",
+								"status": "succeeded"
+							},
+							{
+								"refreshId": "f5aec9ee-92e2-4fb4-bf83-de7ce7d9fcd7",
+								"startTime": "2021-05-02T06:28:41.837Z",
+								"endTime": "2021-05-02T06:42:12.54Z",
+								"status": "succeeded"
+							}
+						]
+					},
+					"yrdy": {
+						"type": "String"
+					}
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/67Server')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "SqlServer",
+				"typeProperties": {
+					"connectionString": "[parameters('67Server_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/67ServerNew')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "SqlServer",
+				"typeProperties": {
+					"connectionString": "[parameters('67ServerNew_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureBlobNCSArchive')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobStorage",
+				"typeProperties": {
+					"connectionString": "[parameters('AzureBlobNCSArchive_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureDatafoundation')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobStorage",
+				"typeProperties": {
+					"connectionString": "[parameters('AzureDatafoundation_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureSqlMI1')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureSqlMI",
+				"typeProperties": {
+					"connectionString": "[parameters('AzureSqlMI1_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureSynapseAnalyticsBackup')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureSqlDW",
+				"typeProperties": {
+					"connectionString": "[parameters('AzureSynapseAnalyticsBackup_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DFSQLDB')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureSqlDatabase",
+				"typeProperties": {
+					"connectionString": "[parameters('DFSQLDB_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DataFoundationDW')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureSqlDW",
+				"typeProperties": {
+					"connectionString": "[parameters('DataFoundationDW_connectionString')]",
+					"servicePrincipalId": "[parameters('DataFoundationDW_properties_typeProperties_servicePrincipalId')]",
+					"servicePrincipalKey": {
+						"type": "SecureString",
+						"value": "[parameters('DataFoundationDW_servicePrincipalKey')]"
+					},
+					"tenant": "[parameters('DataFoundationDW_properties_typeProperties_tenant')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DatafoundationADLS')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobStorage",
+				"typeProperties": {
+					"connectionString": "[parameters('DatafoundationADLS_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/TASDB')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "SqlServer",
+				"typeProperties": {
+					"connectionString": "[parameters('TASDB_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/67ServerRTDX')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "67ServerNew",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "SqlServerTable",
+				"schema": [
+					{
+						"name": "document_no",
+						"type": "nvarchar"
+					},
+					{
+						"name": "apply_to_doc",
+						"type": "nvarchar"
+					},
+					{
+						"name": "document_date",
+						"type": "nvarchar"
+					},
+					{
+						"name": "transaction_type",
+						"type": "nvarchar"
+					},
+					{
+						"name": "subbrandform_name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "prod_name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "customer_name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "customer_code",
+						"type": "nvarchar"
+					},
+					{
+						"name": "retailer_gst_no",
+						"type": "nvarchar"
+					},
+					{
+						"name": "channel_description",
+						"type": "nvarchar"
+					},
+					{
+						"name": "dse",
+						"type": "nvarchar"
+					},
+					{
+						"name": "pcode",
+						"type": "nvarchar"
+					},
+					{
+						"name": "batch",
+						"type": "nvarchar"
+					},
+					{
+						"name": "customer_type",
+						"type": "nvarchar"
+					},
+					{
+						"name": "hsn_code",
+						"type": "nvarchar"
+					},
+					{
+						"name": "category",
+						"type": "nvarchar"
+					},
+					{
+						"name": "brand",
+						"type": "nvarchar"
+					},
+					{
+						"name": "brandform",
+						"type": "nvarchar"
+					},
+					{
+						"name": "upc",
+						"type": "nvarchar"
+					},
+					{
+						"name": "quantity",
+						"type": "nvarchar"
+					},
+					{
+						"name": "gross_value",
+						"type": "nvarchar"
+					},
+					{
+						"name": "discount",
+						"type": "nvarchar"
+					},
+					{
+						"name": "taxable_scheme",
+						"type": "nvarchar"
+					},
+					{
+						"name": "cgst_amount",
+						"type": "nvarchar"
+					},
+					{
+						"name": "sgst_amount",
+						"type": "nvarchar"
+					},
+					{
+						"name": "igst_amount",
+						"type": "nvarchar"
+					},
+					{
+						"name": "cess_amount",
+						"type": "nvarchar"
+					},
+					{
+						"name": "tcs_amount",
+						"type": "nvarchar"
+					},
+					{
+						"name": "mracc_code",
+						"type": "nvarchar"
+					},
+					{
+						"name": "mracc_desc",
+						"type": "nvarchar"
+					},
+					{
+						"name": "vendor",
+						"type": "nvarchar"
+					},
+					{
+						"name": "net_amount",
+						"type": "nvarchar"
+					},
+					{
+						"name": "tax_on_discount",
+						"type": "nvarchar"
+					},
+					{
+						"name": "tax_on_scheme",
+						"type": "nvarchar"
+					},
+					{
+						"name": "tax_in_rlp",
+						"type": "nvarchar"
+					},
+					{
+						"name": "retailing",
+						"type": "nvarchar"
+					},
+					{
+						"name": "gross_in_slp",
+						"type": "nvarchar"
+					},
+					{
+						"name": "po_no",
+						"type": "nvarchar"
+					},
+					{
+						"name": "dse_code",
+						"type": "nvarchar"
+					},
+					{
+						"name": "msu",
+						"type": "nvarchar"
+					},
+					{
+						"name": "reason",
+						"type": "nvarchar"
+					},
+					{
+						"name": "remarks",
+						"type": "nvarchar"
+					},
+					{
+						"name": "srn_ref_no",
+						"type": "nvarchar"
+					},
+					{
+						"name": "composite",
+						"type": "nvarchar"
+					},
+					{
+						"name": "cgst_rate",
+						"type": "nvarchar"
+					},
+					{
+						"name": "sgst_rate",
+						"type": "nvarchar"
+					},
+					{
+						"name": "igst_rate",
+						"type": "nvarchar"
+					},
+					{
+						"name": "cess_rate",
+						"type": "nvarchar"
+					},
+					{
+						"name": "tcs_rate",
+						"type": "nvarchar"
+					},
+					{
+						"name": "branch_code",
+						"type": "nvarchar"
+					},
+					{
+						"name": "branch_name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "distributor_gst_no",
+						"type": "nvarchar"
+					},
+					{
+						"name": "order_mode",
+						"type": "nvarchar"
+					},
+					{
+						"name": "branch_gst_no",
+						"type": "nvarchar"
+					},
+					{
+						"name": "dl_no",
+						"type": "nvarchar"
+					},
+					{
+						"name": "dl_expiry_date",
+						"type": "nvarchar"
+					},
+					{
+						"name": "tc_code",
+						"type": "nvarchar"
+					},
+					{
+						"name": "tc_name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "irn_no",
+						"type": "nvarchar"
+					},
+					{
+						"name": "FileSetId",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "apply_to_doc_date",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "tmpPSR"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/67ServerNew')]"
+			]
+		}
+	]
+}
