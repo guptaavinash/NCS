@@ -13,6 +13,271 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/67ServerRTDX')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "67ServerNew",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "SqlServerTable",
+				"schema": [
+					{
+						"name": "document_no",
+						"type": "nvarchar"
+					},
+					{
+						"name": "apply_to_doc",
+						"type": "nvarchar"
+					},
+					{
+						"name": "document_date",
+						"type": "nvarchar"
+					},
+					{
+						"name": "transaction_type",
+						"type": "nvarchar"
+					},
+					{
+						"name": "subbrandform_name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "prod_name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "customer_name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "customer_code",
+						"type": "nvarchar"
+					},
+					{
+						"name": "retailer_gst_no",
+						"type": "nvarchar"
+					},
+					{
+						"name": "channel_description",
+						"type": "nvarchar"
+					},
+					{
+						"name": "dse",
+						"type": "nvarchar"
+					},
+					{
+						"name": "pcode",
+						"type": "nvarchar"
+					},
+					{
+						"name": "batch",
+						"type": "nvarchar"
+					},
+					{
+						"name": "customer_type",
+						"type": "nvarchar"
+					},
+					{
+						"name": "hsn_code",
+						"type": "nvarchar"
+					},
+					{
+						"name": "category",
+						"type": "nvarchar"
+					},
+					{
+						"name": "brand",
+						"type": "nvarchar"
+					},
+					{
+						"name": "brandform",
+						"type": "nvarchar"
+					},
+					{
+						"name": "upc",
+						"type": "nvarchar"
+					},
+					{
+						"name": "quantity",
+						"type": "nvarchar"
+					},
+					{
+						"name": "gross_value",
+						"type": "nvarchar"
+					},
+					{
+						"name": "discount",
+						"type": "nvarchar"
+					},
+					{
+						"name": "taxable_scheme",
+						"type": "nvarchar"
+					},
+					{
+						"name": "cgst_amount",
+						"type": "nvarchar"
+					},
+					{
+						"name": "sgst_amount",
+						"type": "nvarchar"
+					},
+					{
+						"name": "igst_amount",
+						"type": "nvarchar"
+					},
+					{
+						"name": "cess_amount",
+						"type": "nvarchar"
+					},
+					{
+						"name": "tcs_amount",
+						"type": "nvarchar"
+					},
+					{
+						"name": "mracc_code",
+						"type": "nvarchar"
+					},
+					{
+						"name": "mracc_desc",
+						"type": "nvarchar"
+					},
+					{
+						"name": "vendor",
+						"type": "nvarchar"
+					},
+					{
+						"name": "net_amount",
+						"type": "nvarchar"
+					},
+					{
+						"name": "tax_on_discount",
+						"type": "nvarchar"
+					},
+					{
+						"name": "tax_on_scheme",
+						"type": "nvarchar"
+					},
+					{
+						"name": "tax_in_rlp",
+						"type": "nvarchar"
+					},
+					{
+						"name": "retailing",
+						"type": "nvarchar"
+					},
+					{
+						"name": "gross_in_slp",
+						"type": "nvarchar"
+					},
+					{
+						"name": "po_no",
+						"type": "nvarchar"
+					},
+					{
+						"name": "dse_code",
+						"type": "nvarchar"
+					},
+					{
+						"name": "msu",
+						"type": "nvarchar"
+					},
+					{
+						"name": "reason",
+						"type": "nvarchar"
+					},
+					{
+						"name": "remarks",
+						"type": "nvarchar"
+					},
+					{
+						"name": "srn_ref_no",
+						"type": "nvarchar"
+					},
+					{
+						"name": "composite",
+						"type": "nvarchar"
+					},
+					{
+						"name": "cgst_rate",
+						"type": "nvarchar"
+					},
+					{
+						"name": "sgst_rate",
+						"type": "nvarchar"
+					},
+					{
+						"name": "igst_rate",
+						"type": "nvarchar"
+					},
+					{
+						"name": "cess_rate",
+						"type": "nvarchar"
+					},
+					{
+						"name": "tcs_rate",
+						"type": "nvarchar"
+					},
+					{
+						"name": "branch_code",
+						"type": "nvarchar"
+					},
+					{
+						"name": "branch_name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "distributor_gst_no",
+						"type": "nvarchar"
+					},
+					{
+						"name": "order_mode",
+						"type": "nvarchar"
+					},
+					{
+						"name": "branch_gst_no",
+						"type": "nvarchar"
+					},
+					{
+						"name": "dl_no",
+						"type": "nvarchar"
+					},
+					{
+						"name": "dl_expiry_date",
+						"type": "nvarchar"
+					},
+					{
+						"name": "tc_code",
+						"type": "nvarchar"
+					},
+					{
+						"name": "tc_name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "irn_no",
+						"type": "nvarchar"
+					},
+					{
+						"name": "FileSetId",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "apply_to_doc_date",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "tmpPSR"
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/AzureSqlMITable1')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -2231,139 +2496,6 @@
 					"quoteChar": "\""
 				},
 				"schema": []
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/OrderHistoryFileCon')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "DatafoundationADLS",
-					"type": "LinkedServiceReference"
-				},
-				"parameters": {
-					"OrdFileName": {
-						"type": "string",
-						"defaultValue": "ORDHTR_cloud01_2021Apr01.csv.gz"
-					},
-					"FullDt": {
-						"type": "string",
-						"defaultValue": "2021/04/01"
-					}
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"fileName": {
-							"value": "@dataset().OrdFileName",
-							"type": "Expression"
-						},
-						"folderPath": {
-							"value": "@dataset().FullDt",
-							"type": "Expression"
-						},
-						"container": "cntleap"
-					},
-					"columnDelimiter": "|",
-					"compressionCodec": "gzip",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"quoteChar": "\""
-				},
-				"schema": [
-					{
-						"name": "branch_name",
-						"type": "String"
-					},
-					{
-						"name": "branch_code",
-						"type": "String"
-					},
-					{
-						"name": "retailer_code",
-						"type": "String"
-					},
-					{
-						"name": "retailer_name",
-						"type": "String"
-					},
-					{
-						"name": "channel_description",
-						"type": "String"
-					},
-					{
-						"name": "dse_code",
-						"type": "String"
-					},
-					{
-						"name": "dse_name",
-						"type": "String"
-					},
-					{
-						"name": "order_number",
-						"type": "String"
-					},
-					{
-						"name": "order_date",
-						"type": "String"
-					},
-					{
-						"name": "order_type",
-						"type": "String"
-					},
-					{
-						"name": "order_status",
-						"type": "String"
-					},
-					{
-						"name": "p_code",
-						"type": "String"
-					},
-					{
-						"name": "subbf",
-						"type": "String"
-					},
-					{
-						"name": "po_number",
-						"type": "String"
-					},
-					{
-						"name": "po_date",
-						"type": "String"
-					},
-					{
-						"name": "upc",
-						"type": "String"
-					},
-					{
-						"name": "account_name",
-						"type": "String"
-					},
-					{
-						"name": "qty",
-						"type": "String"
-					},
-					{
-						"name": "rlp",
-						"type": "String"
-					},
-					{
-						"name": "amount",
-						"type": "String"
-					},
-					{
-						"name": "tc_code",
-						"type": "String"
-					},
-					{
-						"name": "tc_name",
-						"type": "String"
-					}
-				]
 			},
 			"dependsOn": []
 		}
